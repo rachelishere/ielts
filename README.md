@@ -1,2 +1,1853 @@
-# ielts
-hihihihi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Listening - Mock Test</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bar:#222;--bg:#f5f5f5;--white:#fff;--text:#111;--text-mid:#555;
+  --text-light:#888;--border:#ddd;--border-dark:#bbb;--green:#2e7d32;--green-light:#e8f5e9;
+  --red:#c62828;--red-light:#ffebee;--blue:#1565c0;--blue-light:#e3f2fd;
+  --amber:#ef6c00;--amber-light:#fff3e0;
+  --hl-y:rgba(255,235,59,.38);--hl-g:rgba(129,199,132,.35);--hl-b:rgba(100,181,246,.35);
+}
+html,body{height:100%;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+.screen{display:none}.screen.active{display:flex;flex-direction:column;height:100vh}
+
+/* ENTRY */
+.entry-screen.active{align-items:center;justify-content:center;background:#fafafa;overflow-y:auto}
+.entry-card{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:40px 44px;max-width:520px;width:94%;text-align:center;margin:24px auto}
+.entry-card h1{font-size:20px;font-weight:700;margin-bottom:4px}
+.entry-card .sub{font-size:13px;color:var(--text-mid);margin-bottom:24px}
+.info-box{text-align:left;background:#fafafa;border:1px solid var(--border);padding:14px 18px;margin-bottom:18px;font-size:13px;line-height:1.8;color:var(--text-mid)}
+.info-box strong{color:var(--text)}
+.entry-input{width:100%;padding:12px 16px;border:1px solid var(--border-dark);font-size:15px;outline:none;margin-bottom:14px}
+.entry-input:focus{border-color:var(--text)}
+.entry-input::placeholder{color:#aaa}
+.btn-start{width:100%;padding:12px;background:var(--bar);color:#fff;border:none;font-size:14px;font-weight:600;cursor:pointer}
+.btn-start:hover{background:#000}
+.entry-err{color:var(--red);font-size:12px;margin-bottom:10px;display:none}
+
+/* TOP BAR */
+.top-bar{height:44px;background:var(--bar);display:flex;align-items:center;justify-content:space-between;padding:0 20px;color:#fff;flex-shrink:0}
+.top-bar .left{display:flex;align-items:center;gap:14px}
+.top-bar .title{font-size:13px;font-weight:600}
+.name-tag{font-size:11px;color:#aaa;background:rgba(255,255,255,.08);padding:3px 10px;border-radius:2px}
+.timer{font-variant-numeric:tabular-nums;font-size:17px;font-weight:700;letter-spacing:1px}
+.timer.warn{color:#ef5350;animation:blink 1s infinite}
+.top-bar .right{display:flex;align-items:center;gap:14px}
+.top-bar .btn-submit{padding:6px 20px;font-size:12px}
+.top-bar .btn-analysis{padding:6px 14px;font-size:11.5px}
+@keyframes blink{50%{opacity:.5}}
+
+/* TABS */
+.section-tabs{height:36px;background:#2a2a2a;display:flex;align-items:stretch;padding:0 8px;gap:1px;flex-shrink:0}
+.section-tab{padding:0 22px;display:flex;align-items:center;font-size:12px;font-weight:600;color:#888;cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent}
+.section-tab:hover{color:#ddd}
+.section-tab.active{color:#fff;border-bottom-color:#fff;background:rgba(255,255,255,.06)}
+
+/* EXPLAIN POPUP (review) */
+.explain-pop{position:fixed;z-index:180;width:490px;max-width:92vw;max-height:64vh;overflow-y:auto;background:var(--white);border:1px solid var(--border-dark);box-shadow:0 8px 28px rgba(0,0,0,.22);padding:14px 16px;display:none;font-size:13px;line-height:1.7}
+.explain-pop.show{display:block}
+.explain-pop .ep-head{font-weight:700;margin-bottom:5px;font-size:13.5px;padding-right:26px}
+.explain-pop .ep-close{position:absolute;top:8px;right:10px;width:22px;height:22px;border:none;background:#eee;color:#555;font-size:14px;font-weight:700;line-height:1;cursor:pointer;border-radius:3px}
+.explain-pop .ep-close:hover{background:#ddd;color:#111}
+.explain-pop .ep-head.ok{color:var(--green)}
+.explain-pop .ep-head.no{color:var(--red)}
+.explain-pop .ep-hint{margin-top:10px;padding-top:7px;border-top:1px solid var(--border);font-size:11.5px;color:var(--text-light)}
+[data-exq],[data-scroll]{cursor:pointer}
+
+/* CLEAR BAR */
+.clear-bar{height:32px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;padding:0 16px;flex-shrink:0}
+.clear-bar button{font-size:11px;color:var(--text-light);background:none;border:1px solid var(--border);padding:3px 12px;cursor:pointer;border-radius:2px}
+.clear-bar button:hover{background:#f0f0f0;color:var(--text)}
+.clear-bar .cb-hint{font-size:11px;color:#aaa;margin-left:auto}
+
+/* SPLIT */
+.main-wrap{display:flex;flex:1;overflow:hidden}
+.panel{flex:1;overflow-y:auto;padding:24px 28px 110px}
+.panel::-webkit-scrollbar{width:7px}
+.panel::-webkit-scrollbar-track{background:#eee}
+.panel::-webkit-scrollbar-thumb{background:#c0c0c0;border-radius:3px}
+.left-panel{background:var(--white);border-right:1px solid var(--border);flex:0 0 30%}
+.question-panel{background:#fafafa}
+.resizer{width:5px;cursor:col-resize;background:var(--border);flex-shrink:0;z-index:10}
+.resizer:hover,.resizer.on{background:#999}
+
+/* LEFT PANEL - TEST MODE */
+.lp-title{font-size:17px;font-weight:700;margin-bottom:4px}
+.lp-sub{font-size:12.5px;color:var(--text-mid);margin-bottom:18px;line-height:1.6}
+.lp-card{border:1px solid var(--border);padding:14px 16px;margin-bottom:16px;background:#fcfcfc}
+.lp-card h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-mid);margin-bottom:8px}
+.lp-card ul{margin:0;padding-left:18px;font-size:12.5px;line-height:1.8;color:var(--text-mid)}
+#scratch{width:100%;height:180px;border:1px solid var(--border);padding:10px;font-size:13px;line-height:1.7;font-family:inherit;resize:vertical;outline:none;background:#fffef7}
+#scratch:focus{border-color:var(--text-mid)}
+
+/* LEFT PANEL - SCRIPT (REVIEW) */
+.script-body{font-size:13.5px;line-height:1.95;color:#222}
+.script-body p{margin-bottom:10px}
+.script-body .spk{font-weight:700}
+.script-body .ans-mark{background:rgba(255,235,59,.45);border-bottom:2px solid #f9a825;padding:1px 0;scroll-margin-top:40px}
+.script-body .ans-mark.sm-active{background:rgba(255,193,7,.9);box-shadow:0 0 0 4px rgba(255,193,7,.35)}
+.script-body .qtag{display:inline-block;background:var(--bar);color:#fff;font-size:10px;font-weight:700;padding:1px 5px;border-radius:2px;margin-right:4px;vertical-align:middle}
+.script-note{font-size:12px;color:var(--text-mid);background:var(--blue-light);border:1px solid #bbdefb;padding:10px 14px;margin-bottom:16px;line-height:1.65}
+
+/* QUESTIONS */
+.q-block{margin-bottom:30px}
+.q-instruction{font-size:13px;color:var(--text-mid);margin-bottom:14px;line-height:1.65;padding:10px 14px;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--bar)}
+.q-instruction b,.q-instruction strong{color:var(--text)}
+.q-card{margin-bottom:12px;padding:13px 16px;background:var(--white);border:1px solid #e5e5e5}
+.q-card:hover{border-color:var(--border-dark)}
+.q-card.is-correct{border-color:var(--green);background:var(--green-light)}
+.q-card.is-wrong{border-color:var(--red);background:var(--red-light)}
+.q-head{display:flex;align-items:flex-start;gap:10px}
+.q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#e0e0e0;font-size:12px;font-weight:700;flex-shrink:0}
+.q-num.done{background:var(--green);color:#fff}
+.q-stem{font-size:14px;line-height:1.55;flex:1}
+.q-opts{margin-top:10px;padding-left:36px}
+.q-opt{display:flex;align-items:flex-start;gap:8px;padding:5px 10px;margin-bottom:3px;cursor:pointer;font-size:13.5px;line-height:1.55;border-radius:3px;user-select:none}
+.q-opt:hover{background:#f0f0f0}
+.q-opt input{accent-color:var(--bar);margin-top:3px;cursor:pointer;width:15px;height:15px;flex-shrink:0}
+.q-opt span{flex:1}
+
+/* INLINE BLANKS (notes / table / flow chart) */
+.note-wrap{background:var(--white);border:1px solid var(--border);padding:18px 20px;font-size:13.5px;line-height:2.1}
+.note-wrap h5{font-size:13.5px;font-weight:700;margin-bottom:8px}
+.note-wrap ul{list-style:none;padding-left:0;margin:0}
+.note-wrap ul li{padding-left:16px;position:relative;margin-bottom:2px}
+.note-wrap ul li:before{content:"\2022";position:absolute;left:2px;color:var(--text-mid)}
+.note-wrap ul ul{margin-left:8px;margin-top:2px}
+.note-wrap table{border-collapse:collapse;width:100%;margin:6px 0}
+.note-wrap table th,.note-wrap table td{border:1px solid var(--border-dark);padding:7px 9px;font-size:13px;text-align:left;vertical-align:middle}
+.note-wrap table th{background:#f3f3f3;font-weight:700}
+.flow-step{border:1px solid var(--border-dark);padding:9px 12px;margin-bottom:2px;background:#fcfcfc}
+.flow-arrow{text-align:center;font-size:16px;color:var(--text-mid);line-height:1.2;margin-bottom:2px}
+.blank{display:inline-block;min-width:120px;width:150px;padding:3px 7px;border:none;border-bottom:2px solid var(--bar);background:#f7f7f7;font-size:13.5px;font-family:inherit;outline:none}
+.blank:focus{background:#fffde7;border-bottom-color:var(--blue)}
+.blank.blank-ok{background:var(--green-light);border-bottom-color:var(--green);color:#1b5e20;font-weight:600}
+.blank.blank-no{background:var(--red-light);border-bottom-color:var(--red);color:#b71c1c;font-weight:600}
+.bnum{display:inline-block;font-weight:700;margin-right:3px}
+
+/* MATCH / MAP TABLE */
+.match-legend{background:var(--white);border:1px solid var(--border);padding:12px 16px;margin-bottom:12px;font-size:13px;line-height:1.9}
+.match-legend .ml-key{font-weight:700;margin-right:6px}
+.match-table{width:100%;border-collapse:collapse;background:var(--white)}
+.match-table td{border:1px solid var(--border);padding:9px 12px;font-size:13.5px}
+.match-table td.mt-q{width:34px;text-align:center;font-weight:700;background:#f3f3f3}
+.match-table td.mt-sel{width:170px}
+.match-table tr.is-correct td{background:var(--green-light)}
+.match-table tr.is-wrong td{background:var(--red-light)}
+select.q-sel{width:100%;padding:6px 8px;border:1px solid var(--border-dark);font-size:13px;font-family:inherit;background:#fff;outline:none}
+select.q-sel:focus{border-color:var(--blue)}
+.map-img{width:100%;max-width:760px;display:block;margin:0 auto 14px;border:1px solid var(--border);background:#fff}
+
+/* FEEDBACK */
+.fb-verdict{font-size:12px;font-weight:700;margin-top:8px}
+.fb-verdict.ok{color:var(--green)}.fb-verdict.no{color:var(--red)}
+.fb-explain{margin-top:10px;padding:13px 16px;background:#f9f9f9;border:1px solid var(--border);border-left:3px solid var(--blue);font-size:13px;line-height:1.75;color:#333}
+.fb-explain .step{font-weight:700;color:var(--blue);display:block;margin-top:9px;margin-bottom:2px}
+.fb-explain .step:first-child{margin-top:0}
+.fb-explain .quote{background:#fffde7;border-left:2px solid #f9a825;padding:6px 10px;margin:5px 0;font-style:italic;color:#444}
+.fb-explain .distractor{margin-top:6px;padding-left:8px;border-left:2px solid #ddd;font-size:12.5px;line-height:1.7;color:var(--text-mid)}
+.fb-explain .distractor strong{color:var(--text)}
+.fb-item{margin-top:10px;padding:11px 14px;border:1px solid var(--border);border-left:3px solid var(--border-dark);background:#f9f9f9;font-size:13px;line-height:1.7}
+.fb-item.ok{border-left-color:var(--green)}
+.fb-item.no{border-left-color:var(--red)}
+.fb-item .fh{font-weight:700;margin-bottom:3px}
+.fb-item.ok .fh{color:var(--green)}
+.fb-item.no .fh{color:var(--red)}
+.fb-spell{background:var(--amber-light);border:1px solid #ffcc80;padding:7px 10px;margin-top:6px;font-size:12.5px;color:#e65100;line-height:1.6}
+
+/* HIGHLIGHT + NOTES */
+mark.hl-y{background:var(--hl-y);padding:1px 0;border-radius:2px}
+mark.hl-g{background:var(--hl-g);padding:1px 0;border-radius:2px}
+mark.hl-b{background:var(--hl-b);padding:1px 0;border-radius:2px}
+mark[data-note]{position:relative;cursor:pointer}
+mark[data-note]::after{content:"";position:absolute;top:-3px;right:-6px;width:8px;height:8px;background:var(--blue);border-radius:50%;border:1px solid #fff}
+.note-tooltip{position:fixed;z-index:150;background:#333;color:#fff;padding:6px 10px;border-radius:4px;font-size:12px;max-width:240px;line-height:1.5;pointer-events:none;white-space:pre-wrap}
+.sel-popup{position:fixed;z-index:160;background:var(--white);border:1px solid var(--border-dark);border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);display:none;padding:6px 4px;gap:2px;flex-direction:row;align-items:center}
+.sel-popup.show{display:flex}
+.sp-color{width:24px;height:24px;border-radius:4px;border:2px solid transparent;cursor:pointer;transition:all .1s}
+.sp-color:hover{transform:scale(1.15);border-color:#999}
+.sp-color.cy{background:rgba(255,235,59,.7)}.sp-color.cb{background:rgba(100,181,246,.6)}.sp-color.cg{background:rgba(129,199,132,.6)}
+.sp-divider{width:1px;height:20px;background:var(--border);margin:0 4px}
+.sp-note{display:flex;align-items:center;gap:4px;padding:4px 8px;cursor:pointer;border-radius:4px;font-size:12px;font-weight:600;color:var(--text-mid);border:none;background:none}
+.sp-note:hover{background:#f0f0f0;color:var(--text)}
+.sp-note svg{width:14px;height:14px}
+.note-input-wrap{position:fixed;z-index:170;background:var(--white);border:1px solid var(--border-dark);border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);padding:10px;display:none;width:240px}
+.note-input-wrap.show{display:block}
+.note-input-wrap textarea{width:100%;height:60px;border:1px solid var(--border);border-radius:4px;padding:6px 8px;font-size:12.5px;resize:none;outline:none;font-family:inherit}
+.note-input-wrap .ni-btns{display:flex;justify-content:flex-end;gap:6px;margin-top:6px}
+.note-input-wrap .ni-btn{padding:4px 12px;font-size:11px;font-weight:600;border:none;border-radius:3px;cursor:pointer}
+.ni-save{background:var(--bar);color:#fff}.ni-cancel{background:#eee;color:var(--text-mid)}
+
+/* BOTTOM BAR */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;min-height:52px;background:var(--bar);display:flex;align-items:center;justify-content:space-between;gap:14px;padding:7px 18px;z-index:100}
+.qnav-wrap{flex:1;overflow-x:auto;display:flex;align-items:center;gap:8px;padding-bottom:2px}
+.qnav-wrap::-webkit-scrollbar{height:5px}
+.qnav-wrap::-webkit-scrollbar-thumb{background:#555;border-radius:3px}
+.qnav-group{display:flex;align-items:center;gap:3px;flex-shrink:0}
+.qnav-lbl{font-size:10px;color:#888;font-weight:700;margin-right:3px;letter-spacing:.4px}
+.qnav-btn{width:26px;height:26px;border-radius:3px;border:1px solid #444;background:#333;color:#888;font-size:10.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qnav-btn:hover{background:#444;color:#eee}
+.qnav-btn.cur{outline:2px solid #fff;outline-offset:1px}
+.qnav-btn.done{background:#f5f5f5;color:#111;border-color:#f5f5f5}
+.qnav-btn.ok{background:var(--green);color:#fff;border-color:var(--green)}
+.qnav-btn.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-submit{padding:9px 26px;background:#fff;color:var(--bar);border:none;font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0}
+.btn-submit:hover{background:#e0e0e0}
+.btn-submit:disabled{background:#555;color:#888;cursor:default}
+.btn-analysis{padding:9px 20px;background:transparent;color:#fff;border:1px solid #666;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0}
+.btn-analysis:hover{border-color:#fff}
+
+/* OVERLAYS */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:none;align-items:center;justify-content:center}
+.overlay.show{display:flex}
+.result-card{background:var(--white);border:1px solid var(--border);padding:32px 40px;max-width:500px;width:92%;text-align:center;max-height:92vh;overflow-y:auto}
+.result-card h2{font-size:20px;font-weight:700;margin-bottom:2px}
+.rname{font-size:13px;color:var(--text-mid);margin-bottom:12px}
+.band-big{font-size:54px;font-weight:800;margin:8px 0}
+.band-big small{font-size:18px;color:var(--text-light);font-weight:400}
+.result-stats{display:flex;justify-content:center;gap:26px;margin:12px 0 16px}
+.rs{text-align:center}.rv{font-size:23px;font-weight:700}.rl{font-size:10.5px;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px}
+.rs-ok .rv{color:var(--green)}.rs-no .rv{color:var(--red)}
+.sec-break{display:flex;gap:8px;justify-content:center;margin-bottom:16px;flex-wrap:wrap}
+.sec-pill{border:1px solid var(--border);padding:5px 11px;font-size:11.5px;color:var(--text-mid)}
+.sec-pill b{color:var(--text)}
+.rbtn{display:block;width:100%;padding:11px;border:none;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px}
+.rbtn-review{background:var(--bar);color:#fff}.rbtn-review:hover{background:#000}
+.rbtn-again{background:var(--white);color:var(--text-mid);border:1px solid var(--border)}.rbtn-again:hover{background:#f5f5f5}
+.confirm-card{background:var(--white);padding:28px 32px;max-width:420px;width:92%;border:1px solid var(--border);text-align:left}
+.confirm-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.confirm-card p{font-size:13.5px;line-height:1.7;color:var(--text-mid);margin-bottom:18px}
+.confirm-btns{display:flex;gap:8px;justify-content:flex-end}
+.cbtn{padding:9px 18px;font-size:12.5px;font-weight:600;border:none;cursor:pointer}
+.cbtn-yes{background:var(--bar);color:#fff}.cbtn-no{background:#eee;color:var(--text-mid)}
+.toast{position:fixed;left:50%;bottom:70px;transform:translateX(-50%);background:#222;color:#fff;padding:9px 18px;font-size:12.5px;border-radius:4px;z-index:300;opacity:0;pointer-events:none;transition:opacity .18s}
+.toast.show{opacity:1}
+.privacy-shield{position:fixed;inset:0;z-index:9999;background:rgba(20,20,20,.85);display:none;align-items:center;justify-content:center;text-align:center;color:#fff;font-size:15px;font-weight:600;line-height:1.6;padding:24px}
+.privacy-shield.show{display:flex}
+body.shielded .screen{filter:blur(16px);pointer-events:none}
+
+/* ANALYSIS */
+.analysis-screen.active{display:block;height:auto;min-height:100vh;overflow-y:auto}
+.analysis-wrap{max-width:800px;margin:0 auto;padding:36px 24px 70px}
+.analysis-wrap h2{font-size:21px;font-weight:700;margin-bottom:4px}
+.asub{font-size:13px;color:var(--text-mid);margin-bottom:26px}
+.a-section{margin-bottom:34px}
+.a-section h3{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.a-tip{padding:14px 18px;background:var(--blue-light);border:1px solid #bbdefb;margin-bottom:10px;font-size:13.5px;line-height:1.75}
+.a-tip strong{color:var(--blue)}
+.a-warn{padding:14px 18px;background:var(--amber-light);border:1px solid #ffcc80;margin-bottom:10px;font-size:13.5px;line-height:1.75}
+.a-warn strong{color:#e65100}
+.a-table{width:100%;border-collapse:collapse;background:var(--white);font-size:13px;margin-bottom:12px}
+.a-table th,.a-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top;line-height:1.6}
+.a-table th{background:#f3f3f3;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.3px}
+.a-table td.bad{color:var(--red);font-weight:600}
+.a-table td.good{color:var(--green);font-weight:600}
+.a-vocab{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.col-chip{position:relative;background:var(--white);border:1px solid var(--border);padding:5px 14px;font-size:13px;font-weight:600;cursor:pointer;border-radius:3px;user-select:none}
+.col-chip:hover{background:#e3f2fd;border-color:var(--blue)}
+.col-chip .col-detail{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:12px 16px;border-radius:6px;min-width:260px;max-width:330px;z-index:80;text-align:left;font-weight:400;font-size:12.5px;line-height:1.7;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.col-chip .col-detail::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #1a1a2e}
+.col-chip:hover .col-detail{display:block}
+.col-detail .cd-word{font-size:14px;font-weight:700;color:#8af;margin-bottom:2px}
+.col-detail .cd-ipa{font-size:12px;color:#aaa;margin-bottom:6px;font-style:italic}
+.col-detail .cd-vi{color:#ffd54f;font-weight:600;margin-bottom:4px}
+.col-detail .cd-ex{color:#ccc;font-size:11.5px;font-style:italic}
+.a-sub{font-size:12.5px;font-weight:700;color:var(--text);margin:16px 0 4px}
+.abtn-back{display:inline-block;margin-top:18px;padding:10px 30px;background:var(--bar);color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer}
+.abtn-back:hover{background:#000}
+.no-copy{user-select:none}
+
+@media(max-width:820px){
+  .main-wrap{flex-direction:column}
+  .resizer{width:100%;height:5px;cursor:row-resize}
+  .left-panel{flex:0 0 auto;max-height:38vh}
+  .panel{padding:16px 14px 120px}
+  .entry-card{padding:28px 18px}
+  .blank{width:120px;min-width:90px}
+}
+</style>
+</head>
+<body>
+
+<div class="screen entry-screen active" id="screenEntry">
+  <div class="entry-card">
+    <h1>IELTS Listening</h1>
+    <div class="sub">Computer-Based Practice Test</div>
+    <div class="entry-err" id="entryErr">Vui lòng nhập tên để bắt đầu.</div>
+    <input class="entry-input" id="nameInput" type="text" placeholder="Họ và tên học viên" autocomplete="off">
+    <button class="btn-start" onclick="beginTest()">START TEST</button>
+  </div>
+</div>
+
+<div class="screen" id="screenTest">
+  <div class="top-bar">
+    <div class="left"><div class="title">IELTS Listening - Mock Test</div><div class="name-tag" id="barName"></div></div>
+    <div class="right">
+      <div class="timer" id="timer">35:00</div>
+      <button class="btn-analysis" id="btnAnalysis" onclick="showAnalysis()" style="display:none">ANALYSIS</button>
+      <button class="btn-submit" id="btnSubmit" onclick="submitTest()">SUBMIT</button>
+    </div>
+  </div>
+  <div class="section-tabs" id="sectionTabs"></div>
+  <div class="clear-bar">
+    <button onclick="clearAllHL()">Xóa hết highlight &amp; note</button>
+    <button onclick="toggleScratch()" id="btnScratch">Ẩn giấy nháp</button>
+    <span class="cb-hint" id="cbHint">Bôi đen một từ để highlight hoặc ghi note</span>
+  </div>
+  <div class="main-wrap" id="mainWrap">
+    <div class="panel left-panel" id="leftPanel"></div>
+    <div class="resizer" id="resizer"></div>
+    <div class="panel question-panel" id="questionPanel"></div>
+  </div>
+  <div class="bottom-bar">
+    <div class="qnav-wrap" id="qNav"></div>
+  </div>
+</div>
+
+<div class="screen analysis-screen" id="screenAnalysis"></div>
+
+<div class="sel-popup" id="selPopup">
+  <div class="sp-color cy" onclick="applyHL('y')"></div>
+  <div class="sp-color cb" onclick="applyHL('b')"></div>
+  <div class="sp-color cg" onclick="applyHL('g')"></div>
+  <div class="sp-divider"></div>
+  <button class="sp-note" onclick="openNoteInput()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+    Note
+  </button>
+</div>
+
+<div class="note-input-wrap" id="noteInput">
+  <textarea id="noteText" placeholder="Ghi note..."></textarea>
+  <div class="ni-btns">
+    <button class="ni-btn ni-cancel" onclick="cancelNote()">Hủy</button>
+    <button class="ni-btn ni-save" onclick="saveNote()">Lưu</button>
+  </div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="result-card">
+    <h2>Kết quả</h2>
+    <div class="rname" id="resName"></div>
+    <div class="band-big" id="resBand">-<small> / 9.0</small></div>
+    <div class="result-stats">
+      <div class="rs rs-ok"><div class="rv" id="resOk">0</div><div class="rl">Correct</div></div>
+      <div class="rs"><div class="rv" id="resTotal">40</div><div class="rl">Total</div></div>
+      <div class="rs rs-no"><div class="rv" id="resNo">0</div><div class="rl">Incorrect</div></div>
+    </div>
+    <div class="sec-break" id="resSec"></div>
+    <div id="gsMsg" style="font-size:12px;margin-bottom:12px;min-height:18px"></div>
+    <button class="rbtn rbtn-review" onclick="reviewMode()">Review Answers</button>
+    <button class="rbtn rbtn-again" onclick="restart()">Làm lại</button>
+  </div>
+</div>
+
+<div class="overlay" id="confirmOverlay">
+  <div class="confirm-card">
+    <h3>Nộp bài?</h3>
+    <p id="confirmMsg"></p>
+    <div class="confirm-btns">
+      <button class="cbtn cbtn-no" onclick="closeConfirm()">Tiếp tục làm</button>
+      <button class="cbtn cbtn-yes" onclick="confirmSubmitYes()">Nộp bài</button>
+    </div>
+  </div>
+</div>
+
+<div class="explain-pop" id="explainPop"></div>
+<div class="note-tooltip" id="noteTooltip" style="display:none"></div>
+<div class="toast" id="toast"></div>
+<div class="privacy-shield" id="privacyShield"><div id="shieldMsg"></div></div>
+
+<script>
+/* =========================================================
+   CAU HINH
+   ========================================================= */
+var TOTAL_SECONDS = 35 * 60;          // 35 phut
+var SCRIPT_URL    = '';               // dan URL Google Apps Script web app vao day
+var MAP_IMG       = 'data:image/png;base64,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';
+
+/* =========================================================
+   TRANSCRIPT 4 SECTION
+   ========================================================= */
+var SECTIONS = [
+{
+  n: 1,
+  topic: "Volunteering at Northwood Library",
+  instr: "Questions 1 - 10",
+  script:
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> Good morning. You would like to volunteer for the children's section. Is that right?</p>" +
+    "<p><span class='spk'>TESSA:</span> Yes. I spoke to you on the phone yesterday.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> That's right. Tessa, isn't it?</p>" +
+    "<p><span class='spk'>TESSA:</span> Yes. Tessa Bridges.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> Thank you for coming in today, Tessa. Before we discuss what a volunteer does in the library, I'll need to get some details from you.</p>" +
+    "<p><span class='spk'>TESSA:</span> No problem. What would you like to know?</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> Where do you live, Tessa?</p>" +
+    "<p><span class='spk'>TESSA:</span> I still live with my family in Northwood. <span class='ans-mark'><span class='qtag'>Q1</span>51 Matthew Drive.</span></p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> M A T H E W, Mathew Drive.</p>" +
+    "<p><span class='spk'>TESSA:</span> <span class='ans-mark'>Actually, there are two t's, m a, double t, h e w.</span></p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> Oh, thank you. And the postcode for Northwood is?</p>" +
+    "<p><span class='spk'>TESSA:</span> Oh, I'm still confused about that. <span class='ans-mark'><span class='qtag'>Q2</span>It used to be 2614, which, of course, I still remember, but the post office has recently changed it to 4126.</span></p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> So 4126. Now you're a university student, aren't you?</p>" +
+    "<p><span class='spk'>TESSA:</span> Not exactly. I go to Northwood Polytechnic. I'm in my final year.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> In your final year. So what are you studying? I mean, your main subject.</p>" +
+    "<p><span class='spk'>TESSA:</span> Oh, <span class='ans-mark'><span class='qtag'>Q3</span>I'm majoring in creative writing.</span></p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> And are you enjoying that?</p>" +
+    "<p><span class='spk'>TESSA:</span> Very much so. I love it. When I graduate, I want to write children's books.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> That's great. Now I can see why you're keen to volunteer at the library. We're always grateful for the extra help, but I still have to ask you some more questions about your previous experience.</p>" +
+    "<p><span class='spk'>TESSA:</span> That's fine. But I haven't had a full time paid job yet.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> Not to worry. Part time work or voluntary work gives you the experience most employers are looking for.</p>" +
+    "<p><span class='spk'>TESSA:</span> Well, to start with, when I was 16, I had a babysitting job.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> And who did you work for?</p>" +
+    "<p><span class='spk'>TESSA:</span> <span class='ans-mark'><span class='qtag'>Q4</span>Oh, just family friends.</span></p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> How long did you babysit for family friends?</p>" +
+    "<p><span class='spk'>TESSA:</span> Oh, about two years, on and off.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> After those two years were up, what did you do then?</p>" +
+    "<p><span class='spk'>TESSA:</span> Well, I was still working as a babysitter on the occasional evening and weekend when I became <span class='ans-mark'><span class='qtag'>Q5</span>a peer tutor at school.</span> I did that for one year, my last year at senior high.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> And what does being a peer tutor involve?</p>" +
+    "<p><span class='spk'>TESSA:</span> Mostly, it means staying behind after school one or two afternoons a week to help fellow students in the subject that they're having difficulty with.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> And what subject did you tutor in?</p>" +
+    "<p><span class='spk'>TESSA:</span> English, actually.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> I see. Do you have any other experience?</p>" +
+    "<p><span class='spk'>TESSA:</span> I worked at the Ace Sports Academy as a <span class='ans-mark'><span class='qtag'>Q6</span>tennis coach,</span> but that was only for about twelve weeks over the summer before I enrolled at the Polytechnic.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> So you're good at sports?</p>" +
+    "<p><span class='spk'>TESSA:</span> Not everything. Just tennis.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> And are you currently working?</p>" +
+    "<p><span class='spk'>TESSA:</span> Yes. Well, unpaid work, that is. I'm a volunteer at the local hospital where I visit sick children who would otherwise not have any visitors.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> Well, it certainly seems as if you like children.</p>" +
+    "<p><span class='spk'>TESSA:</span> Yes. I do.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> Well, Tessa, what I need to know now is what your schedule is like so that we can fit you into the roster here. Can I assume that you're not able to work Monday to Friday during office hours?</p>" +
+    "<p><span class='spk'>TESSA:</span> <span class='ans-mark'><span class='qtag'>Q7</span>Right. I'm very busy with lectures, workshops, and assignments during the week.</span></p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> How about weeknights? Say five to seven in the evening. That's a very busy time in the children's section.</p>" +
+    "<p><span class='spk'>TESSA:</span> <span class='ans-mark'><span class='qtag'>Q8</span>Well, I couldn't commit to more than three evenings a week. And even then, it would depend on my schedule.</span></p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> Yes. I understand. If possible, we could make arrangements a week in advance. Would that help?</p>" +
+    "<p><span class='spk'>TESSA:</span> Yes. That might work.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> Are weekends okay?</p>" +
+    "<p><span class='spk'>TESSA:</span> <span class='ans-mark'><span class='qtag'>Q9</span>Well, Sundays are out. Actually, only every other Sunday because that's when I'm usually needed at the hospital. But I'm free on Saturday afternoons.</span></p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> Alright. We could roster you for the odd weekend then. What about school holidays?</p>" +
+    "<p><span class='spk'>TESSA:</span> <span class='ans-mark'><span class='qtag'>Q10</span>Definitely. No problem whatsoever. I don't have any other commitments during the holidays.</span></p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> That's good to hear. We have droves of children here in the holidays as you can imagine.</p>" +
+    "<p><span class='spk'>TESSA:</span> Thank you.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> Well, Tessa, we'll send you a letter of appointment in the mail, and we look forward to having you join us as a volunteer.</p>" +
+    "<p><span class='spk'>TESSA:</span> Thanks very much.</p>" +
+    "<p><span class='spk'>HEAD LIBRARIAN:</span> Now as for your duties [FADE OUT]</p>"
+},
+{
+  n: 2,
+  topic: "Guided tour of Hobson Park",
+  instr: "Questions 11 - 20",
+  script:
+    "<p>Welcome to our lovely tour around Hobson Park. Visible from much of Auckland, this is a widely recognized local landmark. I hope you'll enjoy your stay here. But first, let me briefly introduce its history to you before we stroll around the park.</p>" +
+    "<p><span class='ans-mark'><span class='qtag'>Q11</span>Hobson Park is located on an island that used to be a volcano, which emerged just 600 years ago.</span> You can still enjoy the breathtaking views of a nearby lake today. The lava flow at the end of Takapuna Beach enveloped a kauri forest. It is known to be New Zealand's only example of a fossil forest preserved in a lava flow.</p>" +
+    "<p>Actually, Hobson Park was named after William Hobson, a British captain and also the first governor of New Zealand. At the time, the British were making plans to claim New Zealand as a colony to ensure their trade interest. War broke out between Maori troops and government forces. <span class='ans-mark'><span class='qtag'>Q12</span>After years of revolt, two Maori chiefs were invited to the island to restore peace. They signed a treaty and shook hands with governor Hobson.</span> While local tribes started to celebrate their success, the two Maori chiefs didn't stop promoting Maori self determination in meetings and correspondence with the government.</p>" +
+    "<p>In 1840, Hobson chose Auckland as the site for his capital. The same year, plans for founding Hobson Park were initiated. <span class='ans-mark'><span class='qtag'>Q13</span>But it was in 1842 that the park was actually created and officially opened to the public.</span></p>" +
+    "<p>As you can see, the park is immense. It is comprised of many natural wonders as well as artificial features. Just a few hundred meters away, there is a duck pond where you can observe the water birds, including some rare breeds. But remember to keep a distance from them and refrain from feeding them. <span class='ans-mark'><span class='qtag'>Q14</span>Across the iron bridge, you'll get to formal gardens used for experiments on breeding local wild species.</span></p>" +
+    "<p>If you keep roaming down the trail, you'll see the old residents of Maori people forming a small village. <span class='ans-mark'><span class='qtag'>Q15</span>These houses are full of local paintings, sculptures, and artifacts, all donated by the city council to showcase the history and culture of Maori people living there.</span> And these are not something you'll stumble upon in a regular museum.</p>" +
+    "<p>Oh, and don't forget to visit the Temperate House. It's only a ten minute walk away from the duck pond. It accommodates a whole range of wild plants from around the country. <span class='ans-mark'><span class='qtag'>Q16</span>But what makes it unique is the forest of kauri trees, a native species to New Zealand. However, the kauri tree population was threatened by the spread of kauri dieback disease and is now under the protection of the Department of Conservation.</span></p>" +
+    "<p>Let me point out the whereabouts of some other critical features in the park in case you need them.</p>" +
+    "<p>If you are a plant lover and want to take some local greenery home, you may wish to visit the plant nursery where you can choose from an extensive collection of plants, from succulents to some rare local species. <span class='ans-mark'><span class='qtag'>Q17</span>It's right next to the museum on the same side of the road.</span></p>" +
+    "<p>There is a pine tree hill with tracks for hikers of all abilities. The whole trip takes about half an hour. There is a steep climb in places. Tread carefully and stick to the formal tracks. You'll be rewarded with great views. <span class='ans-mark'><span class='qtag'>Q18</span>If you leave your car in the car park, you can see it just across the road towards George Street entry.</span></p>" +
+    "<p>Or if you are an experienced hiker and want some challenge, you can choose Eagle Mountain. It offers fantastic hiking routes. It's also an ideal spot for bird watching with many wild species unique to New Zealand. <span class='ans-mark'><span class='qtag'>Q19</span>We are right here at the Wellington entrance. Then take the first right, and you'll see Eagle Mountain immediately to your right.</span></p>" +
+    "<p>If you're hungry and want to take a quick bite, there is a nearby food kiosk providing snacks and beverages. <span class='ans-mark'><span class='qtag'>Q20</span>Start from the Wellington entrance. Take the first left. Keep walking down the road. And after the junction, where it meets a road connecting the George Street entry, you'll see it on your right.</span></p>" +
+    "<p>And lastly, there is a conservation area protecting kauri trees just by the winter garden. Unfortunately, it's currently out of bounds to the public. Okay. Now, if you have anything else to ask, I'm here to help.</p>"
+},
+{
+  n: 3,
+  topic: "Tutorial: Pacific Island tapa cloth",
+  instr: "Questions 21 - 30",
+  script:
+    "<p><span class='spk'>TUTOR:</span> Come in, Helen. How can I help you?</p>" +
+    "<p><span class='spk'>HELEN:</span> Well, I'm doing research for the anthropology assignment and I was hoping to check a few details.</p>" +
+    "<p><span class='spk'>TUTOR:</span> Sure. You chose the topic of Pacific Island tapa cloth, didn't you? What have you found out so far?</p>" +
+    "<p><span class='spk'>HELEN:</span> Well, I was going to introduce my assignment by saying that the tapa cloth is a fabric made from bark, just the outer layer of the trees. It's particularly common in the Pacific Islands, but not exclusive to them. In fact, many other peoples around the world have made high-quality cloth from bark. <span class='ans-mark'><span class='qtag'>Q21</span>But what sets Pacific tapa apart is the incredible variety of roles it's played in this region.</span></p>" +
+    "<p><span class='spk'>TUTOR:</span> Yes, nice introduction. Though I think you could be more specific regarding dates. Okay. So, what about the raw materials used?</p>" +
+    "<p><span class='spk'>HELEN:</span> Well, tapa cloth is made from several species of tree. In the Pacific, the paper mulberry tree is most common, but it doesn't thrive in all conditions. <span class='ans-mark'><span class='qtag'>Q22</span>In fact, it wasn't originally found in the islands, but was carried in the canoes by the first migrants.</span> Tapa is also made from the breadfruit tree, which is convenient because its fruit is a staple food. The paper mulberry tree is only grown for tapa-making, though.</p>" +
+    "<p><span class='spk'>TUTOR:</span> Yes, that's good. Now, what about the Maori people here in New Zealand?</p>" +
+    "<p><span class='spk'>HELEN:</span> But the Maori don't make tapa now.</p>" +
+    "<p><span class='spk'>TUTOR:</span> That's right, and you need to account for it. We know that when Maori migrated here from the other Pacific Islands, they were prepared to make tapa because they brought the paper mulberry tree with them. <span class='ans-mark'><span class='qtag'>Q23</span>The thing was, after they'd been in New Zealand a bit, they found the flax plant, which is superior to tapa because it makes a stronger fabric.</span> By the time Europeans arrived in the 18th century, Maori were making all their fabric from flax and had been for some time.</p>" +
+    "<p><span class='spk'>HELEN:</span> Okay. So, with the production process itself, first the inner bark is beaten with wooden hammers to soften the fibres. <span class='ans-mark'><span class='qtag'>Q24</span>Then the different pieces are glued together using an adhesive paste made from the arrowroot tuber. This is the only way to fabricate large pieces of cloth because bark strands are too fine to be woven together, and stitching isn't strong enough.</span></p>" +
+    "<p><span class='spk'>TUTOR:</span> So, now you need details about different countries. Where would you start?</p>" +
+    "<p><span class='spk'>HELEN:</span> I think Samoa is the obvious place. It's famous for its very fine cloth, called siapo, which is hand-painted with representations of the ancestors. <span class='ans-mark'><span class='qtag'>Q25</span>Still today, at the most profound events in life such as births, funerals, weddings, and the investiture of chiefs, Samoans wear siapo robes to add significance and meaning to the ceremony.</span></p>" +
+    "<p><span class='spk'>TUTOR:</span> Okay.</p>" +
+    "<p><span class='spk'>HELEN:</span> Then I could talk about Tonga. It seems to me that the great innovation in Tonga has been developing a simple, coarse cloth which is quick and easy to make. <span class='ans-mark'><span class='qtag'>Q26</span>This is suitable for all sorts of everyday functions around the house, like bed covers, mosquito nets, and curtains.</span></p>" +
+    "<p><span class='spk'>TUTOR:</span> Good point. Now, what about Cook Islands tapa?</p>" +
+    "<p><span class='spk'>HELEN:</span> Well, the soil there is poor quality, so the breadfruit tree is often used. <span class='ans-mark'><span class='qtag'>Q27</span>One type of thick cloth called Tikuru was wrapped around the poles and used to mark the entrances to places of worship. So it was highly regarded in local culture.</span></p>" +
+    "<p><span class='spk'>TUTOR:</span> <span class='ans-mark'><span class='qtag'>Q28</span>You might mention Fiji as well, which is interesting because tapa was actually used as a currency there. Fijians used to sail between the islands and exchange tapa for other commodities like canoes or pigs.</span></p>" +
+    "<p><span class='spk'>HELEN:</span> I know that in Tahiti, the tapa cloth is different because the patterns are in colour, which is considered more valuable than the usual brown patterns.</p>" +
+    "<p><span class='spk'>TUTOR:</span> <span class='ans-mark'><span class='qtag'>Q29</span>You're right about the Tahitians using coloured pigments, but they aren't more valuable. The colours are only a decoration. People enjoy wearing bright robes, especially for dancing and competitive games, and do it just for fun.</span></p>" +
+    "<p><span class='spk'>HELEN:</span> Oh, I'll make a note of it. Well, the last place I was going to mention was Tikopia. <span class='ans-mark'><span class='qtag'>Q30</span>Even today, it's commonplace to see people wearing clothes made of tapa cloth. In many of the other islands, the tapa only comes out on special occasions, but here, you see people working in the gardens wearing tapa.</span></p>" +
+    "<p><span class='spk'>TUTOR:</span> Sounds promising, Helen. I'll look forward to reading your assignment.</p>"
+},
+{
+  n: 4,
+  topic: "Business lecture: outsourcing at TCP Technologies",
+  instr: "Questions 31 - 40",
+  script:
+    "<p>Welcome class to your very first lecture in this series on business in the modern world conducted by myself, doctor Toby Bennett. Today, we will be looking into the practice of company outsourcing using TCP Technologies as a case study.</p>" +
+    "<p>Now, for those of you who are unfamiliar with this practice, I will give you a summative definition. Company outsourcing involves the contracting of various business activities by one company to another. This practice will sometimes occur from a Western company to a party based in a third world country, the rationale being to make significant financial savings on lower international labor rates and to potentially increase quality.</p>" +
+    "<p>Our case study for today is TCP Technologies, a party located in India that receives outsourced tasks from Western companies. The manager of TCP Technologies is Manjeet Khanna, who has developed a series of aims and philosophies by which the company is expected to operate. <span class='ans-mark'><span class='qtag'>Q31</span>He claims that the most important of these philosophies is to create a workplace where each individual member has the opportunity to contribute their opinion to the operations of the company. That is to say that he found it important to develop a democratic environment.</span></p>" +
+    "<p>As a means of ensuring quality from every individual at TCP Technologies, a grading system has been developed that encourages an ethos of hard work and recognizes accomplishment. This grading of individuals is based on factors such as turnover, hours worked, and efficiency. <span class='ans-mark'><span class='qtag'>Q32</span>Every month, Khanna publishes the grades on an internal website where staff can access not only their own grades, but also compare it to others.</span> A spirit of playful competitiveness has developed through this method, resulting in increased efficiency and turnover across the company.</p>" +
+    "<p>Khanna also saw it as essential to develop a culturally diverse group of employees as a means of presenting a multifaceted image that would appeal to potential employees across the globe. This cultural openness has increased incoming contracted opportunities by 7% and has significantly benefited the company itself. <span class='ans-mark'><span class='qtag'>Q33</span>A level of transparency now exists that had not before been apparent.</span> According to recent questionnaires, these newly introduced measures have significantly increased staff satisfaction, <span class='ans-mark'><span class='qtag'>Q34</span>which has subsequently led to an increase of 32% in the company's income.</span></p>" +
+    "<p>These figures are admirable and demonstrate the impact of Khanna's changes to the workplace at TCP Technologies. In an interview published by The Economist, he stated, the figures speak for themselves, my system works. When asked for advice for companies seeking to streamline workflow and increase turnover, he replied that a company must see itself as a living organism composed of essential cells rather than as one entity of nameless components. <span class='ans-mark'><span class='qtag'>Q35</span>I suggest that the motto by which your management operates will be employee first.</span></p>" +
+    "<p>Many benefits have resulted from the new management style, such as a significant decrease in staff turnover, solving many previous problems. <span class='ans-mark'><span class='qtag'>Q36</span>A lot of these improvements came from the realisation that the solution does not have to be produced internally, but can come from any other company.</span> The grading system has also enhanced company dynamics. <span class='ans-mark'><span class='qtag'>Q37</span>The fact that this measuring system is solely produced for staff members and inaccessible by management means that it cannot be used as a judging criterion for promotion.</span> It has proven to be a relaxed and informal way of stimulating workflow.</p>" +
+    "<p>Khanna also considers it important to respond personally to any complaints filed by staff members. Finding the previous complaint system ineffective, he introduced a new online system that created a direct line of communication between himself and all employees. <span class='ans-mark'><span class='qtag'>Q38</span>The complaint form, dubbed by Khanna as a ticket, eradicates the middleman, is easily accessible to all employees online, and has an interface that can be instinctively navigated.</span></p>" +
+    "<p>Any staff-related complaint, such as those relating to air conditioning and food quality, can be submitted directly to Khanna via this online system. <span class='ans-mark'><span class='qtag'>Q39</span>Entitlement to vacation is also a popular issue discussed through this forum.</span> The main benefit of using the system is that staff must include their personal details on the ticket before submitting it. <span class='ans-mark'><span class='qtag'>Q40</span>In the past, anonymous complaints had caused confusion and wasted many work hours, so the new system has banned this form of complaint.</span></p>" +
+    "<p>That wraps up the lecture for today. Please remember that attendance is mandatory.</p>"
+}
+];
+
+/* =========================================================
+   LAYOUT CAU HOI THEO BLOCK
+   type: inline (dien tu vao doan/bang/flow chart) | mcq | match | map
+   ========================================================= */
+var BLOCKS = [
+/* ---------- SECTION 1 ---------- */
+{ sec:1, type:'inline', qs:[1,2,3],
+  instr:"<b>Questions 1 - 3</b><br>Complete the notes below.<br>Write <b>TWO WORDS AND/OR A NUMBER</b> for each answer.",
+  html:"<h5>Volunteer application</h5><ul>" +
+    "<li>Name: Tessa Bridges</li>" +
+    "<li>Address: 51 <span class='bnum'>1</span>{{1}} Drive</li>" +
+    "<li>Area: Northwood</li>" +
+    "<li>Postcode: <span class='bnum'>2</span>{{2}}</li>" +
+    "<li>Place of study: studying at Northwood Polytechnic</li>" +
+    "<li>Major: <span class='bnum'>3</span>{{3}}</li>" +
+    "<li>Career choice: children's author</li></ul>" },
+
+{ sec:1, type:'inline', qs:[4,5,6],
+  instr:"<b>Questions 4 - 6</b><br>Complete the table below.<br>Write <b>NO MORE THAN TWO WORDS</b> in each gap.",
+  html:"<h5>Work history</h5><table>" +
+    "<tr><th>Length of service</th><th>Employer / Place</th><th>Position</th></tr>" +
+    "<tr><td>2 years</td><td><span class='bnum'>4</span>{{4}}</td><td>Babysitter</td></tr>" +
+    "<tr><td>1 year</td><td>Senior high school</td><td><span class='bnum'>5</span>{{5}}</td></tr>" +
+    "<tr><td>3 months</td><td>Ace Sports Academy</td><td><span class='bnum'>6</span>{{6}}</td></tr>" +
+    "<tr><td>ongoing</td><td>Northwood hospital</td><td>Official visitor</td></tr></table>" },
+
+{ sec:1, type:'match', qs:[7,8,9,10], options:['A','B','C'],
+  instr:"<b>Questions 7 - 10</b><br>Is Tessa available for work at the times listed below?<br>Choose <b>A</b>, <b>B</b> or <b>C</b> for each time.",
+  legend:"<span class='ml-key'>A</span>She is definitely available for work at these times<br>" +
+         "<span class='ml-key'>B</span>She might be available for work at these times<br>" +
+         "<span class='ml-key'>C</span>She is not available for work at these times" },
+
+/* ---------- SECTION 2 ---------- */
+{ sec:2, type:'mcq', qs:[11,12,13,14,15,16],
+  instr:"<b>Questions 11 - 16</b><br>Choose the correct letter, <b>A</b>, <b>B</b> or <b>C</b>." },
+
+{ sec:2, type:'map', qs:[17,18,19,20], options:['A','B','C','D','E','F','G'],
+  instr:"<b>Questions 17 - 20</b><br>Label the map below.<br>Choose the correct letter, <b>A - G</b>, for each place." },
+
+/* ---------- SECTION 3 ---------- */
+{ sec:3, type:'mcq', qs:[21,22,23,24],
+  instr:"<b>Questions 21 - 24</b><br>Choose the correct answer, <b>A</b>, <b>B</b> or <b>C</b>." },
+
+{ sec:3, type:'match', qs:[25,26,27,28,29,30], options:['A','B','C','D'],
+  instr:"<b>Questions 25 - 30</b><br>According to the speakers, what function has tapa cloth played in the following countries?<br>Choose <b>A</b>, <b>B</b>, <b>C</b> or <b>D</b> for each country.<br>NB You may use any letter more than once.",
+  legend:"<span class='ml-key'>A</span>recreational<br>" +
+         "<span class='ml-key'>B</span>practical<br>" +
+         "<span class='ml-key'>C</span>spiritual<br>" +
+         "<span class='ml-key'>D</span>commercial" },
+/* ---------- SECTION 4 ---------- */
+{ sec:4, type:'inline', qs:[31,32,33,34,35,36,37,38,39,40],
+  instr:"<b>Questions 31 - 40</b><br>Complete the notes below.<br>Write <b>NO MORE THAN TWO WORDS</b> for each answer.",
+  html:"<h5>Case study - TCP Technologies</h5><ul>" +
+    "<li>Manager: Manjeet Khanna</li>" +
+    "<li>Main target: to create a <span class='bnum'>31</span>{{31}} environment</li></ul>" +
+    "<h5>Grading for staff</h5><ul>" +
+    "<li>Every month grades are published on an <span class='bnum'>32</span>{{32}}</li>" +
+    "<li>The cultural openness increased the quantity of incoming contracted opportunities.</li>" +
+    "<li>The cultural openness improved the level of <span class='bnum'>33</span>{{33}} of the company.</li>" +
+    "<li>The increased rate of staff satisfaction has led to growth of 32% in the <span class='bnum'>34</span>{{34}}</li></ul>" +
+    "<h5>Recent interview</h5><ul>" +
+    "<li>A company is not one entity comprised of components, but a living organism composed of cells.</li>" +
+    "<li>Manjeet's motto is <span class='bnum'>35</span>{{35}}</li></ul>" +
+    "<h5>Benefits of management style</h5><ul>" +
+    "<li>The rate of staff turnover has been reduced.</li>" +
+    "<li>A <span class='bnum'>36</span>{{36}} can be from any other company.</li>" +
+    "<li>Grades are not used for <span class='bnum'>37</span>{{37}}</li></ul>" +
+    "<h5>Features of managing style</h5><ul>" +
+    "<li>Personally, the manager wrote emails to respond to the complaints.</li>" +
+    "<li>The complaint form known as a <span class='bnum'>38</span>{{38}} has access to all employees online.</li>" +
+    "<li>The manager can receive any complaints concerning air conditioning, food quality and <span class='bnum'>39</span>{{39}} entitlement.</li>" +
+    "<li>A <span class='bnum'>40</span>{{40}} on the anonymous complaint was introduced in the new system.</li></ul>" }
+];
+
+/* =========================================================
+   DAP AN + GIAI THICH 4 BUOC
+   kind: fill | choice
+   ========================================================= */
+var QUESTIONS = [
+/* ================= SECTION 1 ================= */
+{n:1,sec:1,kind:'fill',label:"Address: 51 ___ Drive",accept:['matthew'],display:"MATTHEW",spellTrap:['mathew','mattew','matheu','mathews','matthews'],
+ explain:{
+  s1:"Chỗ trống nằm giữa số nhà 51 và từ Drive nên phải là TÊN ĐƯỜNG, viết hoa chữ đầu. Loại thông tin cần bắt: tên riêng được đánh vần.",
+  s2:"<div class='quote'>TESSA: I still live with my family in Northwood. 51 Matthew Drive.<br>HEAD LIBRARIAN: M A T H E W, Mathew Drive.<br>TESSA: Actually, there are two t's, m a, double t, h e w.</div>Người phỏng vấn đánh vần SAI (một chữ t), Tessa sửa lại: double t. Thông tin cuối cùng mới là đáp án.",
+  s3:"MATTHEW",
+  s4:"Bẫy chính tả kinh điển của Section 1. Tín hiệu báo có sửa thông tin: <b>Actually</b>, sorry, I mean, let me correct that, <b>double</b> t. Nghe thấy <b>double t</b> phải viết hai chữ t. Viết Mathew là mất trọn 1 điểm dù nghe đúng."}},
+
+{n:2,sec:1,kind:'fill',label:"Postcode",accept:['4126'],display:"4126",spellTrap:['2614'],
+ explain:{
+  s1:"Cần một dãy 4 chữ số (postcode). Nghe cụm And the postcode for Northwood is?",
+  s2:"<div class='quote'>It used to be 2614, which, of course, I still remember, but the post office has recently changed it to 4126.</div>Số 2614 là thông tin CŨ. Số hiện tại là 4126, và người phỏng vấn nhắc lại để xác nhận: So 4126.",
+  s3:"4126",
+  s4:"Bẫy số đảo. Cấu trúc cần nhớ: <b>It used to be X ... but ... has changed it to Y</b> thì Y mới là đáp án. Các tín hiệu đổi thông tin khác: now it is, they have updated it to, sorry, make that."}},
+
+{n:3,sec:1,kind:'fill',label:"Major",accept:['creative writing'],display:"Creative writing",
+ explain:{
+  s1:"Cần tên chuyên ngành (danh từ). Từ khoá định vị: what are you studying / your main subject.",
+  s2:"<div class='quote'>So what are you studying? I mean, your main subject. - Oh, I'm majoring in creative writing.</div>major = main subject. Cụm cần bắt là <b>majoring in + chuyên ngành</b>.",
+  s3:"Creative writing",
+  s4:"Bẫy nhiễu quanh chỗ trống: Northwood Polytechnic (nơi học, đã cho sẵn), final year (năm học), children's books (nghề tương lai, đã cho ở dòng Career choice). Chỉ điền đúng chuyên ngành."}},
+
+{n:4,sec:1,kind:'fill',label:"Employer (babysitting, 2 years)",accept:['family friends','family friend'],display:"family friends",
+ explain:{
+  s1:"Cột Employer / Place, ứng với Position là Babysitter. Cần một danh từ chỉ người/nơi làm việc, tối đa 2 từ.",
+  s2:"<div class='quote'>HEAD LIBRARIAN: And who did you work for?<br>TESSA: Oh, just family friends.</div>who did you work for = employer. Câu hỏi trực tiếp giúp định vị đáp án ngay sau đó.",
+  s3:"family friends",
+  s4:"Bỏ từ đệm: <b>Oh, just</b> không thuộc đáp án. Nếu viết just family friends là 3 từ, vượt giới hạn NO MORE THAN TWO WORDS và bị tính sai. Số 16 (when I was 16) là nhiễu vì bảng hỏi Length of service đã cho 2 years."}},
+
+{n:5,sec:1,kind:'fill',label:"Position at senior high school",accept:['peer tutor'],display:"Peer tutor",
+ explain:{
+  s1:"Cột Position, thời gian 1 năm, nơi làm là Senior high school. Cần chức danh (danh từ chỉ người).",
+  s2:"<div class='quote'>I was still working as a babysitter on the occasional evening and weekend when I became a peer tutor at school. I did that for one year, my last year at senior high.</div>Cụm cần bắt: <b>became a peer tutor</b>.",
+  s3:"Peer tutor",
+  s4:"Bẫy: (1) từ babysitter xuất hiện lại ngay trước đáp án nhưng đã dùng cho dòng trên; (2) English là môn dạy, không phải chức danh; (3) không viết mạo từ a vì giới hạn 2 từ."}},
+
+{n:6,sec:1,kind:'fill',label:"Position at Ace Sports Academy",accept:['tennis coach'],display:"Tennis coach",
+ explain:{
+  s1:"Cột Position tại Ace Sports Academy. Cần chức danh gồm môn thể thao + người dạy.",
+  s2:"<div class='quote'>I worked at the Ace Sports Academy as a tennis coach, but that was only for about twelve weeks over the summer.</div>Cấu trúc định vị: <b>work at + nơi làm + as a + chức danh</b>.",
+  s3:"Tennis coach",
+  s4:"Bẫy số: twelve weeks nghe được nhưng bảng đã cho 3 months, đây là phép quy đổi để gây phân tán. Không viết coach một mình vì thiếu thông tin, cũng không viết tennis một mình vì đó không phải chức danh."}},
+
+{n:7,sec:1,kind:'choice',label:"Weekdays",answer:'C',display:"C",
+ options:[{key:'A',text:"She is definitely available for work at these times"},{key:'B',text:"She might be available for work at these times"},{key:'C',text:"She is not available for work at these times"}],
+ explain:{
+  s1:"Nghe mức độ rảnh của Tessa vào các ngày trong tuần (Monday to Friday, during office hours, during the week).",
+  s2:"<div class='quote'>Can I assume that you're not able to work Monday to Friday during office hours? - Right. I'm very busy with lectures, workshops, and assignments during the week.</div>Right ở đây là XÁC NHẬN câu phủ định của người phỏng vấn, tức là Tessa KHÔNG làm được. Lý do đi kèm: very busy with lectures.",
+  s3:"C - She is not available",
+  s4:"Bẫy ngữ pháp hội thoại: khi câu hỏi ở dạng phủ định (you're <b>not</b> able to...) thì Right / Yes / Exactly nghĩa là đồng ý với ý phủ định đó. Nghe thấy Right rồi chọn A là sai hoàn toàn."}},
+
+{n:8,sec:1,kind:'choice',label:"Evenings",answer:'B',display:"B",
+ options:[{key:'A',text:"She is definitely available for work at these times"},{key:'B',text:"She might be available for work at these times"},{key:'C',text:"She is not available for work at these times"}],
+ explain:{
+  s1:"Nghe phần weeknights / five to seven in the evening.",
+  s2:"<div class='quote'>Well, I couldn't commit to more than three evenings a week. And even then, it would depend on my schedule.</div>Có thể làm nhưng bị giới hạn số buổi và còn phụ thuộc lịch học.",
+  s3:"B - She might be available",
+  s4:"Từ khoá quyết định mức độ: <b>it would depend on</b>, couldn't commit to more than, if possible, that might work. Có điều kiện thì chọn B, không chọn A (definitely). Cũng không chọn C vì cô ấy không từ chối hẳn."}},
+
+{n:9,sec:1,kind:'choice',label:"Weekends",answer:'B',display:"B",
+ options:[{key:'A',text:"She is definitely available for work at these times"},{key:'B',text:"She might be available for work at these times"},{key:'C',text:"She is not available for work at these times"}],
+ explain:{
+  s1:"Nghe phần Are weekends okay?",
+  s2:"<div class='quote'>Well, Sundays are out. Actually, only every other Sunday because that's when I'm usually needed at the hospital. But I'm free on Saturday afternoons.</div>Chủ nhật chỉ vướng cách tuần, thứ Bảy chiều thì rảnh, nên cuối tuần là CÓ THỂ.",
+  s3:"B - She might be available",
+  s4:"Bẫy nghe nửa câu: nghe Sundays are out rồi chọn C ngay là sai, vì ngay sau đó có <b>Actually, only every other Sunday</b> (sửa lại thông tin) và <b>But I'm free on Saturday afternoons</b>. Luôn nghe hết cả lượt nói, đặc biệt sau Actually và But."}},
+
+{n:10,sec:1,kind:'choice',label:"School holidays",answer:'A',display:"A",
+ options:[{key:'A',text:"She is definitely available for work at these times"},{key:'B',text:"She might be available for work at these times"},{key:'C',text:"She is not available for work at these times"}],
+ explain:{
+  s1:"Nghe phần What about school holidays?",
+  s2:"<div class='quote'>Definitely. No problem whatsoever. I don't have any other commitments during the holidays.</div>Ba tín hiệu khẳng định mạnh liên tiếp, không kèm điều kiện nào.",
+  s3:"A - She is definitely available",
+  s4:"Nhóm từ chỉ mức độ chắc chắn cần thuộc: definitely, absolutely, no problem whatsoever, by all means, I'm completely free. Đối lập với nhóm điều kiện: it depends, probably, I might, as long as."}},
+
+/* ================= SECTION 2 ================= */
+{n:11,sec:2,kind:'choice',label:"The park was originally the site of",answer:'C',display:"C",
+ stem:"The park was originally the site of",
+ options:[{key:'A',text:"a forest"},{key:'B',text:"a lake"},{key:'C',text:"a volcano"}],
+ explain:{
+  s1:"Từ khoá: <b>originally</b> = trước đây, ban đầu. Cần thông tin về quá khứ của địa điểm.",
+  s2:"<div class='quote'>Hobson Park is located on an island that used to be a volcano, which emerged just 600 years ago.</div>originally được diễn đạt lại thành <b>used to be</b>.",
+  s3:"C - a volcano",
+  s4:"<b>A. a forest</b>: rừng kauri bị dung nham phủ lên (the lava flow enveloped a kauri forest), là hệ quả chứ không phải nguồn gốc của công viên.<br><b>B. a lake</b>: hồ nằm GẦN đó và vẫn tồn tại ở hiện tại (a nearby lake today), không phải quá khứ."}},
+
+{n:12,sec:2,kind:'choice',label:"The two chiefs met in the area to",answer:'B',display:"B",
+ stem:"The two chiefs met in the area to",
+ options:[{key:'A',text:"trade"},{key:'B',text:"end the fight"},{key:'C',text:"celebrate their victory"}],
+ explain:{
+  s1:"Cần MỤC ĐÍCH hai tù trưởng Maori tới đảo. Nghe cụm chỉ mục đích: to + V, in order to, so as to.",
+  s2:"<div class='quote'>After years of revolt, two Maori chiefs were invited to the island to restore peace. They signed a treaty and shook hands with governor Hobson.</div>end the fight là cách nói lại của <b>restore peace</b> và <b>sign a treaty</b>.",
+  s3:"B - end the fight",
+  s4:"<b>A. trade</b>: lợi ích thương mại là mục đích của người Anh khi muốn chiếm New Zealand (to ensure their trade interest), không phải của hai tù trưởng.<br><b>C. celebrate their victory</b>: người ăn mừng là các bộ tộc địa phương (local tribes started to celebrate), còn hai tù trưởng thì tiếp tục vận động self determination."}},
+
+{n:13,sec:2,kind:'choice',label:"The park was founded in",answer:'B',display:"B",
+ stem:"The park was founded in",
+ options:[{key:'A',text:"1840"},{key:'B',text:"1842"},{key:'C',text:"1942"}],
+ explain:{
+  s1:"Cần năm công viên thực sự được thành lập. Chú ý phân biệt năm LẬP KẾ HOẠCH và năm HOÀN THÀNH.",
+  s2:"<div class='quote'>In 1840, Hobson chose Auckland as the site for his capital. The same year, plans for founding Hobson Park were initiated. But it was in 1842 that the park was actually created and officially opened to the public.</div>Cấu trúc nhấn mạnh <b>It was in 1842 that...</b> cùng với <b>actually</b> và <b>officially opened</b> chốt đáp án.",
+  s3:"B - 1842",
+  s4:"<b>A. 1840</b>: chỉ là năm khởi động kế hoạch (plans were initiated), bị đảo lên trước để gài bẫy.<br><b>C. 1942</b>: bẫy phát âm giữa eighteen forty-two và nineteen forty-two. Phải phân biệt /ˈeɪtiːn/ và /ˈnaɪntiːn/."}},
+
+{n:14,sec:2,kind:'choice',label:"The area used for testing",answer:'B',display:"B",
+ stem:"The area used for testing is the",
+ options:[{key:'A',text:"duck pond"},{key:'B',text:"formal gardens"},{key:'C',text:"iron bridge"}],
+ explain:{
+  s1:"Từ khoá: <b>testing</b>. Cần nghe từ đồng nghĩa: experiments, trials, research.",
+  s2:"<div class='quote'>Across the iron bridge, you'll get to formal gardens used for experiments on breeding local wild species.</div>testing = <b>experiments</b>.",
+  s3:"B - formal gardens",
+  s4:"<b>A. duck pond</b>: chỉ để ngắm chim nước (observe the water birds), không thí nghiệm.<br><b>C. iron bridge</b>: chỉ là mốc chỉ đường (Across the iron bridge). Đây là bẫy vị trí: từ xuất hiện gần đáp án nên dễ chọn nhầm."}},
+
+{n:15,sec:2,kind:'choice',label:"Who provided the artwork to the village",answer:'A',display:"A",
+ stem:"Who provided the artwork to the village?",
+ options:[{key:'A',text:"the city council"},{key:'B',text:"local residents"},{key:'C',text:"local museum"}],
+ explain:{
+  s1:"Cần người/tổ chức TẶNG tác phẩm. Nghe cụm bị động: donated by, provided by, given by.",
+  s2:"<div class='quote'>These houses are full of local paintings, sculptures, and artifacts, all donated by the city council.</div>artwork = paintings, sculptures, artifacts. provided = <b>donated by</b>.",
+  s3:"A - the city council",
+  s4:"<b>B. local residents</b>: người Maori là chủ những ngôi nhà cũ, nhưng đồ nghệ thuật do hội đồng thành phố tặng.<br><b>C. local museum</b>: từ museum có xuất hiện nhưng ở câu phủ định gài bẫy: these are <b>not</b> something you'll stumble upon in a regular museum."}},
+
+{n:16,sec:2,kind:'choice',label:"What is special about the Temperate House",answer:'A',display:"A",
+ stem:"What is special about the Temperate House?",
+ options:[{key:'A',text:"it saves a large number of endangered New Zealand plants"},{key:'B',text:"it accommodates newly discovered plants"},{key:'C',text:"it collects plants from around the world"}],
+ explain:{
+  s1:"Từ khoá: <b>special</b>. Nghe cụm chỉ điểm độc đáo: what makes it unique, what is special, the highlight is.",
+  s2:"<div class='quote'>But what makes it unique is the forest of kauri trees, a native species to New Zealand. However, the kauri tree population was threatened by the spread of kauri dieback disease and is now under the protection of the Department of Conservation.</div>native species to New Zealand + threatened + under the protection = cây bản địa đang nguy cấp và được bảo tồn.",
+  s3:"A - endangered New Zealand plants",
+  s4:"<b>B. newly discovered plants</b>: bài chỉ nói wild plants, không hề nói mới được phát hiện.<br><b>C. from around the world</b>: bài nói from around <b>the country</b> (trong nước). Đây là bẫy đổi phạm vi country / world, cực kỳ hay gặp."}},
+
+{n:17,sec:2,kind:'choice',label:"Plant nursery",answer:'E',display:"E",
+ explain:{
+  s1:"Định vị theo mốc có sẵn trên bản đồ: Museum. Nghe giới từ chỉ vị trí: next to, beside, opposite, across the road.",
+  s2:"<div class='quote'>It's right next to the museum on the same side of the road.</div>Ô ngay sát Museum và CÙNG phía đường chính là E (E nằm ngay trên Museum, trong cùng khu).",
+  s3:"E",
+  s4:"Bẫy F: F cũng gần Museum nhưng nằm bên kia đường (trong phần mũi nhọn phía Wellington Entrance), nên vi phạm điều kiện <b>on the same side of the road</b>. Với map labelling, phải nghe đủ CẢ HAI thông tin: mốc và phía đường."}},
+
+{n:18,sec:2,kind:'choice',label:"Pine tree hill",answer:'B',display:"B",
+ explain:{
+  s1:"Định vị theo mốc Car Park và George Street entry. Nghe cụm across the road / towards.",
+  s2:"<div class='quote'>If you leave your car in the car park, you can see it just across the road towards George Street entry.</div>Từ Car Park đi qua đường về hướng cổng George Street thì gặp ô B.",
+  s3:"B",
+  s4:"Bẫy A: A nằm ngay cạnh Car Park nhưng cùng khu, không phải across the road. Ghi nhớ cặp giới từ hay bị lẫn: <b>next to</b> (sát bên), <b>opposite / across from</b> (đối diện qua đường), <b>towards</b> (theo hướng)."}},
+
+{n:19,sec:2,kind:'choice',label:"Eagle mountain",answer:'G',display:"G",
+ explain:{
+  s1:"Chỉ đường theo lộ trình. Nghe điểm bắt đầu (Wellington entrance) và các lệnh rẽ.",
+  s2:"<div class='quote'>We are right here at the Wellington entrance. Then take the first right, and you'll see Eagle Mountain immediately to your right.</div>Từ Wellington Entrance rẽ phải lần thứ nhất, ô nằm ngay bên phải là G.",
+  s3:"G",
+  s4:"Bẫy F: F cũng ở phía đông nhưng cao hơn, nằm trong phần mũi nhọn. Cần đếm đúng <b>take the first right</b> và chú ý cụm <b>immediately to your right</b> (ngay bên phải, không phải xa hơn)."}},
+
+{n:20,sec:2,kind:'choice',label:"Food kiosk",answer:'D',display:"D",
+ explain:{
+  s1:"Chỉ đường nhiều bước. Cần theo dõi: điểm bắt đầu, hướng rẽ, và mốc junction.",
+  s2:"<div class='quote'>Start from the Wellington entrance. Take the first left. Keep walking down the road. And after the junction, where it meets a road connecting the George Street entry, you'll see it on your right.</div>Đi hết đoạn đường và qua giao lộ nối với cổng George Street, ô bên phải là D.",
+  s3:"D",
+  s4:"Bẫy C: C cũng nằm phía tây nhưng ở xa hơn và nằm bên trái đường. Từ khoá phân biệt là <b>after the junction</b> (sau giao lộ) và <b>on your right</b>. Với dạng chỉ đường, hãy dùng bút chì vẽ theo lộ trình trên bản đồ trong khi nghe."}},
+
+/* ================= SECTION 3 ================= */
+{n:21,sec:3,kind:'choice',label:"Pacific tapa is different because",answer:'C',display:"C",
+ stem:"Pacific tapa cloth is different from other types of tapa cloth because it is",
+ options:[{key:'A',text:"the only tapa made today."},{key:'B',text:"better quality than others."},{key:'C',text:"put to a wider range of uses."}],
+ explain:{
+  s1:"Từ khóa: <b>different from other types</b>. Cần nghe cụm diễn đạt sự khác biệt: what sets X apart, unlike, unique to, not exclusive to.",
+  s2:"<div class='quote'>It's particularly common in the Pacific Islands, but not exclusive to them. In fact, many other peoples around the world have made high-quality cloth from bark. But what sets Pacific tapa apart is the incredible variety of roles it's played in this region.</div>a wider range of uses được diễn đạt lại thành <b>the incredible variety of roles</b>.",
+  s3:"C - put to a wider range of uses",
+  s4:"<b>A. the only tapa made today</b>: bài nói rõ tapa không độc quyền của Thái Bình Dương (not exclusive to them, many other peoples).<br><b>B. better quality</b>: bẫy từ trùng lặp. Cụm high-quality được dùng để nói về vải của CÁC DÂN TỘC KHÁC, không phải để so sánh chất lượng tapa Thái Bình Dương."}},
+
+{n:22,sec:3,kind:'choice',label:"The paper mulberry tree",answer:'B',display:"B",
+ stem:"What does Helen say about the paper mulberry tree?",
+ options:[{key:'A',text:"It is also a source of food."},{key:'B',text:"It is not native to the Pacific."},{key:'C',text:"It can grow in any environment."}],
+ explain:{
+  s1:"Cần thông tin về cây paper mulberry. Nghe cụm chỉ nguồn gốc: originally found, native to, brought / carried by.",
+  s2:"<div class='quote'>In the Pacific, the paper mulberry tree is most common, but it doesn't thrive in all conditions. In fact, it wasn't originally found in the islands, but was carried in the canoes by the first migrants.</div>not native to = <b>wasn't originally found in the islands</b>.",
+  s3:"B - It is not native to the Pacific",
+  s4:"<b>A. a source of food</b>: cây cho quả làm lương thực là <b>breadfruit tree</b>, và bài chốt lại: the paper mulberry tree is only grown for tapa-making. Đây là bẫy trộn hai loại cây.<br><b>C. grow in any environment</b>: bị phủ định trực tiếp bằng <b>it doesn't thrive in all conditions</b>."}},
+
+{n:23,sec:3,kind:'choice',label:"Why Maori stopped making tapa",answer:'C',display:"C",
+ stem:"Why did Maori people of New Zealand stop making tapa?",
+ options:[{key:'A',text:"They could not find the right trees in New Zealand."},{key:'B',text:"They were introduced to other fabrics by the Europeans."},{key:'C',text:"They found a better material for making fabric."}],
+ explain:{
+  s1:"Cần LÝ DO người Maori ngừng làm tapa. Nghe cụm so sánh hơn: superior to, stronger, better than.",
+  s2:"<div class='quote'>The thing was, after they'd been in New Zealand a bit, they found the flax plant, which is superior to tapa because it makes a stronger fabric.</div>a better material = <b>superior to tapa / a stronger fabric</b>.",
+  s3:"C - They found a better material",
+  s4:"<b>A. could not find the right trees</b>: sai vì họ đã <b>mang theo</b> cây paper mulberry khi di cư (they brought the paper mulberry tree with them).<br><b>B. introduced by the Europeans</b>: bẫy đảo trình tự thời gian. Khi người châu Âu đến vào thế kỷ 18 thì người Maori ĐÃ dùng flax từ trước đó (had been for some time)."}},
+
+{n:24,sec:3,kind:'choice',label:"How small pieces are joined",answer:'A',display:"A",
+ stem:"Large pieces of tapa are made from smaller pieces which are",
+ options:[{key:'A',text:"stuck together."},{key:'B',text:"woven together."},{key:'C',text:"sewn together."}],
+ explain:{
+  s1:"Cần cách nối các mảnh vải nhỏ. Nghe động từ chỉ thao tác: glue, stick, weave, stitch, sew.",
+  s2:"<div class='quote'>Then the different pieces are glued together using an adhesive paste made from the arrowroot tuber. This is the only way to fabricate large pieces of cloth because bark strands are too fine to be woven together, and stitching isn't strong enough.</div>stuck together = <b>glued together</b> (dùng hồ dán adhesive paste).",
+  s3:"A - stuck together",
+  s4:"Cả ba từ trong đáp án đều xuất hiện trong bài, nhưng hai từ kia nằm trong câu PHỦ ĐỊNH: <b>too fine to be woven together</b> và <b>stitching isn't strong enough</b>. Quy tắc: nghe thấy từ trong đáp án chưa đủ, phải xác định câu đó khẳng định hay phủ định."}},
+
+{n:25,sec:3,kind:'choice',label:"Samoa",answer:'C',display:"C (spiritual)",
+ explain:{
+  s1:"Cần chức năng của tapa ở Samoa. Bốn nhóm cần phân loại: giải trí (fun, games, dancing), thực dụng (everyday, household), tâm linh (ceremony, worship, ancestors), thương mại (currency, trade, exchange).",
+  s2:"<div class='quote'>very fine cloth, called siapo, which is hand-painted with representations of the ancestors. Still today, at the most profound events in life such as births, funerals, weddings, and the investiture of chiefs, Samoans wear siapo robes to add significance and meaning to the ceremony.</div>ancestors + ceremony + profound events là chùm từ chỉ nghi lễ và tâm linh.",
+  s3:"C - spiritual",
+  s4:"Bẫy: nghe thấy weddings dễ nghĩ là dịp vui nên chọn recreational. Nhưng cụm quyết định là <b>add significance and meaning to the ceremony</b> và <b>representations of the ancestors</b>, tức là ý nghĩa tâm linh chứ không phải giải trí."}},
+
+{n:26,sec:3,kind:'choice',label:"Tonga",answer:'B',display:"B (practical)",
+ explain:{
+  s1:"Cần chức năng của tapa ở Tonga. Nghe các danh từ chỉ đồ dùng trong nhà.",
+  s2:"<div class='quote'>developing a simple, coarse cloth which is quick and easy to make. This is suitable for all sorts of everyday functions around the house, like bed covers, mosquito nets, and curtains.</div>practical = <b>everyday functions around the house</b>.",
+  s3:"B - practical",
+  s4:"Từ khóa nhận diện nhóm practical: everyday, household, useful for, suitable for, all sorts of functions. Không chọn commercial chỉ vì có từ innovation hay developing."}},
+
+{n:27,sec:3,kind:'choice',label:"Cook Islands",answer:'C',display:"C (spiritual)",
+ explain:{
+  s1:"Cần chức năng của tapa ở Cook Islands. Nghe cụm chỉ nơi thờ cúng.",
+  s2:"<div class='quote'>One type of thick cloth called Tikuru was wrapped around the poles and used to mark the entrances to places of worship. So it was highly regarded in local culture.</div>spiritual = <b>places of worship</b>.",
+  s3:"C - spiritual",
+  s4:"Bẫy: câu mở đầu nói về thổ nhưỡng xấu nên phải dùng breadfruit tree. Đó là thông tin về NGUYÊN LIỆU, không phải chức năng. Với dạng matching, phải bám đúng tiêu chí mà câu hỏi yêu cầu."}},
+
+{n:28,sec:3,kind:'choice',label:"Fiji",answer:'D',display:"D (commercial)",
+ explain:{
+  s1:"Cần chức năng của tapa ở Fiji. Nghe cụm chỉ trao đổi mua bán.",
+  s2:"<div class='quote'>tapa was actually used as a currency there. Fijians used to sail between the islands and exchange tapa for other commodities like canoes or pigs.</div>commercial = <b>used as a currency</b> và <b>exchange tapa for other commodities</b>.",
+  s3:"D - commercial",
+  s4:"Lưu ý người nói ở đây là TUTOR chứ không phải Helen. Trong Section 3, thông tin đúng có thể đến từ bất kỳ người nói nào, nên đừng chỉ bám theo một giọng."}},
+
+{n:29,sec:3,kind:'choice',label:"Tahiti",answer:'A',display:"A (recreational)",
+ explain:{
+  s1:"Cần chức năng của tapa ở Tahiti. Chú ý đoạn này có phần Helen nói sai và tutor sửa lại.",
+  s2:"<div class='quote'>HELEN: the patterns are in colour, which is considered more valuable...<br>TUTOR: You're right about the Tahitians using coloured pigments, but they aren't more valuable. The colours are only a decoration. People enjoy wearing bright robes, especially for dancing and competitive games, and do it just for fun.</div>recreational = <b>dancing and competitive games, just for fun</b>.",
+  s3:"A - recreational",
+  s4:"Bẫy lớn nhất của Section 3: từ <b>more valuable</b> trong lời Helen dễ dẫn tới chọn commercial, nhưng tutor phủ định ngay bằng <b>but they aren't more valuable</b>. Nguyên tắc: khi tutor hoặc giảng viên sửa lời sinh viên thì thông tin SAU mới là đáp án. Tín hiệu cần bắt: actually, but in fact, you're right about X but, that's not quite right."}},
+
+{n:30,sec:3,kind:'choice',label:"Tikopia",answer:'B',display:"B (practical)",
+ explain:{
+  s1:"Cần chức năng của tapa ở Tikopia, quốc gia cuối cùng trong danh sách.",
+  s2:"<div class='quote'>Even today, it's commonplace to see people wearing clothes made of tapa cloth. In many of the other islands, the tapa only comes out on special occasions, but here, you see people working in the gardens wearing tapa.</div>Mặc tapa khi làm vườn hằng ngày = thực dụng.",
+  s3:"B - practical",
+  s4:"Bẫy đối chiếu: cụm <b>only comes out on special occasions</b> nói về CÁC ĐẢO KHÁC, không phải Tikopia. Từ khóa đảo ý là <b>but here</b>. Khi nghe thấy in many of the other places... but here, phải hiểu vế sau mới là thông tin về đối tượng đang hỏi."}},
+/* ================= SECTION 4 ================= */
+{n:31,sec:4,kind:'fill',label:"Main target: a ___ environment",accept:['democratic'],display:"democratic",
+ explain:{
+  s1:"Sau mạo từ a và trước danh từ environment nên cần TÍNH TỪ.",
+  s2:"<div class='quote'>He claims that the most important of these philosophies is to create a workplace where each individual member has the opportunity to contribute their opinion to the operations of the company. That is to say that he found it important to develop a democratic environment.</div>Câu đầu là định nghĩa dài, câu sau tóm lại bằng một từ. Tín hiệu: <b>That is to say</b>.",
+  s3:"democratic",
+  s4:"Section 4 rất hay dùng cấu trúc giải thích trước, gọi tên sau. Các tín hiệu cần bắt: that is to say, in other words, what I mean by this is, or rather. Đừng vội điền workplace hay opinion vì sai loại từ."}},
+
+{n:32,sec:4,kind:'fill',label:"Grades published on an ___",accept:['internal website'],display:"internal website",
+ explain:{
+  s1:"Sau mạo từ <b>an</b> nên từ tiếp theo bắt đầu bằng ÂM NGUYÊN ÂM. Cần cụm danh từ tối đa 2 từ.",
+  s2:"<div class='quote'>Every month, Khanna publishes the grades on an internal website where staff can access not only their own grades, but also compare it to others.</div>Every month khớp với Every month trong đề, giúp định vị chính xác.",
+  s3:"internal website",
+  s4:"Mẹo dùng mạo từ để dự đoán: <b>an</b> báo hiệu âm đầu là nguyên âm (internal), nếu em viết website đơn thì cụm an website sai ngữ pháp. Bẫy nhiễu quanh đó: turnover, hours worked, efficiency là các tiêu chí xếp loại, không phải nơi công bố."}},
+
+{n:33,sec:4,kind:'fill',label:"Improved the level of ___",accept:['transparency'],display:"transparency",
+ explain:{
+  s1:"Sau the level of nên cần DANH TỪ KHÔNG ĐẾM ĐƯỢC.",
+  s2:"<div class='quote'>A level of transparency now exists that had not before been apparent.</div>Đề dùng improved the level of, bài dùng a level of ... now exists that had not before been apparent (trước đây chưa có, giờ đã có = được cải thiện).",
+  s3:"transparency",
+  s4:"Bẫy nhiễu: ngay trước đó có con số 7% và cụm incoming contracted opportunities, đúng với dòng đã cho sẵn phía trên trong đề. Khi làm note completion, hãy đọc trước cả các dòng ĐÃ CÓ để biết mình đang ở đâu trong bài nghe."}},
+
+{n:34,sec:4,kind:'fill',label:"Growth of 32% in the ___",accept:["company's income",'companys income','company income','company revenue'],display:"company's income",
+ explain:{
+  s1:"Sau in the nên cần cụm danh từ. Từ khoá định vị: con số 32%.",
+  s2:"<div class='quote'>these newly introduced measures have significantly increased staff satisfaction, which has subsequently led to an increase of 32% in the company's income.</div>growth = an increase, led to giữ nguyên.",
+  s3:"company's income",
+  s4:"Bẫy số: bài có hai con số gần nhau, 7% cho contracted opportunities và 32% cho income. Chọn sai số là điền sai chỗ. Lưu ý dấu sở hữu company's, và ghi nhớ cấu trúc <b>lead to an increase of + số + in + đối tượng</b>."}},
+
+{n:35,sec:4,kind:'fill',label:"Manjeet's motto",accept:['employee first','employees first'],display:"employee first",
+ explain:{
+  s1:"Cần khẩu hiệu (tối đa 2 từ). Từ khoá định vị: motto.",
+  s2:"<div class='quote'>I suggest that the motto by which your management operates will be employee first.</div>Từ motto xuất hiện nguyên văn, đáp án nằm ngay sau will be.",
+  s3:"employee first",
+  s4:"Bẫy: ngay trước đó là hai câu trích dẫn dài (the figures speak for themselves, my system works) và phép so sánh living organism / cells. Những cụm này đã được cho sẵn ở dòng trên trong đề nên không phải đáp án."}},
+
+{n:36,sec:4,kind:'fill',label:"A ___ can be from any other company",accept:['solution'],display:"solution",
+ explain:{
+  s1:"Sau mạo từ A nên cần danh từ số ít, đếm được.",
+  s2:"<div class='quote'>A lot of these improvements came from the realisation that the solution does not have to be produced internally, but can come from any other company.</div>Đề đảo cấu trúc: bài nói the solution does not have to be produced internally but can come from any other company, đề gọn lại thành A solution can be from any other company.",
+  s3:"solution",
+  s4:"Bẫy: các danh từ xung quanh như improvements, realisation, staff turnover đều nghe rõ nhưng không khớp mẫu câu A ___ can be from any other company. Hãy dùng ngữ pháp của chỗ trống để loại nhanh."}},
+
+{n:37,sec:4,kind:'fill',label:"Grades are not used for ___",accept:['promotion','promotions'],display:"promotion",
+ explain:{
+  s1:"Sau giới từ for nên cần DANH TỪ hoặc V-ing.",
+  s2:"<div class='quote'>The fact that this measuring system is solely produced for staff members and inaccessible by management means that it cannot be used as a judging criterion for promotion.</div>are not used for = cannot be used as a judging criterion for.",
+  s3:"promotion",
+  s4:"Bẫy: câu rất dài với chủ ngữ là một mệnh đề (The fact that ... means that ...), dễ mất mạch. Khi gặp câu dài, hãy tập trung vào cụm cuối cùng sau động từ chính. Bẫy từ: management và staff members không đi được với used for."}},
+
+{n:38,sec:4,kind:'fill',label:"Complaint form known as a ___",accept:['ticket'],display:"ticket",
+ explain:{
+  s1:"Sau known as a nên cần danh từ số ít. Nghe cụm giới thiệu tên gọi: called, dubbed, known as, referred to as.",
+  s2:"<div class='quote'>The complaint form, dubbed by Khanna as a ticket, eradicates the middleman, is easily accessible to all employees online.</div>known as = <b>dubbed as</b>.",
+  s3:"ticket",
+  s4:"Nhóm động từ chỉ tên gọi cần thuộc để nghe Section 4: be called, be named, be dubbed, be termed, be labelled, go by the name of, what we refer to as. Bẫy nhiễu ở đây là interface và middleman."}},
+
+{n:39,sec:4,kind:'fill',label:"___ entitlement",accept:['vacation','holiday'],display:"vacation",
+ explain:{
+  s1:"Trước danh từ entitlement nên cần một danh từ đứng làm định ngữ. Nghe danh sách các loại khiếu nại.",
+  s2:"<div class='quote'>Any staff-related complaint, such as those relating to air conditioning and food quality, can be submitted directly to Khanna via this online system. Entitlement to vacation is also a popular issue discussed through this forum.</div>Bài nói <b>Entitlement to vacation</b>, đề đảo lại thành <b>vacation entitlement</b>.",
+  s3:"vacation",
+  s4:"Bẫy đảo cụm danh từ: N1 + to + N2 trong bài trở thành N2 + N1 trong đề. Ví dụ khác: entitlement to leave = leave entitlement, access to data = data access. Chú ý air conditioning và food quality đã được cho sẵn trong đề nên hai từ này không phải đáp án."}},
+
+{n:40,sec:4,kind:'fill',label:"A ___ on anonymous complaints",accept:['ban'],display:"ban",
+ explain:{
+  s1:"Sau mạo từ A và trước giới từ on nên cần DANH TỪ số ít.",
+  s2:"<div class='quote'>In the past, anonymous complaints had caused confusion and wasted many work hours, so the new system has banned this form of complaint.</div>Bài dùng ĐỘNG TỪ has banned, đề cần DANH TỪ tương ứng: a ban on.",
+  s3:"ban",
+  s4:"Bẫy đổi từ loại (word form). Đây là dạng khó nhất của note completion Section 4: nghe verb nhưng phải viết noun. Các cặp thường gặp: banned - a ban on, prohibited - a prohibition on, restricted - a restriction on, delayed - a delay in, improved - an improvement in."}}
+];
+
+/* =========================================================
+   COLLOCATIONS THEO SECTION (IPA British, tra Cambridge / Oxford)
+   ========================================================= */
+var COLLOCATIONS = [
+{sec:1, title:"Section 1 - Phỏng vấn, đăng ký, lịch làm việc", items:[
+  {word:"voluntary work",ipa:"/ˈvɒləntri wɜːk/",vi:"công việc tình nguyện (không lương)",ex:"Voluntary work gives you the experience most employers are looking for."},
+  {word:"part-time work",ipa:"/ˌpɑːt taɪm ˈwɜːk/",vi:"công việc bán thời gian",ex:"She took on part-time work to pay for her studies."},
+  {word:"commit to something",ipa:"/kəˈmɪt tuː/",vi:"cam kết làm gì (đều đặn)",ex:"I couldn't commit to more than three evenings a week."},
+  {word:"depend on my schedule",ipa:"/dɪˈpend ɒn maɪ ˈʃedjuːl/",vi:"còn tùy lịch của tôi",ex:"It would depend on my schedule that week."},
+  {word:"make arrangements",ipa:"/meɪk əˈreɪndʒmənts/",vi:"sắp xếp, thu xếp",ex:"We could make arrangements a week in advance."},
+  {word:"in advance",ipa:"/ɪn ədˈvɑːns/",vi:"trước, từ trước",ex:"Please book your shift a week in advance."},
+  {word:"office hours",ipa:"/ˈɒfɪs aʊəz/",vi:"giờ làm việc hành chính",ex:"I am not able to work during office hours."},
+  {word:"on and off",ipa:"/ˌɒn ənd ˈɒf/",vi:"không liên tục, thỉnh thoảng",ex:"I babysat for about two years, on and off."},
+  {word:"every other Sunday",ipa:"/ˈevri ˈʌðə ˈsʌndeɪ/",vi:"cứ cách một tuần vào Chủ nhật",ex:"I am at the hospital every other Sunday."},
+  {word:"major in something",ipa:"/ˈmeɪdʒə ɪn/",vi:"học chuyên ngành gì",ex:"I am majoring in creative logistics at university."},
+  {word:"be keen to do something",ipa:"/biː kiːn tuː/",vi:"háo hức, rất muốn làm gì",ex:"I can see why you are keen to volunteer here."},
+  {word:"no problem whatsoever",ipa:"/nəʊ ˈprɒbləm ˌwɒtsəʊˈevə/",vi:"không vấn đề gì cả (nhấn mạnh)",ex:"Working in the holidays is no problem whatsoever."}
+]},
+{sec:2, title:"Section 2 - Tham quan, địa điểm, chỉ đường", items:[
+  {word:"a local landmark",ipa:"/ə ˈləʊkl ˈlændmɑːk/",vi:"địa danh nổi tiếng của địa phương",ex:"The park is a widely recognised local landmark."},
+  {word:"breathtaking views",ipa:"/ˈbreθteɪkɪŋ vjuːz/",vi:"khung cảnh ngoạn mục",ex:"You can enjoy breathtaking views of the lake."},
+  {word:"war broke out",ipa:"/wɔː brəʊk ˈaʊt/",vi:"chiến tranh bùng nổ",ex:"War broke out between the two sides."},
+  {word:"restore peace",ipa:"/rɪˈstɔː piːs/",vi:"vãn hồi hòa bình",ex:"The chiefs were invited to restore peace."},
+  {word:"sign a treaty",ipa:"/saɪn ə ˈtriːti/",vi:"ký một hiệp ước",ex:"They signed a treaty with the governor."},
+  {word:"refrain from doing something",ipa:"/rɪˈfreɪn frəm/",vi:"kiềm chế không làm gì",ex:"Please refrain from feeding the birds."},
+  {word:"keep a distance from",ipa:"/kiːp ə ˈdɪstəns frəm/",vi:"giữ khoảng cách với",ex:"Keep a distance from the animals at all times."},
+  {word:"stumble upon something",ipa:"/ˈstʌmbl əˈpɒn/",vi:"tình cờ bắt gặp",ex:"These are not things you stumble upon in a regular museum."},
+  {word:"a steep climb",ipa:"/ə stiːp klaɪm/",vi:"đoạn leo dốc",ex:"There is a steep climb in places."},
+  {word:"stick to the track",ipa:"/stɪk tuː ðə træk/",vi:"đi đúng đường mòn quy định",ex:"Tread carefully and stick to the formal tracks."},
+  {word:"an endangered species",ipa:"/ən ɪnˈdeɪndʒəd ˈspiːʃiːz/",vi:"loài đang bị đe dọa",ex:"The kauri tree is now an endangered species."},
+  {word:"out of bounds",ipa:"/ˌaʊt əv ˈbaʊndz/",vi:"khu vực cấm vào",ex:"The area is currently out of bounds to the public."}
+]},
+{sec:3, title:"Section 3 - Trao đổi học thuật, thủ công truyền thống", items:[
+  {word:"set something apart",ipa:"/set ˈsʌmθɪŋ əˈpɑːt/",vi:"làm cho cái gì khác biệt hẳn",ex:"What sets Pacific tapa apart is the variety of its uses."},
+  {word:"be native to",ipa:"/biː ˈneɪtɪv tuː/",vi:"có nguồn gốc bản địa ở",ex:"The tree is not native to the Pacific islands."},
+  {word:"thrive in",ipa:"/θraɪv ɪn/",vi:"phát triển tốt trong điều kiện nào",ex:"The plant does not thrive in all conditions."},
+  {word:"a staple food",ipa:"/ə ˈsteɪpl fuːd/",vi:"lương thực chủ lực",ex:"Rice is a staple food in many Asian countries."},
+  {word:"be superior to",ipa:"/biː suːˈpɪəriə tuː/",vi:"vượt trội hơn so với",ex:"Flax is superior to bark because it makes a stronger fabric."},
+  {word:"glue something together",ipa:"/ɡluː ˈsʌmθɪŋ təˈɡeðə/",vi:"dán các mảnh lại với nhau",ex:"The pieces are glued together with a natural paste."},
+  {word:"an adhesive paste",ipa:"/ən ədˈhiːsɪv peɪst/",vi:"hồ dán, keo dán",ex:"They use an adhesive paste made from a root."},
+  {word:"be woven together",ipa:"/biː ˈwəʊvn təˈɡeðə/",vi:"được dệt đan vào nhau",ex:"The strands are too fine to be woven together."},
+  {word:"account for something",ipa:"/əˈkaʊnt fɔː/",vi:"giải thích nguyên nhân của điều gì",ex:"You need to account for this change in your assignment."},
+  {word:"be highly regarded",ipa:"/biː ˈhaɪli rɪˈɡɑːdɪd/",vi:"được đánh giá rất cao",ex:"The cloth was highly regarded in local culture."},
+  {word:"exchange something for something",ipa:"/ɪksˈtʃeɪndʒ ˈsʌmθɪŋ fɔː/",vi:"đổi cái này lấy cái kia",ex:"They exchanged tapa for canoes and pigs."},
+  {word:"a place of worship",ipa:"/ə pleɪs əv ˈwɜːʃɪp/",vi:"nơi thờ tự",ex:"The cloth marked the entrances to places of worship."}
+]},
+{sec:4, title:"Section 4 - Bài giảng kinh doanh, quản trị nhân sự", items:[
+  {word:"outsource something to somebody",ipa:"/ˈaʊtsɔːs/",vi:"thuê bên ngoài làm việc gì",ex:"Western firms outsource these tasks to local providers."},
+  {word:"make significant savings",ipa:"/meɪk sɪɡˈnɪfɪkənt ˈseɪvɪŋz/",vi:"tiết kiệm được đáng kể",ex:"The aim is to make significant savings on labour costs."},
+  {word:"labour rates",ipa:"/ˈleɪbə reɪts/",vi:"mức giá nhân công",ex:"Lower international labour rates attract investors."},
+  {word:"staff turnover",ipa:"/stɑːf ˈtɜːnəʊvə/",vi:"tỷ lệ nhân viên nghỉ việc",ex:"There has been a significant decrease in staff turnover."},
+  {word:"staff satisfaction",ipa:"/stɑːf ˌsætɪsˈfækʃn/",vi:"mức độ hài lòng của nhân viên",ex:"The measures have increased staff satisfaction."},
+  {word:"streamline workflow",ipa:"/ˈstriːmlaɪn ˈwɜːkfləʊ/",vi:"tinh gọn quy trình làm việc",ex:"Companies seeking to streamline workflow contacted him."},
+  {word:"a level of transparency",ipa:"/ə ˈlevl əv trænsˈpærənsi/",vi:"mức độ minh bạch",ex:"A level of transparency now exists in the company."},
+  {word:"culturally diverse",ipa:"/ˈkʌltʃərəli daɪˈvɜːs/",vi:"đa dạng về văn hóa",ex:"He built a culturally diverse group of employees."},
+  {word:"file a complaint",ipa:"/faɪl ə kəmˈpleɪnt/",vi:"gửi đơn khiếu nại",ex:"He responds personally to complaints filed by staff."},
+  {word:"vacation entitlement",ipa:"/vəˈkeɪʃn ɪnˈtaɪtlmənt/",vi:"quyền được nghỉ phép",ex:"Vacation entitlement is a popular issue among staff."},
+  {word:"a judging criterion",ipa:"/ə ˈdʒʌdʒɪŋ kraɪˈtɪəriən/",vi:"tiêu chí đánh giá",ex:"It cannot be used as a judging criterion for promotion."},
+  {word:"attendance is mandatory",ipa:"/əˈtendəns ɪz ˈmændətəri/",vi:"việc tham dự là bắt buộc",ex:"Please remember that attendance is mandatory."}
+]}
+];
+
+/* =========================================================
+   BANG PARAPHRASE: de bai <-> bai nghe
+   ========================================================= */
+var PARAPHRASE = [
+{sec:1, rows:[
+  ["main subject","majoring in","chuyên ngành chính"],
+  ["Who did you work for?","employer","người/nơi thuê mình"],
+  ["is not available","not able to work / very busy with","không rảnh"],
+  ["might be available","it would depend on / I couldn't commit to more than","có thể rảnh, có điều kiện"],
+  ["is definitely available","Definitely / No problem whatsoever / I don't have any other commitments","chắc chắn rảnh"]
+]},
+{sec:2, rows:[
+  ["originally","used to be","ban đầu, trước đây"],
+  ["end the fight","restore peace / sign a treaty","kết thúc xung đột"],
+  ["was founded in","was actually created and officially opened","được thành lập"],
+  ["used for testing","used for experiments on","dùng để thí nghiệm"],
+  ["provided the artwork","paintings, sculptures and artifacts donated by","tặng tác phẩm nghệ thuật"],
+  ["endangered plants","threatened by disease / under the protection of","cây đang nguy cấp"],
+  ["from around the world","from around the country (BAY)","toàn cầu so với trong nước"]
+]},
+{sec:3, rows:[
+  ["different from other types","what sets Pacific tapa apart","điều làm nên khác biệt"],
+  ["a wider range of uses","the incredible variety of roles it has played","nhiều công dụng hơn"],
+  ["not native to the Pacific","was not originally found in the islands, was carried in the canoes","không phải cây bản địa"],
+  ["a source of food","its fruit is a staple food (breadfruit, KHONG phai paper mulberry)","nguồn lương thực"],
+  ["found a better material","the flax plant, which is superior to tapa","tìm được vật liệu tốt hơn"],
+  ["stuck together","glued together using an adhesive paste","dán lại với nhau"],
+  ["spiritual","representations of the ancestors / places of worship / ceremony","tâm linh, nghi lễ"],
+  ["practical","everyday functions around the house / working in the gardens","dùng hằng ngày"],
+  ["commercial","used as a currency / exchange tapa for other commodities","trao đổi mua bán"],
+  ["recreational","dancing and competitive games / just for fun","giải trí"]
+]},
+{sec:4, rows:[
+  ["main target","the most important of these philosophies is","mục tiêu chính"],
+  ["a democratic environment","a workplace where each member can contribute their opinion","môi trường dân chủ"],
+  ["improved the level of","a level of X now exists that had not before been apparent","cải thiện mức độ"],
+  ["growth of 32%","an increase of 32%","tăng 32%"],
+  ["known as a ticket","dubbed by Khanna as a ticket","được gọi là"],
+  ["vacation entitlement","entitlement to vacation","quyền nghỉ phép"],
+  ["a ban on anonymous complaints","the new system has banned this form of complaint","lệnh cấm"]
+]}
+];
+
+/* =========================================================
+   CAU TRUC NGU PHAP LAY TU SCRIPT (dung lai cho Speaking / Writing)
+   ========================================================= */
+var GRAMMAR = [
+  {title:"used to be + N (thông tin quá khứ đã thay đổi)",
+   from:"It used to be 2614, but the post office has recently changed it to 4126.",
+   use:"Dùng khi so sánh trước và nay. Trong Speaking Part 1 và 3: My hometown used to be a quiet farming area, but it has recently turned into an industrial zone."},
+  {title:"It was in + năm + that + clause (câu chẻ nhấn mạnh)",
+   from:"It was in 1842 that the park was actually created.",
+   use:"Cấu trúc cleft dùng để nhấn mạnh mốc thời gian. Trong Writing Task 1: It was in 2015 that car ownership peaked at 45%."},
+  {title:"Reduced participle clause đầu câu",
+   from:"Visible from much of Auckland, this is a widely recognized local landmark. / Finding the previous complaint system ineffective, he introduced a new online system.",
+   use:"Rút gọn mệnh đề để câu gọn và nâng band Grammatical Range. Trong Writing Task 2: Faced with rising tuition fees, many students take on part-time work."},
+  {title:"Reduced passive relative clause",
+   from:"formal gardens used for experiments on breeding local wild species / artifacts, all donated by the city council",
+   use:"Bỏ which is / which are trước quá khứ phân từ. Trong Task 1: the amount of energy generated by wind farms."},
+  {title:"The fact that + clause làm chủ ngữ",
+   from:"The fact that this measuring system is solely produced for staff members means that it cannot be used as a judging criterion.",
+   use:"Đưa cả một mệnh đề làm chủ ngữ, rất hữu ích cho Task 2: The fact that wages have stagnated explains the fall in consumer spending."},
+  {title:"not A but B (đối lập có nhấn mạnh)",
+   from:"A company is not one entity comprised of components, but a living organism composed of cells.",
+   use:"Dùng để định nghĩa lại một khái niệm. Trong Task 2: Education is not merely a means of finding work but a way of shaping citizens."},
+  {title:"lead to an increase of + số + in + đối tượng",
+   from:"which has subsequently led to an increase of 32% in the company's income",
+   use:"Cụm chuẩn để mô tả nguyên nhân và số liệu trong Writing Task 1: The new policy led to a reduction of 12% in traffic volume."},
+  {title:"Danh từ hóa động từ (verb to noun)",
+   from:"has banned this form of complaint => a ban on anonymous complaints",
+   use:"Nominalisation nâng độ học thuật: The government banned plastic bags => The ban on plastic bags took effect in 2020."},
+  {title:"could not commit to + V-ing / N (không thể cam kết)",
+   from:"I couldn't commit to more than three evenings a week.",
+   use:"Cách nói lịch sự để từ chối một phần. Trong Speaking: I couldn't commit to a full-time course, so I chose an evening class."},
+  {title:"agree with a negative question (đồng ý với câu hỏi phủ định)",
+   from:"Can I assume that you're not able to work Monday to Friday? - Right.",
+   use:"Khi câu hỏi ở dạng phủ định, Right / Exactly / That's correct nghĩa là đồng ý với ý phủ định. Đây là điểm ngữ pháp hội thoại thường bị hiểu sai trong Listening."},
+  {title:"What + clause + is + N (câu chẻ dạng pseudo-cleft)",
+   from:"But what sets Pacific tapa apart is the incredible variety of roles it has played in this region.",
+   use:"Dùng để nhấn mạnh điểm mấu chốt của một luận điểm. Trong Writing Task 2: What makes this policy effective is its focus on prevention rather than punishment."},
+  {title:"be superior to / inferior to + N",
+   from:"they found the flax plant, which is superior to tapa because it makes a stronger fabric",
+   use:"So sánh hơn không dùng more ... than. Trong Task 2: Online learning is not inherently inferior to classroom teaching."},
+  {title:"too + adj + to + V (nguyên nhân dẫn tới không thể)",
+   from:"bark strands are too fine to be woven together",
+   use:"Diễn đạt giới hạn hoặc trở ngại. Trong Speaking Part 3: The rent in big cities is simply too high for young graduates to afford."}
+];
+
+/* =========================================================
+   STATE
+   ========================================================= */
+var studentName = '';
+var answers     = {};
+var timerSec    = TOTAL_SECONDS;
+var timerInt    = null;
+var done        = false;
+var reviewing   = false;
+var curSec      = 1;
+var savedRange  = null;
+var scratchText = '';
+var scratchOn   = true;
+
+var QMAP = {};
+QUESTIONS.forEach(function(q){ QMAP[q.n] = q; });
+
+var BLOCK_TNAME = [
+  "Note completion (form)",
+  "Table completion",
+  "Matching - mức độ khả dụng",
+  "Multiple choice (Section 2)",
+  "Map labelling",
+  "Multiple choice (Section 3)",
+  "Matching - chức năng của tapa",
+  "Note completion (Section 4)"
+];
+var TMAP = {};
+BLOCKS.forEach(function(b,i){ b.qs.forEach(function(n){ TMAP[n] = BLOCK_TNAME[i]; }); });
+
+var STRATEGY = {
+  "Note completion (form)":
+    "Dự đoán loại từ cho từng chỗ trống TRƯỚC khi audio chạy (tên riêng, số, danh từ, tính từ). Với tên riêng và địa chỉ, chuẩn bị sẵn tay để ghi từng chữ khi người nói đánh vần, và luôn chờ cụm sửa lỗi: actually, sorry, I mean, double t.",
+  "Table completion":
+    "Đọc tiêu đề cột để biết mình cần loại thông tin gì (thời gian, nơi làm, chức danh). Bài nghe đi theo thứ tự các dòng, nên nếu bị mất một dòng thì bỏ luôn dòng đó và bắt dòng tiếp theo. Bỏ các từ đệm như just, about, sort of khi đếm giới hạn từ.",
+  "Matching - mức độ khả dụng":
+    "Gạch chân từ chỉ mức độ trong mỗi phương án (definitely / might / not). Khi nghe, phân loại theo nhóm tín hiệu: chắc chắn (definitely, no problem whatsoever), có điều kiện (it depends, I couldn't commit to more than, if possible), phủ định (I'm afraid not, I'm very busy).",
+  "Multiple choice (Section 2)":
+    "Khoanh phần KHÁC BIỆT giữa 3 phương án trước khi nghe. Cảnh giác với bẫy đổi phạm vi (country / world), bẫy thời gian (used to be / now) và bẫy từ trùng lặp: từ nào nghe rõ nhất thường là bẫy.",
+  "Map labelling":
+    "Xác định trước điểm bắt đầu (entrance) và các mốc có tên trên bản đồ. Đánh dấu hướng bằng bút chì ngay khi nghe. Học chắc nhóm giới từ chỉ vị trí: next to, opposite, across the road, at the junction, immediately on your right, at the end of.",
+  "Multiple choice (Section 3)":
+    "Hội thoại có nhiều lượt đổi ý, nên đáp án luôn là quyết định CUỐI CÙNG. Nghe các cụm chốt: let us make it, let us go with that, that is settled, the main thing is. Ý bị bác bỏ thường đi kèm but, actually, I do not think so.",
+  "Matching - chức năng của tapa":
+    "Với matching có thể dùng lại đáp án, hãy gạch chân từ khóa cho từng nhóm trước khi nghe: A recreational (fun, games, dancing), B practical (everyday, household, working), C spiritual (ceremony, worship, ancestors), D commercial (currency, trade, exchange). Các quốc gia được nói theo đúng thứ tự trong đề. Cẩn thận đoạn tutor sửa lời sinh viên, vì thông tin SAU mới là đáp án.",
+  "Note completion (Section 4)":
+    "Section 4 chạy liền một mạch không có khoảng nghỉ, nên phải đọc trước cả các dòng ĐÃ CHO để định vị. Chú ý ba loại biến đổi: đổi từ loại (banned thành a ban on), đảo cụm danh từ (entitlement to vacation thành vacation entitlement), và tóm ý bằng một từ sau that is to say."
+};
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+function show(id){
+  var els = document.querySelectorAll('.screen');
+  for (var i = 0; i < els.length; i++) els[i].classList.remove('active');
+  document.getElementById(id).classList.add('active');
+}
+function norm(s){
+  return String(s == null ? '' : s).toLowerCase()
+    .replace(/\u2019/g, "'")
+    .replace(/^[\s"']+|[\s"'.,;:!?]+$/g, '')
+    .replace(/\s+/g, ' ').trim();
+}
+function isCorrect(q){
+  var a = answers[q.n];
+  if (a == null || String(a).trim() === '') return false;
+  if (q.kind === 'fill') return q.accept.indexOf(norm(a)) !== -1;
+  return norm(a).toUpperCase() === String(q.answer).toUpperCase();
+}
+function isSpellTrap(q){
+  if (!q.spellTrap) return false;
+  return q.spellTrap.indexOf(norm(answers[q.n])) !== -1;
+}
+function esc(s){
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function plain(s){ return String(s == null ? '' : s).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim(); }
+function firstSentence(s){
+  var t = plain(s);
+  var i = t.indexOf('. ');
+  if (i > 20 && i < 190) return t.slice(0, i + 1);
+  return t.length > 170 ? t.slice(0, 170) + '...' : t;
+}
+function fmt(sec){
+  sec = Math.max(0, Math.floor(sec));
+  var m = String(Math.floor(sec / 60));
+  var s = String(sec % 60);
+  if (m.length < 2) m = '0' + m;
+  if (s.length < 2) s = '0' + s;
+  return m + ':' + s;
+}
+var toastT = null;
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  if (toastT) clearTimeout(toastT);
+  toastT = setTimeout(function(){ t.classList.remove('show'); }, 1800);
+}
+function rawToBand(r){
+  if (r >= 39) return '9.0';
+  if (r >= 37) return '8.5';
+  if (r >= 35) return '8.0';
+  if (r >= 32) return '7.5';
+  if (r >= 30) return '7.0';
+  if (r >= 26) return '6.5';
+  if (r >= 23) return '6.0';
+  if (r >= 18) return '5.5';
+  if (r >= 16) return '5.0';
+  if (r >= 13) return '4.5';
+  if (r >= 10) return '4.0';
+  if (r >= 8)  return '3.5';
+  if (r >= 6)  return '3.0';
+  if (r >= 4)  return '2.5';
+  return '2.0';
+}
+
+/* =========================================================
+   START
+   ========================================================= */
+document.getElementById('nameInput').addEventListener('keydown', function(e){ if (e.key === 'Enter') beginTest(); });
+
+function beginTest(){
+  var n = document.getElementById('nameInput').value.trim();
+  if (!n){ document.getElementById('entryErr').style.display = 'block'; return; }
+  studentName = n;
+  document.getElementById('barName').textContent = n;
+  show('screenTest');
+  buildTabs();
+  switchSection(1);
+  updateNav();
+  startTimer();
+  initResizer();
+}
+function buildTabs(){
+  var h = '';
+  SECTIONS.forEach(function(s){
+    h += '<button class="section-tab' + (s.n === curSec ? ' active' : '') + '" onclick="switchSection(' + s.n + ')">Section ' + s.n + '</button>';
+  });
+  document.getElementById('sectionTabs').innerHTML = h;
+}
+function switchSection(n){
+  curSec = n;
+  buildTabs();
+  renderLeft();
+  renderQuestions();
+  document.getElementById('questionPanel').scrollTop = 0;
+  document.getElementById('leftPanel').scrollTop = 0;
+}
+
+/* =========================================================
+   LEFT PANEL
+   ========================================================= */
+function renderLeft(){
+  var sec = SECTIONS[curSec - 1];
+  var el = document.getElementById('leftPanel');
+  if (reviewing){
+    el.innerHTML =
+      '<div class="lp-title">Transcript - Section ' + sec.n + '</div>' +
+      '<div class="lp-sub">' + sec.topic + '</div>' +
+      '<div class="script-note">Phần bôi vàng là vị trí chứa đáp án, kèm số câu tương ứng. Bấm số câu ở thanh dưới để nhảy đến câu đó ở cột phải.</div>' +
+      '<div class="script-body">' + sec.script + '</div>';
+    tagScriptMarks();
+    return;
+  }
+  el.innerHTML =
+    '<div class="lp-title">Section ' + sec.n + '</div>' +
+    '<div class="lp-sub">' + sec.instr + '</div>' +
+    '<div class="lp-card"><h4>Trước khi nghe</h4><ul>' +
+      '<li>Đọc trước câu hỏi và dự đoán loại từ cần điền.</li>' +
+      '<li>Gạch chân từ khóa bằng cách bôi đen chữ rồi chọn màu.</li>' +
+      '<li>Kiểm tra giới hạn số từ của từng phần.</li>' +
+      '<li>File nghe chỉ phát 1 lần, không tua lại được.</li>' +
+    '</ul></div>' +
+    '<div class="lp-card" id="scratchCard"><h4>Giấy nháp</h4>' +
+      '<textarea id="scratch" placeholder="Ghi nhanh số, tên riêng, chính tả..."></textarea></div>';
+  var sc = document.getElementById('scratch');
+  if (sc){
+    sc.value = scratchText;
+    sc.addEventListener('input', function(){ scratchText = sc.value; });
+    document.getElementById('scratchCard').style.display = scratchOn ? '' : 'none';
+  }
+}
+function toggleScratch(){
+  scratchOn = !scratchOn;
+  var c = document.getElementById('scratchCard');
+  if (c) c.style.display = scratchOn ? '' : 'none';
+  document.getElementById('btnScratch').textContent = scratchOn ? 'Ẩn giấy nháp' : 'Hiện giấy nháp';
+}
+
+/* =========================================================
+   QUESTIONS
+   ========================================================= */
+function renderQuestions(){
+  var review = reviewing;
+  var h = '';
+  BLOCKS.forEach(function(b){
+    if (b.sec !== curSec) return;
+    h += '<div class="q-block"><div class="q-instruction">' + b.instr + '</div>';
+    if (b.type === 'inline') h += buildInline(b, review);
+    else if (b.type === 'mcq') h += buildMcq(b, review);
+    else if (b.type === 'match') h += buildMatch(b, review, false);
+    else if (b.type === 'map') h += buildMatch(b, review, true);
+    h += '</div>';
+  });
+  if (review){
+    h = '<div style="margin-bottom:18px;text-align:center">' +
+        '<button class="btn-start" style="width:auto;padding:11px 28px" onclick="showAnalysis()">Xem Analysis &amp; Tips</button>' +
+        '<div style="font-size:11.5px;color:#888;margin-top:7px">Bấm vào ô trả lời để hiện giải thích, transcript bên trái sẽ tự nhảy tới câu dẫn chứng</div></div>' + h;
+  }
+  document.getElementById('questionPanel').innerHTML = h;
+}
+
+function inputFor(n, review){
+  var q = QMAP[n];
+  var v = answers[n] == null ? '' : answers[n];
+  var cls = 'blank';
+  if (review) cls += isCorrect(q) ? ' blank-ok' : ' blank-no';
+  return '<input type="text" class="' + cls + '" id="inp-' + n + '" value="' + esc(v) + '" ' +
+    'autocomplete="off" autocapitalize="off" spellcheck="false" ' +
+    (review ? ('readonly data-exq="' + n + '" ') : '') +
+    'oninput="typeIn(' + n + ',this.value)">';
+}
+function buildInline(b, review){
+  var html = b.html;
+  b.qs.forEach(function(n){
+    html = html.split('{{' + n + '}}').join(inputFor(n, review));
+  });
+  var h = '<div class="note-wrap">' + html + '</div>';
+  if (review){
+    b.qs.forEach(function(n){ h += fbItem(n); });
+  }
+  return h;
+}
+function buildMcq(b, review){
+  var h = '';
+  b.qs.forEach(function(n){
+    var q = QMAP[n];
+    var ua = answers[n] || '';
+    var okc = isCorrect(q);
+    var cls = review ? (okc ? ' is-correct' : ' is-wrong') : '';
+    h += '<div class="q-card' + cls + '" id="qc-' + n + '"' + (review ? (' data-scroll="' + n + '"') : '') + '><div class="q-head">' +
+         '<span class="q-num' + (ua ? ' done' : '') + '" id="qn-' + n + '">' + n + '</span>' +
+         '<span class="q-stem">' + (q.stem || q.label) + '</span></div><div class="q-opts">';
+    q.options.forEach(function(o){
+      h += '<label class="q-opt"><input type="radio" name="q' + n + '" value="' + o.key + '" ' +
+           (ua === o.key ? 'checked ' : '') + (review ? 'disabled ' : '') +
+           'onchange="pick(' + n + ',\'' + o.key + '\')"><span><b>' + o.key + '.</b> ' + o.text + '</span></label>';
+    });
+    h += '</div>';
+    if (review){
+      h += '<div class="fb-verdict ' + (okc ? 'ok' : 'no') + '">' +
+           (okc ? 'Đúng' : 'Sai - đáp án đúng: ' + q.display) + '</div>' + explainBlock(q);
+    }
+    h += '</div>';
+  });
+  return h;
+}
+function buildMatch(b, review, isMap){
+  var h = '';
+  if (isMap) h += '<img class="map-img" src="' + MAP_IMG + '" alt="Hobson Park map">';
+  if (b.legend) h += '<div class="match-legend">' + b.legend + '</div>';
+  h += '<table class="match-table">';
+  b.qs.forEach(function(n){
+    var q = QMAP[n];
+    var ua = answers[n] || '';
+    var okc = isCorrect(q);
+    var cls = review ? (okc ? ' class="is-correct"' : ' class="is-wrong"') : '';
+    h += '<tr' + cls + ' id="qc-' + n + '"' + (review ? (' data-exq="' + n + '"') : '') + '><td class="mt-q">' + n + '</td><td>' + q.label + '</td><td class="mt-sel">';
+    h += '<select class="q-sel" id="inp-' + n + '" ' + (review ? 'disabled ' : '') + 'onchange="pick(' + n + ',this.value)">';
+    h += '<option value="">- select -</option>';
+    b.options.forEach(function(o){
+      h += '<option value="' + o + '"' + (ua === o ? ' selected' : '') + '>' + o + '</option>';
+    });
+    h += '</select></td></tr>';
+  });
+  h += '</table>';
+  if (review) b.qs.forEach(function(n){ h += fbItem(n); });
+  return h;
+}
+function explainBlock(q){
+  var e = q.explain || {};
+  var h = '<div class="fb-explain">';
+  h += '<span class="step">Bước 1: Cần nghe gì</span>' + (e.s1 || '');
+  h += '<span class="step">Bước 2: Vị trí trong bài nghe</span>' + (e.s2 || '');
+  h += '<span class="step">Bước 3: Đáp án</span>' + (e.s3 || q.display);
+  h += '<span class="step">Bước 4: Bẫy và cách tránh</span>' + (e.s4 || '');
+  h += '</div>';
+  return h;
+}
+function fbItem(n){
+  var q = QMAP[n];
+  var okc = isCorrect(q);
+  var ua = (answers[n] == null || String(answers[n]).trim() === '') ? '(bỏ trống)' : String(answers[n]);
+  var h = '<div class="fb-item ' + (okc ? 'ok' : 'no') + '" id="fb-' + n + '" data-scroll="' + n + '">';
+  h += '<div class="fh">Câu ' + n + ': ' + (okc ? 'Đúng' : 'Sai') + '</div>';
+  h += 'Em điền: <b>' + esc(ua) + '</b> &nbsp;|&nbsp; Đáp án: <b>' + esc(q.display) + '</b>';
+  if (!okc && isSpellTrap(q)){
+    h += '<div class="fb-spell">Nghe đúng nhưng viết sai nên bị tính sai hoàn toàn. Đây là lỗi mất điểm oan, cần luyện riêng phần chính tả và số.</div>';
+  }
+  h += explainBlock(q);
+  h += '</div>';
+  return h;
+}
+
+/* =========================================================
+   ANSWERS + NAV
+   ========================================================= */
+function pick(n, val){
+  if (done) return;
+  answers[n] = val;
+  var qn = document.getElementById('qn-' + n);
+  if (qn && val) qn.classList.add('done');
+  updateNav();
+}
+function typeIn(n, val){
+  if (done) return;
+  answers[n] = val;
+  updateNav();
+}
+function updateNav(){
+  var h = '';
+  SECTIONS.forEach(function(s){
+    h += '<div class="qnav-group"><span class="qnav-lbl">S' + s.n + '</span>';
+    QUESTIONS.forEach(function(q){
+      if (q.sec !== s.n) return;
+      var cls = '';
+      if (done) cls = isCorrect(q) ? ' ok' : ' wrong';
+      else if (answers[q.n] != null && String(answers[q.n]).trim() !== '') cls = ' done';
+      h += '<button class="qnav-btn' + cls + '" onclick="goQ(' + q.n + ')">' + q.n + '</button>';
+    });
+    h += '</div>';
+  });
+  document.getElementById('qNav').innerHTML = h;
+}
+function goQ(n){
+  var q = QMAP[n];
+  if (!q) return;
+  if (q.sec !== curSec) switchSection(q.sec);
+  setTimeout(function(){
+    var el = document.getElementById('qc-' + n) || document.getElementById('fb-' + n) || document.getElementById('inp-' + n);
+    if (!el) return;
+    if (el.scrollIntoView) el.scrollIntoView({behavior:'smooth', block:'center'});
+    var t = document.getElementById('inp-' + n) || el;
+    t.style.outline = '2px solid #1565c0';
+    setTimeout(function(){ t.style.outline = ''; }, 1400);
+  }, 60);
+}
+
+/* =========================================================
+   CHONG COPY / PASTE
+   ========================================================= */
+['copy','cut','paste','dragstart','drop'].forEach(function(ev){
+  document.addEventListener(ev, function(e){
+    e.preventDefault();
+    toast('Bài thi không cho phép copy hoặc paste.');
+  });
+});
+document.addEventListener('keydown', function(e){
+  if (!(e.ctrlKey || e.metaKey)) return;
+  var k = String(e.key || '').toLowerCase();
+  if (k === 'c' || k === 'x' || k === 'v' || k === 'p' || k === 's'){
+    e.preventDefault();
+    toast('Bài thi không cho phép copy, paste, in hoặc lưu trang.');
+  }
+});
+document.addEventListener('contextmenu', function(e){
+  if (document.getElementById('screenTest').classList.contains('active')){
+    e.preventDefault();
+    toast('Menu chuột phải bị tắt trong bài thi.');
+  }
+});
+
+/* =========================================================
+   HIGHLIGHT + NOTE
+   ========================================================= */
+var popup = document.getElementById('selPopup');
+var noteInputWrap = document.getElementById('noteInput');
+
+document.addEventListener('mouseup', function(e){
+  if (popup.contains(e.target) || noteInputWrap.contains(e.target)) return;
+  setTimeout(showPopup, 10);
+});
+function showPopup(){
+  var sel = window.getSelection();
+  if (!sel.rangeCount || sel.isCollapsed){ hidePopup(); return; }
+  var range = sel.getRangeAt(0);
+  var c = range.commonAncestorContainer;
+  var lp = document.getElementById('leftPanel');
+  var qp = document.getElementById('questionPanel');
+  if (!lp || !qp) return;
+  if (!lp.contains(c) && !qp.contains(c)){ hidePopup(); return; }
+  savedRange = range.cloneRange();
+  var r = range.getBoundingClientRect();
+  popup.style.left = Math.max(6, r.left + r.width / 2 - 62) + 'px';
+  popup.style.top = Math.max(6, r.top - 44) + 'px';
+  popup.classList.add('show');
+}
+function hidePopup(){ popup.classList.remove('show'); noteInputWrap.classList.remove('show'); }
+function wrapRange(cls, note){
+  if (!savedRange) return;
+  var sel = window.getSelection();
+  sel.removeAllRanges(); sel.addRange(savedRange);
+  var mark = document.createElement('mark');
+  mark.className = cls;
+  if (note) mark.setAttribute('data-note', note);
+  try { savedRange.surroundContents(mark); }
+  catch(err){
+    var frag = savedRange.extractContents();
+    mark.appendChild(frag);
+    savedRange.insertNode(mark);
+  }
+  sel.removeAllRanges();
+  hidePopup(); savedRange = null;
+}
+function applyHL(color){ wrapRange('hl-' + color, null); }
+function openNoteInput(){
+  var r = popup.getBoundingClientRect();
+  noteInputWrap.style.left = r.left + 'px';
+  noteInputWrap.style.top = (r.bottom + 6) + 'px';
+  noteInputWrap.classList.add('show');
+  var t = document.getElementById('noteText');
+  t.value = ''; t.focus();
+}
+function cancelNote(){ noteInputWrap.classList.remove('show'); }
+function saveNote(){
+  var text = document.getElementById('noteText').value.trim();
+  if (!text) return;
+  wrapRange('hl-y', text);
+}
+document.addEventListener('mouseover', function(e){
+  var m = e.target.closest ? e.target.closest('mark[data-note]') : null;
+  if (!m) return;
+  var tip = document.getElementById('noteTooltip');
+  var r = m.getBoundingClientRect();
+  tip.textContent = m.getAttribute('data-note');
+  tip.style.left = r.left + 'px';
+  tip.style.top = Math.max(6, r.top - 40) + 'px';
+  tip.style.display = 'block';
+});
+document.addEventListener('mouseout', function(e){
+  var m = e.target.closest ? e.target.closest('mark[data-note]') : null;
+  if (m) document.getElementById('noteTooltip').style.display = 'none';
+});
+function clearAllHL(){
+  ['leftPanel','questionPanel'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (!el) return;
+    var ms = el.querySelectorAll('mark');
+    for (var i = 0; i < ms.length; i++){
+      var m = ms[i], p = m.parentNode;
+      while (m.firstChild) p.insertBefore(m.firstChild, m);
+      p.removeChild(m);
+    }
+  });
+  hidePopup();
+}
+document.addEventListener('scroll', function(){ hidePopup(); }, true);
+
+/* =========================================================
+   TIMER
+   ========================================================= */
+function startTimer(){
+  if (timerInt) clearInterval(timerInt);
+  timerInt = setInterval(function(){
+    if (done){ clearInterval(timerInt); return; }
+    timerSec--;
+    if (timerSec <= 0){
+      timerSec = 0;
+      clearInterval(timerInt);
+      document.getElementById('timer').textContent = '00:00';
+      forceSubmit();
+      return;
+    }
+    var el = document.getElementById('timer');
+    el.textContent = fmt(timerSec);
+    if (timerSec <= 120) el.classList.add('warn'); else el.classList.remove('warn');
+  }, 1000);
+}
+
+/* =========================================================
+   SUBMIT
+   ========================================================= */
+function submitTest(){
+  if (done) return;
+  var blank = 0;
+  QUESTIONS.forEach(function(q){
+    if (answers[q.n] == null || String(answers[q.n]).trim() === '') blank++;
+  });
+  document.getElementById('confirmMsg').textContent = blank > 0
+    ? ('Còn ' + blank + ' câu chưa trả lời. Vẫn nộp bài?')
+    : 'Đã trả lời hết 40 câu. Nộp bài bây giờ?';
+  document.getElementById('confirmOverlay').classList.add('show');
+}
+function closeConfirm(){ document.getElementById('confirmOverlay').classList.remove('show'); }
+function confirmSubmitYes(){ closeConfirm(); doSubmit(); }
+function forceSubmit(){ closeConfirm(); doSubmit(); }
+
+function doSubmit(){
+  if (done) return;
+  done = true;
+  if (timerInt) clearInterval(timerInt);
+
+  var correct = 0;
+  var secOk = {1:0, 2:0, 3:0, 4:0};
+  QUESTIONS.forEach(function(q){
+    if (isCorrect(q)){ correct++; secOk[q.sec]++; }
+  });
+  var wrong = QUESTIONS.length - correct;
+  var band = rawToBand(correct);
+  var usedSec = TOTAL_SECONDS - timerSec;
+  var timeUsed = Math.floor(usedSec / 60) + 'm ' + (usedSec % 60) + 's';
+
+  document.getElementById('resName').textContent = studentName + ' - thời gian làm: ' + timeUsed;
+  document.getElementById('resOk').textContent = correct;
+  document.getElementById('resTotal').textContent = QUESTIONS.length;
+  document.getElementById('resNo').textContent = wrong;
+  document.getElementById('resBand').innerHTML = band + '<small> / 9.0</small>';
+  var sh = '';
+  [1,2,3,4].forEach(function(s){ sh += '<div class="sec-pill">Section ' + s + ': <b>' + secOk[s] + '/10</b></div>'; });
+  document.getElementById('resSec').innerHTML = sh;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('btnSubmit').textContent = 'SUBMITTED';
+  document.getElementById('btnSubmit').disabled = true;
+  document.getElementById('btnAnalysis').style.display = '';
+  updateNav();
+
+  pushToSheets({name:studentName, correct:correct, total:QUESTIONS.length, band:band, timeUsed:timeUsed, answers:answers});
+}
+function pushToSheets(data){
+  var m = document.getElementById('gsMsg');
+  if (!SCRIPT_URL){ m.textContent = ''; return; }
+  m.textContent = 'Đang lưu kết quả...';
+  m.style.color = '#888';
+  fetch(SCRIPT_URL, {method:'POST', body:JSON.stringify(data), mode:'no-cors'})
+    .then(function(){ m.textContent = 'Đã lưu kết quả'; m.style.color = '#2e7d32'; })
+    .catch(function(){ m.textContent = 'Không lưu được kết quả'; m.style.color = '#c62828'; });
+}
+
+/* =========================================================
+   REVIEW
+   ========================================================= */
+function reviewMode(){
+  reviewing = true;
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('cbHint').textContent = 'Review: bấm vào ô trả lời để hiện giải thích và nhảy tới câu dẫn chứng trong transcript';
+  clearAllHL();
+  switchSection(curSec);
+  updateNav();
+}
+function restart(){
+  done = false; reviewing = false; answers = {}; scratchText = '';
+  timerSec = TOTAL_SECONDS; curSec = 1;
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('btnSubmit').textContent = 'SUBMIT';
+  document.getElementById('btnSubmit').disabled = false;
+  document.getElementById('btnAnalysis').style.display = 'none';
+  document.getElementById('timer').textContent = fmt(TOTAL_SECONDS);
+  document.getElementById('timer').classList.remove('warn');
+  show('screenEntry');
+  document.getElementById('nameInput').value = '';
+  document.getElementById('nameInput').focus();
+}
+
+/* =========================================================
+   ANALYSIS
+   ========================================================= */
+function showAnalysis(){
+  var wrongs = QUESTIONS.filter(function(q){ return !isCorrect(q); });
+  var correct = QUESTIONS.length - wrongs.length;
+  var band = rawToBand(correct);
+  var usedSec = TOTAL_SECONDS - timerSec;
+
+  var h = '<div class="analysis-wrap">';
+  h += '<h2>Performance Analysis - IELTS Listening</h2>';
+  h += '<div class="asub">' + esc(studentName) + ' | ' + correct + '/40 câu đúng | band ước tính ' + band +
+       ' | thời gian làm ' + Math.floor(usedSec / 60) + 'm ' + (usedSec % 60) + 's</div>';
+  h += '<button class="abtn-back" style="margin-top:0;margin-bottom:26px" onclick="backToReview()">Quay lại Review</button>';
+
+  /* diem theo section */
+  h += '<div class="a-section"><h3>1. Điểm theo từng section</h3><table class="a-table"><tr><th>Section</th><th>Nội dung</th><th>Đúng</th></tr>';
+  SECTIONS.forEach(function(s){
+    var ok = QUESTIONS.filter(function(q){ return q.sec === s.n && isCorrect(q); }).length;
+    h += '<tr><td>Section ' + s.n + '</td><td>' + s.topic + '</td><td class="' + (ok >= 7 ? 'good' : 'bad') + '">' + ok + '/10</td></tr>';
+  });
+  h += '</table>';
+  h += '<div class="a-tip"><strong>Cách đọc bảng này:</strong> Section 1 và 2 là phần dễ lấy điểm nên mục tiêu là 8-10/10. Nếu Section 1 hoặc 2 dưới 7 thì vấn đề thường là chính tả, số và giới hạn số từ chứ không phải khả năng nghe. Nếu Section 3 và 4 thấp hơn hẳn thì cần luyện nghe đoạn dài và nhận diện paraphrase.</div></div>';
+
+  /* dang cau hoi */
+  var byType = {};
+  QUESTIONS.forEach(function(q){
+    var t = TMAP[q.n] || 'Khac';
+    if (!byType[t]) byType[t] = {ok:0, no:0};
+    if (isCorrect(q)) byType[t].ok++; else byType[t].no++;
+  });
+  h += '<div class="a-section"><h3>2. Lỗi theo dạng câu hỏi</h3><table class="a-table"><tr><th>Dạng</th><th>Đúng</th><th>Sai</th></tr>';
+  Object.keys(byType).forEach(function(t){
+    h += '<tr><td>' + t + '</td><td class="good">' + byType[t].ok + '</td><td class="' + (byType[t].no ? 'bad' : '') + '">' + byType[t].no + '</td></tr>';
+  });
+  h += '</table>';
+  Object.keys(byType).forEach(function(t){
+    if (!byType[t].no) return;
+    h += '<div class="a-warn"><strong>' + t + ' - chiến lược cần sửa:</strong><br>' + (STRATEGY[t] || '') + '</div>';
+  });
+  if (!wrongs.length) h += '<div class="a-tip"><strong>Không sai câu nào.</strong> Bước tiếp theo là giứ độ chính xác khi tăng tốc độ và làm đề có nhiều giọng khác nhau.</div>';
+  h += '</div>';
+
+  /* bang cau sai */
+  if (wrongs.length){
+    h += '<div class="a-section"><h3>3. Chi tiết các câu sai</h3><table class="a-table">' +
+         '<tr><th>Câu</th><th>Dạng</th><th>Em điền</th><th>Đáp án</th><th>Bẫy</th></tr>';
+    wrongs.forEach(function(q){
+      var ua = (answers[q.n] == null || String(answers[q.n]).trim() === '') ? '(bỏ trống)' : String(answers[q.n]);
+      h += '<tr><td>' + q.n + '</td><td>' + (TMAP[q.n] || '') + '</td><td class="bad">' + esc(ua) + '</td><td class="good">' +
+           esc(q.display) + '</td><td>' + esc(firstSentence(q.explain ? q.explain.s4 : '')) + '</td></tr>';
+    });
+    h += '</table></div>';
+  }
+
+  /* collocations */
+  h += '<div class="a-section"><h3>4. Collocations cần học từ đề này</h3>';
+  h += '<div class="a-tip"><strong>Cách dùng:</strong> rê chuột vào từng chip để xem IPA, nghĩa tiếng Việt và câu ví dụ. Mỗi ngày chọn 5 cụm, tự viết lại 1 câu cho mỗi cụm và đọc to 3 lần để nhớ cả phát âm. Những cụm này dùng được cả trong Speaking Part 1-3 và Writing Task 2.</div>';
+  COLLOCATIONS.forEach(function(g){
+    h += '<div class="a-sub">' + g.title + '</div><div class="a-vocab">';
+    g.items.forEach(function(c){
+      h += '<div class="col-chip">' + c.word + '<div class="col-detail">' +
+           '<div class="cd-word">' + c.word + '</div>' +
+           '<div class="cd-ipa">' + c.ipa + '</div>' +
+           '<div class="cd-vi">' + c.vi + '</div>' +
+           '<div class="cd-ex">' + c.ex + '</div></div></div>';
+    });
+    h += '</div>';
+  });
+  h += '</div>';
+
+  /* paraphrase */
+  h += '<div class="a-section"><h3>5. Paraphrase: đề bài so với bài nghe</h3>';
+  h += '<div class="a-tip"><strong>Nguyên tắc:</strong> đề bài gần như không bao giờ dùng lại từ của bài nghe. Học theo cặp từ vựng này là cách nhanh nhất để tăng điểm Listening và Reading cùng lúc.</div>';
+  PARAPHRASE.forEach(function(g){
+    h += '<div class="a-sub">Section ' + g.sec + '</div><table class="a-table"><tr><th>Trong đề bài</th><th>Trong bài nghe</th><th>Nghĩa</th></tr>';
+    g.rows.forEach(function(r){
+      h += '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td></tr>';
+    });
+    h += '</table>';
+  });
+  h += '</div>';
+
+  /* grammar */
+  h += '<div class="a-section"><h3>6. Cấu trúc ngữ pháp lấy từ transcript</h3>';
+  h += '<div class="a-tip"><strong>Tại sao phải học:</strong> transcript Listening là nguồn ngữ pháp tự nhiên và chuẩn. Mọi cấu trúc dưới đây đều chuyển trực tiếp sang Speaking hoặc Writing được.</div>';
+  GRAMMAR.forEach(function(g){
+    h += '<div class="a-warn"><strong>' + g.title + '</strong><br>' +
+         '<span style="color:#555">Trong bài nghe:</span> ' + esc(g.from) + '<br>' +
+         '<span style="color:#555">Cách dùng lại:</span> ' + g.use + '</div>';
+  });
+  h += '</div>';
+
+  /* checklist */
+  h += '<div class="a-section"><h3>7. Ba lỗi mất điểm oan cần kiểm tra lại</h3>';
+  h += '<div class="a-warn"><strong>1. Chính tả và số:</strong> Matthew (double t) và 4126 (không phải 2614). Nghe đúng nhưng viết sai vẫn tính 0 điểm. Mỗi ngày dành 5 phút chép chính tả số điện thoại, mã bưu chính, tên riêng.</div>';
+  h += '<div class="a-warn"><strong>2. Giới hạn số từ:</strong> ONE WORD ONLY là đúng một từ, NO MORE THAN TWO WORDS là tối đa hai từ. Viết just family friends hay a peer tutor là vượt giới hạn và bị tính sai.</div>';
+  h += '<div class="a-warn"><strong>3. Dạng từ:</strong> sau mạo từ a hoặc an cần danh từ hoặc tính từ (an internal website, a democratic environment), động từ banned trong bài phải đổi thành danh từ a ban on trong đề, và cụm entitlement to vacation bị đảo thành vacation entitlement.</div>';
+  h += '</div>';
+
+  h += '<div class="a-section"><h3>8. Lộ trình 7 ngày tiếp theo</h3>' +
+    '<div class="a-tip"><strong>Ngày 1-2:</strong> nghe lại cả 4 section cùng transcript, dừng ở từng chỗ bôi vàng và đọc to lại câu đó.<br>' +
+    '<strong>Ngày 3-4:</strong> chép chính tả (dictation) riêng Section 1 và Section 4, so với transcript và đếm số lỗi.<br>' +
+    '<strong>Ngày 5:</strong> học các collocations ở mục 4, viết 1 câu cho mỗi cụm.<br>' +
+    '<strong>Ngày 6:</strong> làm lại đề này không xem transcript, mục tiêu cao hơn lần này ít nhất 4 câu.<br>' +
+    '<strong>Ngày 7:</strong> làm 1 đề mới, tập trung vào dạng câu sai nhiều nhất ở mục 2.</div></div>';
+
+  h += '<button class="abtn-back" onclick="backToReview()">Quay lại Review</button></div>';
+  document.getElementById('screenAnalysis').innerHTML = h;
+  show('screenAnalysis');
+  try { window.scrollTo(0, 0); } catch(e){}
+}
+function backToReview(){ show('screenTest'); }
+
+/* =========================================================
+   RESIZER
+   ========================================================= */
+function initResizer(){
+  var rs = document.getElementById('resizer');
+  var wrap = document.getElementById('mainWrap');
+  var left = document.getElementById('leftPanel');
+  var right = document.getElementById('questionPanel');
+  var on = false;
+  function move(x){
+    var r = wrap.getBoundingClientRect();
+    var pct = ((x - r.left) / r.width) * 100;
+    if (pct < 20 || pct > 70) return;
+    left.style.flex = 'none'; right.style.flex = 'none';
+    left.style.width = pct + '%'; right.style.width = (100 - pct) + '%';
+  }
+  rs.addEventListener('mousedown', function(e){
+    on = true; rs.classList.add('on');
+    document.body.style.userSelect = 'none'; e.preventDefault();
+  });
+  document.addEventListener('mousemove', function(e){ if (on) move(e.clientX); });
+  document.addEventListener('mouseup', function(){
+    if (on){ on = false; rs.classList.remove('on'); document.body.style.userSelect = ''; }
+  });
+  rs.addEventListener('touchstart', function(e){ on = true; rs.classList.add('on'); e.preventDefault(); }, {passive:false});
+  document.addEventListener('touchmove', function(e){ if (on) move(e.touches[0].clientX); }, {passive:false});
+  document.addEventListener('touchend', function(){ if (on){ on = false; rs.classList.remove('on'); } });
+}
+
+/* =========================================================
+   RAN DE CHONG CHUP MAN HINH (yeu, khong chan duoc o tang OS)
+   ========================================================= */
+var SHIELD_DEFAULT = 'Nội dung đã được ẩn.<br>Quay lại cửa sổ bài thi để tiếp tục.';
+function showShield(msg){
+  document.getElementById('shieldMsg').innerHTML = msg || SHIELD_DEFAULT;
+  document.body.classList.add('shielded');
+  document.getElementById('privacyShield').classList.add('show');
+}
+function hideShield(){
+  document.body.classList.remove('shielded');
+  document.getElementById('privacyShield').classList.remove('show');
+}
+window.addEventListener('blur', function(){ if (!document.getElementById('screenEntry').classList.contains('active')) showShield(); });
+window.addEventListener('focus', function(){ hideShield(); });
+document.addEventListener('keyup', function(e){
+  if (e.key === 'PrintScreen'){
+    try { navigator.clipboard.writeText(' '); } catch(err){}
+    showShield('Không cho phép chụp màn hình.<br>Nội dung đã được ẩn.');
+  }
+});
+
+
+/* =========================================================
+   POPUP GIAI THICH KHI RE CHUOT + LINK TOI TRANSCRIPT
+   ========================================================= */
+function tagScriptMarks(){
+  var lp = document.getElementById('leftPanel');
+  if (!lp) return;
+  var tags = lp.querySelectorAll('.qtag');
+  for (var i = 0; i < tags.length; i++){
+    var num = String(tags[i].textContent || '').replace(/[^0-9]/g, '');
+    if (num && tags[i].parentNode) tags[i].parentNode.id = 'sm-' + num;
+  }
+}
+function focusScript(n){
+  if (!reviewing) return;
+  var q = QMAP[n];
+  if (!q) return;
+  if (q.sec !== curSec) switchSection(q.sec);
+  setTimeout(function(){
+    var el = document.getElementById('sm-' + n);
+    var lp = document.getElementById('leftPanel');
+    if (!el || !lp) return;
+    var r = el.getBoundingClientRect(), pr = lp.getBoundingClientRect();
+    lp.scrollTop += (r.top - pr.top) - (lp.clientHeight / 3);
+    var marks = lp.querySelectorAll('.ans-mark.sm-active');
+    for (var i = 0; i < marks.length; i++) marks[i].classList.remove('sm-active');
+    el.classList.add('sm-active');
+    setTimeout(function(){ el.classList.remove('sm-active'); }, 2600);
+  }, 80);
+}
+function showExplainPop(n, el){
+  var q = QMAP[n];
+  if (!q) return;
+  var pop = document.getElementById('explainPop');
+  var okc = isCorrect(q);
+  var ua = (answers[n] == null || String(answers[n]).trim() === '') ? '(bỏ trống)' : String(answers[n]);
+  var h = '<button class="ep-close" onclick="hideExplainPop()">&times;</button>';
+  h += '<div class="ep-head ' + (okc ? 'ok' : 'no') + '">Câu ' + n + ': ' + (okc ? 'Đúng' : 'Sai') + '</div>';
+  h += 'Em điền: <b>' + esc(ua) + '</b> &nbsp;|&nbsp; Đáp án: <b>' + esc(q.display) + '</b>';
+  if (!okc && isSpellTrap(q)){
+    h += '<div class="fb-spell">Nghe đúng nhưng viết sai nên bị tính sai hoàn toàn.</div>';
+  }
+  h += explainBlock(q);
+  h += '<div class="ep-hint">Transcript bên trái đã nhảy tới câu dẫn chứng được bôi vàng đậm. Bấm ra ngoài hoặc nhấn Esc để đóng.</div>';
+  pop.innerHTML = h;
+  pop.classList.add('show');
+  pop.scrollTop = 0;
+  var r = el.getBoundingClientRect();
+  var pw = pop.offsetWidth, ph = pop.offsetHeight;
+  var left = r.left;
+  if (left + pw > window.innerWidth - 10) left = window.innerWidth - pw - 10;
+  if (left < 8) left = 8;
+  var top = r.bottom + 8;
+  if (top + ph > window.innerHeight - 10) top = Math.max(8, r.top - ph - 8);
+  pop.style.left = left + 'px';
+  pop.style.top = top + 'px';
+}
+function hideExplainPop(){ document.getElementById('explainPop').classList.remove('show'); }
+(function(){
+  var qp = document.getElementById('questionPanel');
+  var pop = document.getElementById('explainPop');
+  qp.addEventListener('click', function(e){
+    if (!reviewing) return;
+    var t = e.target.closest ? e.target.closest('[data-exq],[data-scroll]') : null;
+    if (!t) return;
+    var n = Number(t.getAttribute('data-exq') || t.getAttribute('data-scroll'));
+    if (!n) return;
+    focusScript(n);
+    if (t.getAttribute('data-exq')) showExplainPop(n, t); else hideExplainPop();
+  });
+  qp.addEventListener('scroll', function(){ hideExplainPop(); });
+  document.addEventListener('click', function(e){
+    if (!reviewing) return;
+    var inside = e.target.closest ? e.target.closest('#explainPop,[data-exq],[data-scroll]') : null;
+    if (!inside) hideExplainPop();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') hideExplainPop();
+  });
+})();
+
+</script>
+</body>
+</html>
