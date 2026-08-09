@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Listening Mock Test 1 - Sections 1 to 3</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bar:#222;--bg:#f5f5f5;--white:#fff;--text:#111;--text-mid:#555;
+  --text-light:#888;--border:#ddd;--border-dark:#bbb;--green:#2e7d32;--green-light:#e8f5e9;
+  --red:#c62828;--red-light:#ffebee;--blue:#1565c0;--blue-light:#e3f2fd;
+  --amber:#f9a825;--amber-light:#fff8e1;
+  --hl-y:rgba(255,235,59,.38);--hl-g:rgba(129,199,132,.35);--hl-b:rgba(100,181,246,.35);
+}
+html,body{height:100%;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+.screen{display:none}
+.screen.active{display:flex;flex-direction:column;height:100vh}
+#screenAnalysis.active{display:block;height:auto;min-height:100vh;overflow-y:auto;background:var(--bg)}
+
+/* ENTRY */
+.entry-screen.active{align-items:center;justify-content:center;background:#fafafa;display:flex}
+.entry-card{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:44px 48px;max-width:520px;width:94%;text-align:center}
+.entry-card h1{font-size:20px;font-weight:700;margin-bottom:4px}
+.entry-card .sub{font-size:13px;color:var(--text-mid);margin-bottom:24px}
+.info-box{text-align:left;background:#fafafa;border:1px solid var(--border);padding:14px 18px;margin-bottom:22px;font-size:13px;line-height:1.8;color:var(--text-mid)}
+.info-box strong{color:var(--text)}
+.entry-input{width:100%;padding:12px 16px;border:1px solid var(--border-dark);font-size:15px;outline:none;margin-bottom:14px}
+.entry-input:focus{border-color:var(--text)}
+.entry-input::placeholder{color:#aaa}
+.btn-start{width:100%;padding:12px;background:var(--bar);color:#fff;border:none;font-size:14px;font-weight:600;cursor:pointer}
+.btn-start:hover{background:#000}
+.entry-err{color:var(--red);font-size:12px;margin-bottom:10px;display:none}
+
+/* TOP BAR */
+.top-bar{height:46px;background:var(--bar);display:flex;align-items:center;justify-content:space-between;padding:0 18px;color:#fff;flex-shrink:0}
+.top-bar .left{display:flex;align-items:center;gap:14px}
+.top-bar .right{display:flex;align-items:center;gap:12px}
+.top-bar .title{font-size:13px;font-weight:600}
+.name-tag{font-size:11px;color:#bbb;background:rgba(255,255,255,.08);padding:3px 10px;border-radius:2px}
+.timer{font-variant-numeric:tabular-nums;font-size:18px;font-weight:700;letter-spacing:1px}
+.timer.warn{color:#ef5350;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.45}}
+.btn-submit{padding:8px 24px;background:#fff;color:var(--bar);border:none;font-size:12.5px;font-weight:700;cursor:pointer;border-radius:2px}
+.btn-submit:hover{background:#e2e2e2}
+.btn-submit:disabled{background:#555;color:#999;cursor:default}
+.btn-ana{padding:8px 18px;background:var(--amber);color:#222;border:none;font-size:12.5px;font-weight:700;cursor:pointer;border-radius:2px;display:none}
+.btn-ana.show{display:inline-block}
+.btn-ana:hover{background:#f7b733}
+
+/* TABS */
+.section-tabs{height:36px;background:#2a2a2a;display:flex;align-items:stretch;padding:0 8px;gap:1px;flex-shrink:0}
+.section-tab{padding:0 26px;display:flex;align-items:center;font-size:12px;font-weight:600;color:#777;cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent}
+.section-tab.active{color:#fff;border-bottom-color:#fff;background:rgba(255,255,255,.06)}
+
+/* CLEAR BAR */
+.clear-bar{height:32px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0}
+.clear-bar span{font-size:11px;color:var(--text-light)}
+.clear-bar button{font-size:11px;color:var(--text-light);background:none;border:1px solid var(--border);padding:3px 12px;cursor:pointer;border-radius:2px}
+.clear-bar button:hover{background:#f0f0f0;color:var(--text)}
+
+/* SPLIT */
+.main-wrap{display:flex;flex:1;overflow:hidden}
+.panel{overflow-y:auto;padding:24px 26px 96px}
+.panel::-webkit-scrollbar{width:7px}
+.panel::-webkit-scrollbar-track{background:#eee}
+.panel::-webkit-scrollbar-thumb{background:#c0c0c0;border-radius:3px}
+.left-panel{flex:0 0 30%;background:var(--white);border-right:1px solid var(--border)}
+.right-panel{flex:1;background:#fafafa}
+.resizer{width:5px;cursor:col-resize;background:var(--border);flex-shrink:0;z-index:10}
+.resizer:hover,.resizer.on{background:#999}
+
+/* LEFT: notepad */
+.pad-title{font-size:13px;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-mid)}
+.pad-hint{font-size:12px;line-height:1.75;color:var(--text-mid);background:#fafafa;border:1px solid var(--border);border-left:3px solid var(--bar);padding:10px 12px;margin-bottom:14px}
+.pad-hint b{color:var(--text)}
+.scratch{width:100%;min-height:340px;border:1px solid var(--border);padding:12px 14px;font-size:13.5px;line-height:2.1;font-family:inherit;resize:vertical;outline:none;background:repeating-linear-gradient(transparent,transparent 27px,#eee 27px,#eee 28px);background-color:#fffef8}
+.scratch:focus{border-color:var(--border-dark)}
+
+/* LEFT in review: transcript */
+.tr-title{font-size:15px;font-weight:700;margin-bottom:12px}
+.tr-body{font-size:14px;line-height:1.95;color:#222}
+.tr-body p{margin-bottom:9px}
+.tr-body .spk{font-weight:700;color:#000}
+.ans-mark{background:var(--hl-y);padding:1px 2px;border-radius:2px;scroll-margin-top:80px}
+.ans-mark.sm-active{background:#ffd54f;box-shadow:0 0 0 2px #f9a825}
+.qtag{display:inline-block;background:var(--bar);color:#fff;font-size:10px;font-weight:700;border-radius:2px;padding:0 5px;margin-left:4px;vertical-align:middle}
+mark.hl-y{background:var(--hl-y);padding:1px 0;border-radius:2px}
+mark.hl-g{background:var(--hl-g);padding:1px 0;border-radius:2px}
+mark.hl-b{background:var(--hl-b);padding:1px 0;border-radius:2px}
+mark[data-note]{position:relative;cursor:pointer}
+mark[data-note]::after{content:"";position:absolute;top:-3px;right:-6px;width:8px;height:8px;background:var(--blue);border-radius:50%;border:1px solid #fff}
+.note-tooltip{position:absolute;z-index:50;background:#333;color:#fff;padding:6px 10px;border-radius:4px;font-size:12px;max-width:230px;line-height:1.5;pointer-events:none;white-space:pre-wrap}
+
+/* SELECTION POPUP */
+.sel-popup{position:absolute;z-index:60;background:var(--white);border:1px solid var(--border-dark);border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);display:none;padding:6px 4px;gap:2px;flex-direction:row;align-items:center}
+.sel-popup.show{display:flex}
+.sp-color{width:24px;height:24px;border-radius:4px;border:2px solid transparent;cursor:pointer}
+.sp-color:hover{transform:scale(1.12);border-color:#999}
+.sp-color.cy{background:rgba(255,235,59,.75)}.sp-color.cb{background:rgba(100,181,246,.65)}.sp-color.cg{background:rgba(129,199,132,.65)}
+.sp-divider{width:1px;height:20px;background:var(--border);margin:0 4px}
+.sp-note{padding:4px 10px;cursor:pointer;border-radius:4px;font-size:12px;font-weight:600;color:var(--text-mid);border:none;background:none}
+.sp-note:hover{background:#f0f0f0;color:var(--text)}
+.note-input-wrap{position:absolute;z-index:70;background:var(--white);border:1px solid var(--border-dark);border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);padding:10px;display:none;width:242px}
+.note-input-wrap.show{display:block}
+.note-input-wrap textarea{width:100%;height:60px;border:1px solid var(--border);border-radius:4px;padding:6px 8px;font-size:12.5px;resize:none;outline:none;font-family:inherit}
+.ni-btns{display:flex;justify-content:flex-end;gap:6px;margin-top:6px}
+.ni-btn{padding:4px 12px;font-size:11px;font-weight:600;border:none;border-radius:3px;cursor:pointer}
+.ni-save{background:var(--bar);color:#fff}
+.ni-cancel{background:#eee;color:var(--text-mid)}
+
+/* QUESTIONS */
+.q-block{margin-bottom:30px}
+.q-instruction{font-size:13px;color:var(--text-mid);margin-bottom:14px;line-height:1.65;padding:10px 14px;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--bar)}
+.q-instruction b{color:var(--text)}
+.q-range{font-size:15px;font-weight:700;margin-bottom:6px}
+
+/* inline note completion */
+.note-card{background:var(--white);border:1px solid #e5e5e5;padding:18px 22px;font-size:14px;line-height:2.5}
+.note-h{font-weight:700;margin:14px 0 6px;font-size:14px}
+.note-h:first-child{margin-top:0}
+.note-card ul{list-style:none;padding-left:4px}
+.note-card li{margin-bottom:2px;padding-left:16px;position:relative}
+.note-card li:before{content:"\2022";position:absolute;left:0;color:var(--text-mid)}
+.gap{display:inline-flex;align-items:center;gap:5px;vertical-align:middle}
+.gap-n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#e0e0e0;font-size:11px;font-weight:700;flex-shrink:0}
+.gap-n.done{background:var(--green);color:#fff}
+.gap-n.ok{background:var(--green);color:#fff}
+.gap-n.no{background:var(--red);color:#fff}
+input.fillbox{width:170px;padding:5px 8px;border:1px solid var(--border-dark);font-size:13.5px;font-family:inherit;outline:none;background:#fff}
+input.fillbox:focus{border-color:var(--bar);background:#fffde7}
+input.fillbox.ok{border-color:var(--green);background:var(--green-light);cursor:pointer}
+input.fillbox.no{border-color:var(--red);background:var(--red-light);cursor:pointer}
+.corr-tag{font-size:12.5px;font-weight:700;color:var(--green);margin-left:6px}
+
+/* mcq */
+.q-card{margin-bottom:14px;padding:14px 16px;background:var(--white);border:1px solid #e5e5e5}
+.q-card.is-correct{border-color:var(--green);background:var(--green-light)}
+.q-card.is-wrong{border-color:var(--red);background:var(--red-light)}
+.q-head{display:flex;align-items:flex-start;gap:10px}
+.q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#e0e0e0;font-size:12px;font-weight:700;flex-shrink:0}
+.q-num.done{background:var(--green);color:#fff}
+.q-num.no{background:var(--red);color:#fff}
+.q-stem{font-size:14px;line-height:1.55;flex:1}
+.q-opts{margin-top:10px;padding-left:36px}
+.q-opt{display:flex;align-items:flex-start;gap:8px;padding:5px 10px;margin-bottom:3px;cursor:pointer;font-size:13.5px;line-height:1.55;border-radius:3px}
+.q-opt:hover{background:#f0f0f0}
+.q-opt input{accent-color:var(--bar);margin-top:3px;cursor:pointer;width:15px;height:15px;flex-shrink:0}
+.q-opt label{cursor:pointer;flex:1}
+.q-opt.pick-ok{background:var(--green-light);border:1px solid var(--green)}
+.q-opt.pick-no{background:var(--red-light);border:1px solid var(--red)}
+
+/* match */
+.opt-box{background:var(--white);border:1px solid var(--border-dark);padding:14px 18px;margin-bottom:14px;font-size:13.5px;line-height:1.95}
+.opt-box .obt{font-weight:700;margin-bottom:6px;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-mid)}
+.match-row{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--white);border:1px solid #e5e5e5;margin-bottom:7px}
+.match-row.is-correct{border-color:var(--green);background:var(--green-light);cursor:pointer}
+.match-row.is-wrong{border-color:var(--red);background:var(--red-light);cursor:pointer}
+.match-row .mlabel{flex:1;font-size:14px}
+select.matchsel{padding:5px 8px;border:1px solid var(--border-dark);font-size:13.5px;font-family:inherit;outline:none;background:#fff;min-width:150px}
+select.matchsel:focus{border-color:var(--bar)}
+
+.fb-verdict{font-size:12px;font-weight:700;margin-top:8px;padding-left:36px}
+.fb-verdict.ok{color:var(--green)}
+.fb-verdict.no{color:var(--red)}
+.fb-explain{margin-top:10px;padding:13px 15px;background:#f9f9f9;border:1px solid var(--border);border-left:3px solid var(--blue);font-size:13px;line-height:1.8;color:#333}
+.fb-explain .step{font-weight:700;color:var(--blue);display:block;margin-top:9px;margin-bottom:2px}
+.fb-explain .step:first-child{margin-top:0}
+.fb-explain .distractor{margin-top:5px;padding-left:8px;border-left:2px solid #ddd;font-size:12.5px;line-height:1.7;color:var(--text-mid)}
+.fb-explain .distractor b{color:var(--text)}
+
+/* EXPLAIN POPUP */
+.exp-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.exp-overlay.show{display:flex}
+.exp-box{background:var(--white);width:100%;max-width:640px;max-height:82vh;overflow-y:auto;border-radius:4px;padding:24px 28px;position:relative}
+.exp-box h4{font-size:15px;font-weight:700;margin-bottom:4px}
+.exp-sub{font-size:12.5px;color:var(--text-mid);margin-bottom:14px}
+.exp-close{position:absolute;top:12px;right:14px;border:none;background:none;font-size:20px;cursor:pointer;color:var(--text-mid);line-height:1}
+.exp-close:hover{color:#000}
+
+/* BOTTOM BAR */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;height:52px;background:var(--bar);display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:100;gap:14px}
+.qnav-groups{display:flex;gap:16px;flex-wrap:wrap}
+.qnav-group{display:flex;align-items:center;gap:5px}
+.qnav-group .gl{font-size:10px;color:#888;font-weight:700;margin-right:2px}
+.qnav-btn{width:27px;height:27px;border-radius:3px;border:1px solid #444;background:#333;color:#888;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.qnav-btn:hover{background:#444;color:#ddd}
+.qnav-btn.done{background:#eceff1;color:#222;border-color:#eceff1}
+.qnav-btn.ok{background:var(--green);color:#fff;border-color:var(--green)}
+.qnav-btn.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+.nav-hint{font-size:11px;color:#888;white-space:nowrap}
+
+/* CONFIRM MODAL */
+.cf-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;display:none;align-items:center;justify-content:center;padding:20px}
+.cf-overlay.show{display:flex}
+.cf-box{background:var(--white);max-width:430px;width:100%;border-radius:4px;padding:26px 28px;text-align:center}
+.cf-box h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.cf-box p{font-size:13.5px;line-height:1.7;color:var(--text-mid);margin-bottom:20px}
+.cf-btns{display:flex;gap:10px;justify-content:center}
+.cf-btn{padding:9px 26px;font-size:13px;font-weight:700;border:none;cursor:pointer;border-radius:3px}
+.cf-yes{background:var(--bar);color:#fff}
+.cf-no{background:#e8e8e8;color:var(--text)}
+
+/* RESULT */
+.rs-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:250;display:none;align-items:center;justify-content:center;padding:20px}
+.rs-overlay.show{display:flex}
+.rs-box{background:var(--white);max-width:470px;width:100%;border-radius:4px;padding:32px 34px;text-align:center}
+.rs-box h2{font-size:19px;font-weight:700;margin-bottom:4px}
+.rs-name{font-size:13px;color:var(--text-mid);margin-bottom:20px}
+.rs-grid{display:flex;gap:10px;margin-bottom:18px}
+.rs{flex:1;padding:14px 6px;border:1px solid var(--border)}
+.rs .rv{font-size:24px;font-weight:700}
+.rs .rl{font-size:11px;color:var(--text-mid);margin-top:3px}
+.rs-ok .rv{color:var(--green)}
+.rs-no .rv{color:var(--red)}
+.rs-pct .rv{color:var(--blue)}
+.rs-note{font-size:12px;line-height:1.7;color:var(--text-mid);background:#fafafa;border:1px solid var(--border);padding:10px 12px;margin-bottom:16px;text-align:left}
+.rbtn{width:100%;padding:11px;font-size:13.5px;font-weight:700;border:none;cursor:pointer;margin-bottom:8px}
+.rbtn-review{background:var(--bar);color:#fff}
+.rbtn-ana{background:var(--amber);color:#222}
+
+/* ANALYSIS */
+.analysis-wrap{max-width:1000px;margin:0 auto;padding:34px 26px 60px}
+.analysis-wrap h2{font-size:23px;font-weight:700;margin-bottom:4px}
+.asub{font-size:13.5px;color:var(--text-mid);margin-bottom:24px}
+.a-section{background:var(--white);border:1px solid var(--border);padding:22px 26px;margin-bottom:18px}
+.a-section h3{font-size:16px;font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--bar)}
+.a-tip{font-size:13.5px;line-height:1.85;color:#333;background:#fafafa;border-left:3px solid var(--blue);padding:12px 15px;margin-bottom:12px}
+.a-tip b{color:#000}
+.a-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:12px}
+.a-table th{background:#f0f0f0;text-align:left;padding:8px 10px;border:1px solid var(--border);font-weight:700}
+.a-table td{padding:8px 10px;border:1px solid var(--border);vertical-align:top;line-height:1.65}
+.a-table tr.bad td{background:var(--red-light)}
+.a-table tr.good td{background:var(--green-light)}
+.a-vocab{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.col-chip{position:relative;background:var(--white);border:1px solid var(--border-dark);border-radius:3px;padding:6px 12px;font-size:13px;cursor:default}
+.col-chip:hover{border-color:var(--bar);background:#fafafa}
+.col-detail{display:none;position:absolute;bottom:calc(100% + 8px);left:0;background:#222;color:#fff;padding:10px 13px;border-radius:4px;width:290px;z-index:20;font-size:12.5px;line-height:1.65}
+.col-chip:hover .col-detail{display:block}
+.cd-word{font-weight:700;margin-bottom:2px}
+.cd-ipa{color:#90caf9;margin-bottom:4px}
+.cd-vi{color:#ffe082;margin-bottom:5px}
+.cd-ex{color:#ddd;font-style:italic}
+.sec-label{font-size:12px;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:.6px;margin:16px 0 4px}
+.abtn-back{display:block;width:260px;margin:0 auto 22px;padding:11px;background:var(--bar);color:#fff;border:none;font-size:13.5px;font-weight:700;cursor:pointer}
+.abtn-back.bottom{margin:26px auto 0}
+.g-item{border:1px solid var(--border);padding:12px 15px;margin-bottom:10px;background:#fafafa}
+.g-name{font-weight:700;font-size:13.5px;margin-bottom:4px}
+.g-ex{font-size:13px;line-height:1.7;color:#333;font-style:italic;margin-bottom:4px}
+.g-use{font-size:12.5px;line-height:1.7;color:var(--text-mid)}
+.day-row{display:flex;gap:12px;font-size:13.5px;line-height:1.7;padding:8px 0;border-bottom:1px dashed var(--border)}
+.day-row b{flex:0 0 74px;color:var(--blue)}
+.privacy-shield{position:fixed;inset:0;z-index:9999;background:rgba(20,20,20,.85);display:none;align-items:center;justify-content:center;text-align:center;color:#fff;font-size:15px;font-weight:600;line-height:1.6;padding:24px}
+.privacy-shield.show{display:flex}
+body.shielded .screen{filter:blur(16px);pointer-events:none}
+</style>
+</head>
+<body>
+
+<!-- ENTRY -->
+<div class="screen entry-screen active" id="screenEntry">
+  <div class="entry-card">
+    <h1>IELTS Listening - Mock Test 1</h1>
+    <div class="sub">Sections 1 to 3 - 30 câu - Định dạng thi trên máy</div>
+    <div class="info-box">
+      <strong>Trước khi bắt đầu:</strong><br>
+      1. Giáo viên mở file audio ở ngoài trình duyệt. File này không có trình phát.<br>
+      2. Thời gian: <strong>26 phút</strong> (nghe và chuyển đáp án). Hết giờ hệ thống tự nộp bài.<br>
+      3. Câu 1-10, 19-20: <strong>ONE WORD AND/OR A NUMBER</strong>. Viết quá số từ là sai.<br>
+      4. Không copy / paste được. Vẫn bôi đen để highlight và ghi note bình thường.<br>
+      5. Nộp bài bằng nút <strong>SUBMIT</strong> ở góc trên bên phải.
+    </div>
+    <div class="entry-err" id="entryErr">Vui lòng nhập họ tên.</div>
+    <input class="entry-input" id="nameInput" placeholder="Họ và tên học viên" autocomplete="off">
+    <button class="btn-start" onclick="beginTest()">BẮT ĐẦU LÀM BÀI</button>
+  </div>
+</div>
+
+<!-- TEST -->
+<div class="screen" id="screenTest">
+  <div class="top-bar">
+    <div class="left">
+      <span class="title">IELTS Listening - Mock Test 1</span>
+      <span class="name-tag" id="nameTag"></span>
+    </div>
+    <div class="right">
+      <span class="timer" id="timer">26:00</span>
+      <button class="btn-ana" id="btnAna" onclick="showAnalysis()">ANALYSIS</button>
+      <button class="btn-submit" id="btnSubmit" onclick="submitTest()">SUBMIT</button>
+    </div>
+  </div>
+  <div class="section-tabs" id="sectionTabs"></div>
+  <div class="clear-bar">
+    <span>Bôi đen chữ để highlight hoặc ghi note.</span>
+    <button onclick="clearHighlights()">Xóa hết highlight</button>
+  </div>
+  <div class="main-wrap" id="mainWrap">
+    <div class="panel left-panel" id="leftPanel"></div>
+    <div class="resizer" id="resizer"></div>
+    <div class="panel right-panel" id="rightPanel"></div>
+  </div>
+  <div class="bottom-bar">
+    <div class="qnav-groups" id="qnav"></div>
+    <span class="nav-hint" id="navHint">Bấm số để nhảy tới câu đó</span>
+  </div>
+</div>
+
+<!-- ANALYSIS -->
+<div class="screen" id="screenAnalysis"></div>
+
+<!-- CONFIRM -->
+<div class="cf-overlay" id="confirmOverlay">
+  <div class="cf-box">
+    <h3 id="cfTitle">Nộp bài?</h3>
+    <p id="cfMsg"></p>
+    <div class="cf-btns">
+      <button class="cf-btn cf-no" onclick="confirmSubmitNo()">Quay lại làm tiếp</button>
+      <button class="cf-btn cf-yes" onclick="confirmSubmitYes()">Nộp bài</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div class="rs-overlay" id="resultOverlay">
+  <div class="rs-box">
+    <h2>Kết quả</h2>
+    <div class="rs-name" id="resName"></div>
+    <div class="rs-grid">
+      <div class="rs rs-ok"><div class="rv" id="resOk">0</div><div class="rl">Đúng</div></div>
+      <div class="rs rs-no"><div class="rv" id="resNo">0</div><div class="rl">Sai</div></div>
+      <div class="rs rs-pct"><div class="rv" id="resPct">0%</div><div class="rl">Tỷ lệ đúng</div></div>
+    </div>
+    <div class="rs-note">Đề này chỉ có 30 câu (Section 1-3) nên không quy đổi band điểm. Band chỉ có giá trị khi làm đủ 40 câu.</div>
+    <div id="gsMsg" style="font-size:12px;margin-bottom:12px;min-height:18px"></div>
+    <button class="rbtn rbtn-review" onclick="reviewMode()">Xem lại bài và transcript</button>
+    <button class="rbtn rbtn-ana" onclick="showAnalysis()">Xem Analysis</button>
+  </div>
+</div>
+
+<!-- EXPLAIN POPUP -->
+<div class="exp-overlay" id="expOverlay" onclick="closeExpBg(event)">
+  <div class="exp-box" id="expBox">
+    <button class="exp-close" onclick="closeExp()">&times;</button>
+    <h4 id="expTitle"></h4>
+    <div class="exp-sub" id="expSub"></div>
+    <div id="expBody"></div>
+  </div>
+</div>
+
+<!-- SELECTION TOOLS -->
+<div class="sel-popup" id="selPopup">
+  <div class="sp-color cy" onclick="applyHl('hl-y')"></div>
+  <div class="sp-color cg" onclick="applyHl('hl-g')"></div>
+  <div class="sp-color cb" onclick="applyHl('hl-b')"></div>
+  <div class="sp-divider"></div>
+  <button class="sp-note" onclick="openNoteInput()">Note</button>
+</div>
+<div class="note-input-wrap" id="noteWrap">
+  <textarea id="noteText" placeholder="Ghi chú của em..."></textarea>
+  <div class="ni-btns">
+    <button class="ni-btn ni-cancel" onclick="cancelNote()">Hủy</button>
+    <button class="ni-btn ni-save" onclick="saveNote()">Lưu</button>
+  </div>
+</div>
+<div class="note-tooltip" id="noteTooltip" style="display:none"></div>
+<div class="privacy-shield" id="privacyShield"><div id="shieldMsg"></div></div>
+
+<script>
+var TOTAL_SECONDS=26*60;
+var SCRIPT_URL="";
+var MAP_IMG="";
+
+var SECTIONS=[
+{n:1,title:"Section 1 - James and Annie talk about their jobs",transcript:"<p><span class='spk'>James:</span> Hello, Annie. Haven't seen you for ages.</p><p><span class='spk'>Annie:</span> Hi, James. You're right. I've been working really long hours.</p><p><span class='spk'>James:</span> How's your job going?</p><p><span class='spk'>Annie:</span> Pretty well. And yours?</p><p><span class='spk'>James:</span> I'll have to admit, it's not what I expected, but at least I've got a job. Plenty of people who graduated with me are still looking.</p><p><span class='spk'>Annie:</span> You're working in the city archives, aren't you?</p><p><span class='spk'>James:</span> Yes. Near Central Library. <span class='ans-mark'>It's a terrific location.<span class='qtag'>1</span></span></p><p><span class='spk'>Annie:</span> Lucky you. <span class='ans-mark'>The one thing I don't like about my job is all the traveling.<span class='qtag'>2</span></span> I'd no idea how big the region was until I had to catch so many buses, trains and taxis.</p><p><span class='spk'>James:</span> Why don't you drive?</p><p><span class='spk'>Annie:</span> I haven't saved up enough for a car.</p><p><span class='spk'>James:</span> Too bad. I'm sure you've told me before, but what exactly is your job?</p><p><span class='spk'>Annie:</span> I'm a biodiversity adviser for the council.</p><p><span class='spk'>James:</span> What does that involve?</p><p><span class='spk'>Annie:</span> <span class='ans-mark'>A lot of surveying.<span class='qtag'>3</span></span> There are four divisions in our team: ecological assessment, native species management, ecosystem restoration, and I've forgotten the last one. <span class='ans-mark'>Anyway, I'm in ecological assessment.<span class='qtag'>4</span></span></p><p><span class='spk'>James:</span> What kind of land do you survey?</p><p><span class='spk'>Annie:</span> All kinds.</p><p><span class='spk'>James:</span> And who do you advise?</p><p><span class='spk'>Annie:</span> Anyone who manages or owns property, public or private. When a person wants to make changes, we run through his or her legal obligations and <span class='ans-mark'>suggest the best use of the land<span class='qtag'>5</span></span> while protecting or restoring ecosystems.</p><p><span class='spk'>James:</span> That was your major at university, wasn't it?</p><p><span class='spk'>Annie:</span> Yes. But the real world is rather more complex than the one we described in our assignments.</p><p><span class='spk'>James:</span> What are you working on at the moment?</p><p><span class='spk'>Annie:</span> A development application. A farmer wants to reduce her reliance on sheep by planting olives. She'd also like to build some tourist accommodation, plus some walking tracks and a road.</p><p><span class='spk'>James:</span> That's quite a lot of work.</p><p><span class='spk'>Annie:</span> It is. Moreover, there's a deep volcanic crater on her property as well as a large wetland, home to a rare bird.</p><p><span class='spk'>James:</span> So what should she do?</p><p><span class='spk'>Annie:</span> The tourist accommodation will be relatively straightforward as long as it's on high ground. With the track into the crater, where there are unusual rock formations and steam, she'll need to consider health and safety regulations, but they shouldn't be too hard. <span class='ans-mark'>It's the wetland that presents a challenge.<span class='qtag'>6</span></span> I doubt she'll be able to drain it. At some expense, <span class='ans-mark'>she might be able to build a road around it<span class='qtag'>7</span></span>, but it's more likely she'll have to forego new access to the olive grove.</p><p><span class='spk'>James:</span> I had no idea development applications were so detailed.</p><p><span class='spk'>Annie:</span> Well, this process means a carefully controlled use of land for which <span class='ans-mark'>I believe future generations will be grateful.<span class='qtag'>8</span></span></p><p><span class='spk'>James:</span> Future generations. Working at the archives, I'm completely immersed in the lives of past generations.</p><p><span class='spk'>Annie:</span> I bet.</p><p><span class='spk'>James:</span> Although the technology is up to date, we've got amazing scanners. I spent all last week scanning tram tickets and timetables from 1902 to 1956.</p><p><span class='spk'>Annie:</span> Why?</p><p><span class='spk'>James:</span> The archives keep all kinds of documents. 1902 was when the electric tram service began here, and <span class='ans-mark'>1956 was when buses took over completely.<span class='qtag'>9</span></span></p><p><span class='spk'>Annie:</span> <span class='ans-mark'>But didn't you major in psychology?<span class='qtag'>10</span></span></p><p><span class='spk'>James:</span> Yes, I did. The archives are about as far away from that as you could imagine. Although, working with so many different staff and public means I do have to apply some psychology from time to time.</p>"},
+{n:2,title:"Section 2 - Enquiry about Winsham Farm Centre",transcript:"<p><span class='spk'>Receptionist:</span> Hello. Winsham Farm Centre.</p><p><span class='spk'>Caller:</span> Oh, hello. I want to arrange a weekend away for myself and some people from work, and we heard about your centre. I wonder if you could give me some details.</p><p><span class='spk'>Receptionist:</span> Yes, certainly. We are a residential centre attached to a working farm, and we organize educational activities for those guests who want them. What else would you like to know?</p><p><span class='spk'>Caller:</span> Well, firstly, what kind of accommodation have you got?</p><p><span class='spk'>Receptionist:</span> <span class='ans-mark'>We've got eight rooms altogether, and we can sleep 38 at any one time. Three of the rooms have got six bunks, and five of them have got four bunks.<span class='qtag'>11</span></span></p><p><span class='spk'>Caller:</span> Right. And what other facilities are there?</p><p><span class='spk'>Receptionist:</span> We have separate toilets and showers for each of the rooms. There's a large dining room and a large meeting room, which can be booked by groups in advance. <span class='ans-mark'>But I'm afraid we had a flood in there last month, and the floor was slightly damaged. So, unfortunately, it's out of use just now.<span class='qtag'>12</span></span> We've got workmen coming in next week. When were you thinking of staying?</p><p><span class='spk'>Caller:</span> In three weeks' time, the September 28.</p><p><span class='spk'>Receptionist:</span> Oh, it should be okay by then.</p><p><span class='spk'>Caller:</span> Oh, well, that's okay then. And what about food? Do you provide meals or is it self-catering?</p><p><span class='spk'>Receptionist:</span> We're very flexible. <span class='ans-mark'>As long as you give us enough notice, we can cater for you.<span class='qtag'>13</span></span> Or if you prefer, you can just bring your own food and use the kitchen facilities. And some people prefer to eat out, which is also fine.</p><p><span class='spk'>Caller:</span> Fine. And I heard that your farm is organic. Does that mean that you only have crops and no animals?</p><p><span class='spk'>Receptionist:</span> It doesn't actually. A lot of people seem to think that, but we do rear livestock as well, and so we have a wide range of food. Organic means it's all produced without the use of artificial fertilizers or pesticides.</p><p><span class='spk'>Caller:</span> I see. That sounds good. Could you tell me what sort of recreational activities are available, either at the centre or in the area?</p><p><span class='spk'>Receptionist:</span> Yes. Here at the centre, we offer farm tours. They're very popular. <span class='ans-mark'>One of the farm managers shows people around and explains some of the principles of organic farming. And for any visitors who are really keen, he lets them drive a tractor or feed the animals and so on, with supervision, of course.<span class='qtag'>14</span></span></p><p><span class='spk'>Caller:</span> I think a lot of our group would be interested in that. It'd make a change from factory work.</p><p><span class='spk'>Receptionist:</span> Well, if they fancy it, tell them to come prepared. Plenty of old clothing, especially footwear. It can be very messy and wet.</p><p><span class='spk'>Caller:</span> Okay. I'll warn them.</p><p><span class='spk'>Receptionist:</span> And another type of activity we do is survival courses, but that's only for groups of five or more. And they've got to be acquaintances. They have to cooperate closely. These courses are very popular, especially with school groups, but adults seem to enjoy them too.</p><p><span class='spk'>Caller:</span> What do they involve? Things like map reading?</p><p><span class='spk'>Receptionist:</span> Well, not exactly. What it is, we've got a large area of woodland on the farm, and we run this course there. <span class='ans-mark'>It's mainly about collecting food and water, lighting a fire without any equipment, that kind of thing.<span class='qtag'>15</span></span></p><p><span class='spk'>Caller:</span> This weekend could be hard work. What about the area around the centre? What is there to do?</p><p><span class='spk'>Receptionist:</span> If you look at a map, you'll see that we're very well situated here. Our centre's about midway between the Exmoor National Park, which is very popular for hill walking, and the South Coast, which has very good beaches.</p><p><span class='spk'>Caller:</span> Are they both within walking distance?</p><p><span class='spk'>Receptionist:</span> Well, they're both a bit far, unless you're very fit, but they're only about thirty minutes by road. <span class='ans-mark'>And there's also a cycle path, which starts quite near here, about ten minutes walk away. You can hire bikes at the starting point.<span class='qtag'>16</span></span></p><p><span class='spk'>Caller:</span> What is there to do if the weather's bad? I hope it won't be, but you never know.</p><p><span class='spk'>Receptionist:</span> Yes, that's right. Well, on most Saturday evenings, we show films here. And then once a month, a group of local musicians performs in our meeting room. <span class='ans-mark'>And then Sherborne is only 14 miles away. It's only a small town, but it's got a very good museum and an old abbey, which is well worth a visit.<span class='qtag'>17</span></span></p><p><span class='spk'>Caller:</span> Well, it sounds perfect for our purposes. One last thing. What about prices? I'm not sure yet, but there'll probably be about 15 of us.</p><p><span class='spk'>Receptionist:</span> We charge a standard 14 pounds a head for accommodation, whether there are 10 or 20 of you or whatever, and about 7 pounds for cooked meals, depending on the menu you want. Use of the kitchen facilities is extra, as is the hire of the meeting room. It depends really what exactly you want and for how many people.</p><p><span class='spk'>Caller:</span> Right. Well, I've made a note of all that, and I'll discuss it with the rest of the group. Then I'll get back to you with a firm booking. Can I do that by phone?</p><p><span class='spk'>Receptionist:</span> Yes, you can. <span class='ans-mark'>But once you've made a booking, we would need a deposit within five days to secure it. Then you just pay the balance when you're here.<span class='qtag'>18</span></span></p><p><span class='spk'>Caller:</span> Oh, yes. Of course. Could you give me the address, please?</p><p><span class='spk'>Receptionist:</span> Yes. It's Winsham Farm, <span class='ans-mark'>Cotehele Road. That's C-O-T-E-H-E-L-E<span class='qtag'>19</span></span>, near Sherborne, and <span class='ans-mark'>the postcode is SH12 1LQ.<span class='qtag'>20</span></span></p><p><span class='spk'>Caller:</span> Thank you.</p>"},
+{n:3,title:"Section 3 - Anna and Chris discuss postgraduate music courses",transcript:"<p><span class='spk'>Anna:</span> Hi, Chris.</p><p><span class='spk'>Chris:</span> What are you doing here? I thought you were supposed to be revising for your finals in the library.</p><p><span class='spk'>Anna:</span> Yeah, well, I decided it was time for a break. I really wasn't being very productive, so I thought I'd come and have a coffee and some fresh air to see if that'd help.</p><p><span class='spk'>Chris:</span> Oh, what are you doing with all those prospectuses?</p><p><span class='spk'>Anna:</span> Well, I'm trying to decide which university to apply to for my MA in music. The choice is really overwhelming.</p><p><span class='spk'>Chris:</span> Well, that certainly is a big pile of prospectuses. Maybe talking about it will help you at least narrow it down. I've got some time, and to be honest, it'll be a welcome distraction from my dissertation.</p><p><span class='spk'>Anna:</span> Great. Thanks, Chris. So far, the universities that appeal the most are the Academy in London, Leeds Conservatory of Contemporary Music, and the Henry Music Institute, which is also in London.</p><p><span class='spk'>Chris:</span> <span class='ans-mark'>I'm not an expert, but wouldn't the Henry Music Institute be the best as it's the one that everyone's heard of?<span class='qtag'>21</span></span></p><p><span class='spk'>Anna:</span> Well, yes and no. Leeds Conservatory of Contemporary Music is also pretty famous. And although the Academy in London is less well known, they've got some excellent modules on offer.</p><p><span class='spk'>Chris:</span> But still, it's always good to have a well-known name on your CV, even if Leeds Conservatory of Contemporary Music and the Academy in London are good. What about the entry requirements? That might help you to make a decision.</p><p><span class='spk'>Anna:</span> Well, funny you should say that, because I was just looking at them. The Academy in London requires an audition, as does the Henry Music Institute.</p><p><span class='spk'>Chris:</span> Leeds Conservatory of Contemporary Music doesn't?</p><p><span class='spk'>Anna:</span> No. They want candidates to compose a piece of music instead before attending an interview.</p><p><span class='spk'>Chris:</span> Don't the others require you to do that? Compose, that is.</p><p><span class='spk'>Anna:</span> No. The others ask you to write an assignment stating why you want to join the course first of all. <span class='ans-mark'>But if I pass that stage, then I'll also have to attend a face-to-face interview like the other two places with the head of school.<span class='qtag'>22</span></span> Assuming that goes okay, then I'll be accepted onto the course.</p><p><span class='spk'>Chris:</span> Right. Sounds tough.</p><p><span class='spk'>Anna:</span> I know. But I suppose it's for a master's degree, so I wasn't expecting it to be easy.</p><p><span class='spk'>Chris:</span> What about the fees? Are they all the same?</p><p><span class='spk'>Anna:</span> Well, surprisingly, the fee structures are very different.</p><p><span class='spk'>Chris:</span> Why is that?</p><p><span class='spk'>Anna:</span> I really don't know. But, for example, the Henry Music Institute is the most expensive at 8,000 pounds a year. Next comes the Academy in London, and the cheapest is Leeds Conservatory of Contemporary Music.</p><p><span class='spk'>Chris:</span> How much are they exactly?</p><p><span class='spk'>Anna:</span> Well, for a full-time course lasting one year, <span class='ans-mark'>it's 7,000 pounds at the Academy in London and 6,000 pounds at Leeds Conservatory of Contemporary Music.<span class='qtag'>23</span></span></p><p><span class='spk'>Chris:</span> Okay. Well, what other expenses do you have to take into consideration, like train fares, for example? If you're going to be travelling home and back during the holidays, that's got to be a factor.</p><p><span class='spk'>Anna:</span> I'm not worried about that. Though insurance is an added cost, as I'll need to make sure my instrument is covered. <span class='ans-mark'>However, all of them require me to send in a cheque for the charges for applying before they'll process my application.<span class='qtag'>24</span></span></p><p><span class='spk'>Chris:</span> Is that normal?</p><p><span class='spk'>Anna:</span> Apparently.</p><p><span class='spk'>Chris:</span> Can I have a look?</p><p><span class='spk'>Anna:</span> Yes, of course. Here you are.</p><p><span class='spk'>Chris:</span> Well, I think you might have a problem.</p><p><span class='spk'>Anna:</span> Why? What is it?</p><p><span class='spk'>Chris:</span> Well, it says here that the deadline is January 9. That's next week.</p><p><span class='spk'>Anna:</span> Where? Let me see. Oh, you're right. Which prospectus is this?</p><p><span class='spk'>Chris:</span> The Henry Music Institute.</p><p><span class='spk'>Anna:</span> Oh, no. What am I going to do?</p><p><span class='spk'>Chris:</span> Make your decision now. Is the closing date the same for all of them? Let's check. Look here. <span class='ans-mark'>Leeds Conservatory of Contemporary Music is on the nineteenth, but the Academy in London isn't until the thirtieth of this month.<span class='qtag'>25</span></span></p><p><span class='spk'>Anna:</span> Okay. I'd better hurry up and make a decision. Right. Now apart from those three colleges, I also wanted to have a quick flick through Northdown College's and the one from the James Academy of Music.</p><p><span class='spk'>Chris:</span> Look. Here it is. Facilities at Northdown College.</p><p><span class='spk'>Anna:</span> What does it say?</p><p><span class='spk'>Chris:</span> <span class='ans-mark'>Well, it has a library with a dedicated historical research section that's world famous.<span class='qtag'>26</span></span></p><p><span class='spk'>Anna:</span> That's all very interesting, but it's not going to make me go there.</p><p><span class='spk'>Chris:</span> Okay. <span class='ans-mark'>The Academy in London has four campuses all around Central London.<span class='qtag'>27</span></span> They all have large common rooms, and there's one twenty-four hour cafeteria at the biggest site.</p><p><span class='spk'>Anna:</span> That's nice. But for me, the most important thing is somewhere to practise.</p><p><span class='spk'>Chris:</span> Yes, of course.</p><p><span class='spk'>Anna:</span> Right. Now where did I see it? Okay. Here it is. Look. Now this is good. <span class='ans-mark'>Leeds Conservatory of Contemporary Music has over 100 teaching and practice studios.<span class='qtag'>28</span></span> What a luxury. Here, there are only 10, and it's really difficult to find one empty. So I often have to play in the gardens.</p><p><span class='spk'>Chris:</span> Oh, dear.</p><p><span class='spk'>Anna:</span> Anyway, that's the past, and this place looks great.</p><p><span class='spk'>Chris:</span> Well, what about the Henry Music Institute? Look. <span class='ans-mark'>There's a new suite with the latest that technology has to offer<span class='qtag'>29</span></span>, and a small museum dedicated to the history of music. That's really impressive.</p><p><span class='spk'>Anna:</span> I don't think I'm really that interested in using computers while making music, so that's not a selling point, really. But look, this place is interesting, the James Academy of Music. It comes recommended by lots of people in the music industry, and all of its courses have a business element, <span class='ans-mark'>as well as having a professional studio for recording albums.<span class='qtag'>30</span></span></p><p><span class='spk'>Chris:</span> Wow. That sounds really cutting edge. So are you any closer to making a decision now?</p>"}
+];
+
+var BLOCKS=[
+{sec:1,type:"inline",range:"Questions 1 - 10",instruction:"Complete the notes below.<br><b>Write ONE WORD AND/OR A NUMBER in each gap.</b>",html:"<div class='note-h'>Work details:</div><ul><li>James enjoys the [[1]] of his work.</li><li>Annie does not enjoy all the [[2]] for her work.</li><li>Her job involves [[3]] and offering advice.</li><li>She works in the Council's [[4]] Assessment division.</li><li>She proposes the [[5]] utilization of her clients' land.</li></ul><div class='note-h'>Development application:</div><div style='margin-bottom:4px'>There are two difficult things for the farmer in her application, i.e.</div><ul><li>[[6]]</li><li>a new [[7]]</li></ul><div class='note-h'>Other information:</div><ul><li>Annie thinks offspring will be [[8]] for the controlled use of land.</li><li>A tram service ceased in James and Annie's town in [[9]].</li><li>James studies [[10]] at university.</li></ul>"},
+{sec:2,type:"mcq",range:"Questions 11 - 18",instruction:"Choose the correct letter, <b>A</b>, <b>B</b> or <b>C</b>.",qs:[11,12,13,14,15,16,17,18]},
+{sec:2,type:"inline",range:"Questions 19 - 20",instruction:"Complete the notes below.<br><b>Write ONE WORD AND/OR NUMBERS for each answer.</b>",html:"<div class='note-h'>Address</div><ul><li>Winsham Farm</li><li>[[19]] Rd</li><li>Near Sherborne</li><li>Postcode: [[20]]</li></ul>"},
+{sec:3,type:"mcq",range:"Questions 21 - 25",instruction:"Choose the correct letter, <b>A</b>, <b>B</b> or <b>C</b>.",qs:[21,22,23,24,25]},
+{sec:3,type:"match",range:"Questions 26 - 30",instruction:"Which facilities do the colleges have?<br>Choose <b>FIVE</b> answers from the box and write the correct letter, <b>A-G</b>, next to questions 26-30.",box:[{k:"A",t:"large gardens"},{k:"B",t:"multiple sites"},{k:"C",t:"practice rooms"},{k:"D",t:"recording studio"},{k:"E",t:"research facility"},{k:"F",t:"student canteen"},{k:"G",t:"technology suite"}],qs:[26,27,28,29,30]}
+];
+
+var QUESTIONS=[
+{n:1,sec:1,kind:"fill",stem:"James enjoys the ___ of his work.",answer:"location",accept:["location"],explain:{
+s1:"Chỗ trống đứng sau mạo từ the và trước of his work, nên bắt buộc là DANH TỪ chỉ một đặc điểm của công việc. Nghe tín hiệu khen ngợi từ James.",
+s2:"James: &quot;Near Central Library. It's a terrific location.&quot;",
+s3:"enjoys trong đề = terrific trong bài. Đề dùng ĐỘNG TỪ chỉ cảm xúc tích cực, bài dùng TÍNH TỪ khen. Đáp án là danh từ đứng ngay sau tính từ đó.",
+s4:"Bẫy 1 - tên riêng: nhiều em nghe thấy Central Library liền trước rồi điền vào. Đó chỉ là mốc địa điểm, không phải danh từ chỉ đặc điểm. Bẫy 2: city archives là nơi làm việc chứ không phải thứ James thích."}},
+
+{n:2,sec:1,kind:"fill",stem:"Annie does not enjoy all the ___ for her work.",answer:"travelling / traveling",accept:["travelling","traveling"],explain:{
+s1:"Sau all the phải là danh từ không đếm được hoặc danh động từ. Tín hiệu cần bắt là câu chê, phủ định.",
+s2:"Annie: &quot;The one thing I don't like about my job is all the traveling.&quot;",
+s3:"does not enjoy = don't like; for her work = about my job. Cấu trúc giữ gần như nguyên, chỉ đổi ngôi thứ nhất sang ngôi thứ ba.",
+s4:"Bẫy 1 - chính tả Anh - Mỹ: travelling và traveling đều được chấp nhận. Bẫy 2 - liệt kê: ngay sau đó bài đọc buses, trains and taxis. Đó là ví dụ minh hoạ, điền một trong ba từ này là sai vì không khớp với all the."}},
+
+{n:3,sec:1,kind:"fill",stem:"Her job involves ___ and offering advice.",answer:"surveying",accept:["surveying"],explain:{
+s1:"Cấu trúc involves + V-ing, lại song song với offering advice nên chỗ trống bắt buộc đuôi -ing.",
+s2:"James: &quot;What does that involve?&quot; Annie: &quot;A lot of surveying.&quot;",
+s3:"Đề giữ nguyên động từ involve, chỉ chuyển từ câu hỏi sang câu trần thuật. Đáp án nằm ngay trong câu trả lời đầu tiên.",
+s4:"Bẫy dạng từ: viết survey là sai vì không song song với offering. Bẫy 2: advising không điền được vì offering advice đã in sẵn trong đề, điền vào sẽ bị trùng ý."}},
+
+{n:4,sec:1,kind:"fill",stem:"She works in the Council's ___ Assessment division.",answer:"ecological",accept:["ecological"],explain:{
+s1:"Chỗ trống đứng trước từ Assessment đã in sẵn, nên cần MỘT TÍNH TỪ bổ nghĩa. Chỉ điền một từ.",
+s2:"Annie: &quot;There are four divisions in our team: ecological assessment, native species management, ecosystem restoration... Anyway, I'm in ecological assessment.&quot;",
+s3:"Bài liệt kê bốn phòng ban trước rồi mới chốt I'm in. Trong Listening, thông tin CHỐT sau mới là đáp án, phần liệt kê trước đó chỉ là nhiễu.",
+s4:"Bẫy 1 - liệt kê nhanh: native species management và ecosystem restoration đọc liền mạch, rất dễ chép nhầm. Bẫy 2 - vượt số từ: viết ecological assessment là hai từ, vẫn bị tính SAI vì đề yêu cầu ONE WORD và Assessment đã có sẵn."}},
+
+{n:5,sec:1,kind:"fill",stem:"She proposes the ___ utilization of her clients' land.",answer:"best",accept:["best"],explain:{
+s1:"Chỗ trống nằm giữa the và danh từ utilization, nên cần TÍNH TỪ, nhiều khả năng là dạng so sánh nhất.",
+s2:"Annie: &quot;we run through his or her legal obligations and suggest the best use of the land&quot;",
+s3:"proposes = suggest; utilization = use; her clients' land = the land (đất của người sở hữu mà cô tư vấn). Đây là paraphrase từ vựng thuần tuý, trật tự từ không đổi.",
+s4:"Bẫy 1 - thừa mạo từ: viết the best là hai từ, sai giới hạn số từ vì đề đã có the. Bẫy 2 - từ nghe rõ liền trước: legal obligations đứng ngay trước, dễ khiến em điền legal."}},
+
+{n:6,sec:1,kind:"fill",stem:"Difficult thing 1 in the application",answer:"wetland",accept:["wetland","the wetland"],explain:{
+s1:"Đề hỏi hai thứ KHÓ trong hồ sơ. Cần bắt tính từ hoặc cụm chỉ khó khăn: difficult, challenge, problem, hard.",
+s2:"Annie: &quot;It's the wetland that presents a challenge.&quot;",
+s3:"difficult trong đề = presents a challenge trong bài. Cấu trúc nhấn mạnh It is ... that ... là tín hiệu rất mạnh đánh dấu đáp án.",
+s4:"Bẫy 1 - thông tin trái chiều: volcanic crater cũng được nhắc đến nhưng bài nói they shouldn't be too hard, tức là KHÔNG khó. Bẫy 2: rare bird là lý do khiến wetland khó xử, không phải bản thân thứ khó."}},
+
+{n:7,sec:1,kind:"fill",stem:"Difficult thing 2: a new ___",answer:"road",accept:["road"],explain:{
+s1:"Sau a new phải là danh từ đếm được số ít. Cần thứ gây tốn kém hoặc khó xây.",
+s2:"Annie: &quot;At some expense, she might be able to build a road around it&quot;",
+s3:"Cụm at some expense báo hiệu chi phí cao, tức là khó khăn. Đây là paraphrase ở cấp độ Ý chứ không phải từ đối từ.",
+s4:"Bẫy liệt kê: trước đó bài đã đọc tourist accommodation, walking tracks and a road. Trong ba thứ này chỉ road có vấn đề; accommodation được mô tả là relatively straightforward. Bẫy 2: olive grove là nơi cần đến, không phải công trình xây mới."}},
+
+{n:8,sec:1,kind:"fill",stem:"Annie thinks offspring will be ___ for the controlled use of land.",answer:"grateful",accept:["grateful"],explain:{
+s1:"Chỗ trống đứng sau will be và trước giới từ for, nên cần TÍNH TỪ đi với for.",
+s2:"Annie: &quot;this process means a carefully controlled use of land for which I believe future generations will be grateful.&quot;",
+s3:"offspring trong đề = future generations trong bài. Đây là paraphrase từ vựng học thuật, mức độ band 7 trở lên. Cụm be grateful for là collocation cố định.",
+s4:"Bẫy 1 - dạng từ: gratitude là danh từ, không đứng được sau will be trong cấu trúc này. Bẫy 2 - mệnh đề quan hệ đảo: for which ... will be grateful đẩy tính từ xuống cuối câu, em phải nghe hết câu mới bắt được."}},
+
+{n:9,sec:1,kind:"fill",stem:"A tram service ceased in James and Annie's town in ___.",answer:"1956",accept:["1956"],explain:{
+s1:"Sau giới từ in và với đề bài cho phép A NUMBER, đây chắc chắn là MỘT NĂM. Cần bắt từ chỉ sự kết thúc.",
+s2:"James: &quot;1902 was when the electric tram service began here, and 1956 was when buses took over completely.&quot;",
+s3:"ceased trong đề = buses took over completely trong bài. Xe buýt thay hoàn toàn đồng nghĩa với tàu điện ngừng chạy. Đây là suy luận một bước, không có từ đồng nghĩa trực tiếp.",
+s4:"Bẫy số đôi: bài đọc hai năm liền nhau. 1902 đi với began (bắt đầu), 1956 đi với took over (kết thúc). Phải bám ĐỘNG TỪ chứ không bám thứ tự xuất hiện. Trước đó còn có cụm from 1902 to 1956 càng dễ loạn."}},
+
+{n:10,sec:1,kind:"fill",stem:"James studies ___ at university.",answer:"psychology",accept:["psychology"],explain:{
+s1:"Cần TÊN MỘT NGÀNH HỌC. Tín hiệu là major in hoặc study.",
+s2:"Annie: &quot;But didn't you major in psychology?&quot; James: &quot;Yes, I did.&quot;",
+s3:"studies at university = major in. Điểm khó: đáp án nằm trong CÂU HỎI của người kia, chỉ được xác nhận bằng Yes, I did.",
+s4:"Bẫy 1 - xác nhận gián tiếp: nếu chỉ chờ nghe James tự nói thì sẽ bỏ lỡ. Bẫy 2 - lặp lại sai ngữ cảnh: câu cuối có apply some psychology from time to time nhưng đó là áp dụng tâm lý học trong công việc, không phải ngành học."}},
+
+{n:11,sec:2,kind:"choice",stem:"The centre has enough accommodation for",options:[{k:"A",t:"18 people"},{k:"B",t:"20 people"},{k:"C",t:"38 people"}],answer:"C",accept:["C"],explain:{
+s1:"Đề hỏi sức chứa TỐI ĐA cùng một lúc. Cần bắt động từ sleep, hold, accommodate.",
+s2:"&quot;We've got eight rooms altogether, and we can sleep 38 at any one time.&quot;",
+s3:"has enough accommodation for = can sleep ... at any one time. Đề dùng danh từ accommodation, bài dùng động từ sleep.",
+s4:"Phân tích từng phương án sai:",
+d:[{k:"A",t:"18 không xuất hiện trong bài. Em dễ ghép nhầm eight rooms với đuôi -teen do tốc độ đọc nhanh."},{k:"B",t:"20 có xuất hiện nhưng ở cuối bài, trong câu về giá: whether there are 10 or 20 of you. Đó là ví dụ về số khách, không phải sức chứa."}]}},
+
+{n:12,sec:2,kind:"choice",stem:"The meeting room is currently",options:[{k:"A",t:"unavailable"},{k:"B",t:"flooded"},{k:"C",t:"booked"}],answer:"A",accept:["A"],explain:{
+s1:"Từ khoá quyết định là currently. Phải xác định trạng thái HIỆN TẠI, không phải quá khứ.",
+s2:"&quot;we had a flood in there last month, and the floor was slightly damaged. So, unfortunately, it's out of use just now.&quot;",
+s3:"currently = just now; unavailable = out of use. Đề dùng tính từ học thuật, bài dùng cụm giới từ thông dụng.",
+s4:"Phân tích từng phương án sai:",
+d:[{k:"B",t:"Bẫy THÌ. Trận lụt xảy ra last month, chia ở quá khứ đơn. Hiện tại phòng chỉ còn hậu quả, không còn ngập."},{k:"C",t:"Bài có cụm can be booked by groups in advance nhưng đó là quy định chung, không phải trạng thái của phòng lúc này."}]}},
+
+{n:13,sec:2,kind:"choice",stem:"Visitors must tell the centre in advance if they want to",options:[{k:"A",t:"use the centre's kitchen"},{k:"B",t:"have meals cooked for them"},{k:"C",t:"eat at restaurants outside"}],answer:"B",accept:["B"],explain:{
+s1:"Từ khoá là must ... in advance. Phải tìm hoạt động có KÈM ĐIỀU KIỆN báo trước.",
+s2:"&quot;As long as you give us enough notice, we can cater for you.&quot;",
+s3:"tell the centre in advance = give us enough notice; have meals cooked for them = cater for you. Mệnh đề as long as chính là dấu hiệu điều kiện.",
+s4:"Phân tích từng phương án sai:",
+d:[{k:"A",t:"Dùng bếp chỉ cần bring your own food and use the kitchen facilities, không hề kèm điều kiện báo trước."},{k:"C",t:"Bài nói some people prefer to eat out, which is also fine. Hoàn toàn tự do, không cần báo."}]}},
+
+{n:14,sec:2,kind:"choice",stem:"All visitors on the tour of the farm can",options:[{k:"A",t:"get information about organic farming"},{k:"B",t:"help to feed the animals"},{k:"C",t:"watch a tractor demonstration"}],answer:"A",accept:["A"],explain:{
+s1:"Từ khoá quyết định là ALL visitors. Phải chọn hoạt động dành cho MỌI người.",
+s2:"&quot;One of the farm managers shows people around and explains some of the principles of organic farming. And for any visitors who are really keen, he lets them drive a tractor or feed the animals.&quot;",
+s3:"get information about = explains some of the principles of. Câu đầu không giới hạn đối tượng nên áp dụng cho tất cả.",
+s4:"Phân tích từng phương án sai:",
+d:[{k:"B",t:"Bẫy GIỚI HẠN ĐỐI TƯỢNG. Cho động vật ăn chỉ dành cho any visitors who are really keen, không phải tất cả."},{k:"C",t:"Sai hai lớp. Thứ nhất, khách được LÁI máy kéo (drive a tractor) chứ không phải XEM biểu diễn. Thứ hai, cũng chỉ dành cho nhóm really keen."}]}},
+
+{n:15,sec:2,kind:"choice",stem:"On the survival course people have to",options:[{k:"A",t:"learn to use a map"},{k:"B",t:"find their own food"},{k:"C",t:"run through woodland"}],answer:"B",accept:["B"],explain:{
+s1:"Cần bắt nội dung chính của khoá survival. Tín hiệu: What do they involve?",
+s2:"&quot;It's mainly about collecting food and water, lighting a fire without any equipment, that kind of thing.&quot;",
+s3:"find their own food = collecting food and water. Trạng từ mainly đánh dấu trọng tâm, chính là chỗ cần nghe kỹ.",
+s4:"Phân tích từng phương án sai:",
+d:[{k:"A",t:"Bẫy PHỦ ĐỊNH TRỰC TIẾP. Người gọi hỏi Things like map reading? và lễ tân đáp Well, not exactly. Nghe thấy map đừng vội chọn."},{k:"C",t:"Bài có nhắc woodland nhưng chỉ là ĐỊA ĐIỂM tổ chức khoá học (we run this course there), không phải hoạt động chạy. Động từ run ở đây nghĩa là tổ chức."}]}},
+
+{n:16,sec:2,kind:"choice",stem:"From the centre it is easy to walk to",options:[{k:"A",t:"Exmoor National Park"},{k:"B",t:"the beach"},{k:"C",t:"a cycling route"}],answer:"C",accept:["C"],explain:{
+s1:"Từ khoá là easy to WALK. Phải chọn nơi đi bộ tới được.",
+s2:"&quot;there's also a cycle path, which starts quite near here, about ten minutes walk away. You can hire bikes at the starting point.&quot;",
+s3:"easy to walk to = about ten minutes walk away; a cycling route = a cycle path. Hai lớp paraphrase cùng lúc.",
+s4:"Phân tích từng phương án sai:",
+d:[{k:"A",t:"Bẫy PHƯƠNG TIỆN. Bài nói they're both a bit far, unless you're very fit, but they're only about thirty minutes by road, tức là đi bằng xe."},{k:"B",t:"Cùng lý do với A. Cụm they're both gộp cả Exmoor và South Coast vào một nhận định, cả hai đều không đi bộ được."}]}},
+
+{n:17,sec:2,kind:"choice",stem:"If the weather is bad visitors can go to a",options:[{k:"A",t:"cinema"},{k:"B",t:"theatre"},{k:"C",t:"museum"}],answer:"C",accept:["C"],explain:{
+s1:"Động từ go to đòi một ĐỊA ĐIỂM BÊN NGOÀI trung tâm.",
+s2:"&quot;Sherborne is only 14 miles away. It's only a small town, but it's got a very good museum and an old abbey, which is well worth a visit.&quot;",
+s3:"go to a museum khớp trực tiếp với it's got a very good museum, cộng thêm cụm well worth a visit xác nhận đây là nơi đáng đến.",
+s4:"Phân tích từng phương án sai:",
+d:[{k:"A",t:"Bẫy ĐỊA ĐIỂM. Bài nói on most Saturday evenings, we show films HERE, tức chiếu phim ngay tại trung tâm, không phải đi rạp."},{k:"B",t:"Bài nói a group of local musicians performs in our meeting room. Đó là buổi nhạc tại chỗ, không phải nhà hát kịch, lại chỉ diễn ra once a month."}]}},
+
+{n:18,sec:2,kind:"choice",stem:"Groups who wish to stay at the centre must pay",options:[{k:"A",t:"part of the cost in advance"},{k:"B",t:"all of the cost in advance"},{k:"C",t:"all of the cost on arrival"}],answer:"A",accept:["A"],explain:{
+s1:"Cần bắt cơ chế thanh toán: trả trước bao nhiêu, trả sau bao nhiêu.",
+s2:"&quot;once you've made a booking, we would need a deposit within five days to secure it. Then you just pay the balance when you're here.&quot;",
+s3:"part of the cost in advance = a deposit. Từ balance xác nhận phần còn lại trả sau, nên khoản trước chỉ là một phần.",
+s4:"Phân tích từng phương án sai:",
+d:[{k:"B",t:"Sai ở từ all. Chỉ cần đặt cọc (deposit) trong 5 ngày, không phải toàn bộ."},{k:"C",t:"Chỉ PHẦN CÒN LẠI mới trả khi đến nơi. Nếu chọn C nghĩa là em bỏ qua câu về deposit."}]}},
+
+{n:19,sec:2,kind:"fill",stem:"Address line 2: ___ Rd",answer:"Cotehele",accept:["cotehele"],explain:{
+s1:"Đề in sẵn Rd nên chỗ trống là TÊN ĐƯỜNG. Tên riêng thì chắc chắn sẽ được đánh vần.",
+s2:"&quot;It's Winsham Farm, Cotehele Road. That's C-O-T-E-H-E-L-E&quot;",
+s3:"Trong Listening, khi người nói đánh vần từng chữ cái thì đó gần như luôn là đáp án. Phải viết theo phần ĐÁNH VẦN.",
+s4:"Bẫy 1 - chính tả: khi đọc trôi, từ này nghe gần giống Coteal hoặc Cotele. Chỉ cần thiếu một chữ cái là mất điểm. Bẫy 2 - viết hoa: tên riêng nên viết hoa chữ cái đầu. Bẫy 3 - thừa từ: không viết Cotehele Rd vì Rd đã in sẵn."}},
+
+{n:20,sec:2,kind:"fill",stem:"Postcode: ___",answer:"SH121LQ",accept:["sh121lq","sh12 1lq"],explain:{
+s1:"Postcode Anh luôn gồm chữ cái và số xen kẽ. Đề cho phép ONE WORD AND/OR NUMBERS nên viết liền hoặc có dấu cách đều được.",
+s2:"&quot;the postcode is SH12 1LQ&quot;",
+s3:"Không có paraphrase ở dạng này. Đây là câu kiểm tra khả năng nghe chính xác chuỗi ký tự.",
+s4:"Bẫy chữ cái dễ nhầm khi nghe: S với F, L với M hoặc N, số 1 với chữ I. Viết IN HOA toàn bộ để tránh nhầm lẫn. Ghi ngay khi nghe, đừng chờ nhớ lại."}}
+];
+
+var QUESTIONS3=[
+{n:21,sec:3,kind:"choice",stem:"Which college does Chris suggest would be best?",options:[{k:"A",t:"Lees Conservatory of Contemporary Music"},{k:"B",t:"The Henry Music Institute"},{k:"C",t:"The Academy in London"}],answer:"B",accept:["B"],explain:{
+s1:"Từ khoá quyết định là CHRIS suggest. Phải bắt ý của Chris, không phải ý của Anna. Dạng này gọi là speaker-attribution.",
+s2:"Chris: &quot;I'm not an expert, but wouldn't the Henry Music Institute be the best as it's the one that everyone's heard of?&quot;",
+s3:"Câu hỏi tu từ wouldn't ... be the best? chính là cách nói giảm để đưa ra lời gợi ý. Đề dùng động từ suggest, bài dùng câu hỏi phủ định.",
+s4:"Phân tích từng phương án sai:",
+d:[{k:"A",t:"Leeds do ANNA nhắc tới, và cô chỉ nói is also pretty famous. Đó là thông tin bổ sung, không phải lời gợi ý của Chris."},{k:"C",t:"Anna nói Academy in London là less well known nhưng có modules tốt. Chris còn phản bác luôn: it's always good to have a well-known name on your CV."}]}},
+
+{n:22,sec:3,kind:"choice",stem:"What entry requirements are common to all the colleges?",options:[{k:"A",t:"an audition"},{k:"B",t:"an essay"},{k:"C",t:"an interview"}],answer:"C",accept:["C"],explain:{
+s1:"Từ khoá là common to ALL. Phải đúng cho cả ba trường, nên phải cộng dồn thông tin ở nhiều chỗ khác nhau.",
+s2:"Leeds: &quot;They want candidates to compose a piece of music instead before attending an interview.&quot; Hai trường kia: &quot;I'll also have to attend a face-to-face interview like the other two places with the head of school.&quot;",
+s3:"Đáp án nằm ở HAI đoạn cách xa nhau. Từ also và like the other two places là cầu nối cho biết yêu cầu này lặp lại ở mọi trường.",
+s4:"Phân tích từng phương án sai:",
+d:[{k:"A",t:"Audition chỉ có ở Academy in London và Henry Music Institute. Anna nói rõ Leeds thay bằng compose a piece of music instead."},{k:"B",t:"Bài dùng từ write an assignment (paraphrase của essay) nhưng chỉ áp dụng cho the others, tức hai trường, không phải cả ba."}]}},
+
+{n:23,sec:3,kind:"choice",stem:"How much does the course at Leeds Conservatory of Contemporary Music cost?",options:[{k:"A",t:"6000 pounds a year"},{k:"B",t:"7000 pounds a year"},{k:"C",t:"8000 pounds a year"}],answer:"A",accept:["A"],explain:{
+s1:"Ba con số học phí sẽ được đọc liên tiếp. Phải bám TÊN TRƯỜNG chứ không bám thứ tự xuất hiện.",
+s2:"Anna: &quot;for a full-time course lasting one year, it's 7,000 pounds at the Academy in London and 6,000 pounds at Leeds Conservatory of Contemporary Music.&quot;",
+s3:"Trước đó bài đã xếp hạng bằng so sánh: the most expensive ... Next comes ... the cheapest is. Nếu nghe được cụm the cheapest is Leeds thì đã suy được đáp án trước khi con số xuất hiện.",
+s4:"Phân tích từng phương án sai:",
+d:[{k:"B",t:"7,000 là học phí của the Academy in London, đọc NGAY TRƯỚC con số đúng nên rất dễ chép nhầm."},{k:"C",t:"8,000 là học phí của the Henry Music Institute, gắn với cụm the most expensive."}]}},
+
+{n:24,sec:3,kind:"choice",stem:"What other expenses are payable to the colleges?",options:[{k:"A",t:"application fee"},{k:"B",t:"insurance"},{k:"C",t:"train fare"}],answer:"A",accept:["A"],explain:{
+s1:"Từ khoá là payable TO THE COLLEGES. Cả ba phương án đều là chi phí, nhưng chỉ một khoản trả cho trường.",
+s2:"Anna: &quot;all of them require me to send in a cheque for the charges for applying before they'll process my application.&quot;",
+s3:"application fee = the charges for applying. Đề nén thành danh từ ghép, bài diễn giải thành cụm danh từ dài. Cụm send in a cheque xác nhận tiền đi tới trường.",
+s4:"Phân tích từng phương án sai:",
+d:[{k:"B",t:"Bảo hiểm là có thật (insurance is an added cost) nhưng trả cho công ty bảo hiểm để bảo vệ nhạc cụ, không trả cho trường."},{k:"C",t:"Chris là người nêu train fares, còn Anna gạt đi ngay: I'm not worried about that. Ý kiến bị bác bỏ thì không thể là đáp án."}]}},
+
+{n:25,sec:3,kind:"choice",stem:"When is the deadline for Leeds Conservatory of Contemporary Music?",options:[{k:"A",t:"January 9th"},{k:"B",t:"January 19th"},{k:"C",t:"January 30th"}],answer:"B",accept:["B"],explain:{
+s1:"Ba mốc ngày sẽ xuất hiện gần nhau. Phải ghép đúng ngày với đúng trường.",
+s2:"Chris: &quot;Leeds Conservatory of Contemporary Music is on the nineteenth, but the Academy in London isn't until the thirtieth of this month.&quot;",
+s3:"deadline trong đề = closing date trong bài. Ngày đọc theo dạng số thứ tự (the nineteenth), không đọc kèm tên tháng, nên phải nhớ tháng January đã nêu trước đó.",
+s4:"Phân tích từng phương án sai:",
+d:[{k:"A",t:"January 9 là hạn của the Henry Music Institute. Đây là con số được nhấn mạnh nhất trong đoạn (That's next week) nên dễ chọn nhầm."},{k:"C",t:"the thirtieth là hạn của the Academy in London, đọc ngay sau đáp án đúng trong cùng một câu."}]}},
+
+{n:26,sec:3,kind:"choice",stem:"Northdown College",options:[],answer:"E",accept:["E"],explain:{
+s1:"Dạng matching: đọc trước 7 phương án, gạch chân danh từ chính của mỗi phương án để nhận ra khi nghe.",
+s2:"Chris: &quot;it has a library with a dedicated historical research section that's world famous.&quot;",
+s3:"research facility = a library with a dedicated historical research section. Đề nén cả cụm dài thành một danh từ ghép hai từ.",
+s4:"Bẫy: phương án A large gardens có xuất hiện trong bài (I often have to play in the gardens) nhưng đó là trường Anna ĐANG HỌC, không phải Northdown College. Trong matching, luôn kiểm tra chủ thể trước khi ghép."}},
+
+{n:27,sec:3,kind:"choice",stem:"The Academy in London",options:[],answer:"B",accept:["B"],explain:{
+s1:"Cần bắt thông tin về cơ sở vật chất, chú ý con số đi kèm danh từ chỉ địa điểm.",
+s2:"Chris: &quot;The Academy in London has four campuses all around Central London.&quot;",
+s3:"multiple sites = four campuses. Đề dùng từ khái quát multiple, bài dùng con số cụ thể four. Đây là paraphrase kiểu số cụ thể sang từ định lượng chung.",
+s4:"Bẫy: ngay câu sau có one twenty-four hour cafeteria, rất giống phương án F student canteen. Nhưng bài chỉ nói CÓ MỘT căng tin ở cơ sở lớn nhất, còn thông tin đặc trưng của trường này là bốn cơ sở. Nếu chọn F thì Q27 sai và một câu khác cũng lệch theo."}},
+
+{n:28,sec:3,kind:"choice",stem:"Leeds Conservatory of Contemporary Music",options:[],answer:"C",accept:["C"],explain:{
+s1:"Anna đã nói trước nhu cầu của cô: the most important thing is somewhere to practise. Câu này báo hiệu đáp án sắp tới.",
+s2:"Anna: &quot;Leeds Conservatory of Contemporary Music has over 100 teaching and practice studios.&quot;",
+s3:"practice rooms = practice studios. Chỉ đổi một danh từ, mức paraphrase dễ nhất trong nhóm này.",
+s4:"Bẫy so sánh: ngay sau đó Anna nói Here, there are only 10, and it's really difficult to find one empty. Con số 10 và cảm giác thiếu phòng thuộc về trường HIỆN TẠI của Anna, không phải Leeds. Trong matching, cụm trạng ngữ chỉ nơi chốn như here quyết định chủ thể."}},
+
+{n:29,sec:3,kind:"choice",stem:"The Henry Music Institute",options:[],answer:"G",accept:["G"],explain:{
+s1:"Nghe danh từ chỉ khu vực chức năng: suite, centre, studio, lab.",
+s2:"Chris: &quot;There's a new suite with the latest that technology has to offer, and a small museum dedicated to the history of music.&quot;",
+s3:"technology suite = a new suite with the latest that technology has to offer. Đề giữ nguyên từ suite và nén phần mô tả thành một tính ngữ.",
+s4:"Bẫy 1: a small museum đọc ngay sau, nhưng museum không có trong bảng A-G nên không dùng được. Bẫy 2 - thái độ: Anna nói I don't think I'm really that interested in using computers. Đó là Ý KIẾN cá nhân, không phủ nhận việc trường CÓ khu công nghệ. Đừng loại đáp án chỉ vì người nói không thích."}},
+
+{n:30,sec:3,kind:"choice",stem:"The James Academy of Music",options:[],answer:"D",accept:["D"],explain:{
+s1:"Đây là trường cuối cùng được nhắc. Khi còn hai phương án chưa dùng, phương pháp loại trừ giúp tăng xác suất.",
+s2:"Anna: &quot;all of its courses have a business element, as well as having a professional studio for recording albums.&quot;",
+s3:"recording studio = a professional studio for recording albums. Đề đảo trật tự và nén cụm giới từ for recording albums thành tính ngữ đứng trước.",
+s4:"Bẫy 1: cụm a business element dễ khiến em tìm phương án liên quan kinh doanh, nhưng bảng A-G không có. Bẫy 2: từ studio đã xuất hiện ở Q28 (practice studios). Cùng một danh từ dùng cho hai trường khác nhau, phải phân biệt bằng tính từ đi kèm: practice studios so với professional studio for recording."}}
+];
+
+var COLLOCATIONS=[
+{sec:1,w:"work long hours",ipa:"/wɜːk lɒŋ ˈaʊəz/",vi:"làm việc nhiều giờ liền",ex:"I've been working really long hours this term."},
+{sec:1,w:"prime location",ipa:"/praɪm ləʊˈkeɪʃn/",vi:"vị trí đắc địa",ex:"The office is in a prime location near the station."},
+{sec:1,w:"save up for something",ipa:"/ˌseɪv ˈʌp fɔː/",vi:"để dành tiền mua thứ gì",ex:"She is saving up for a second-hand car."},
+{sec:1,w:"land use",ipa:"/ˈlænd juːs/",vi:"việc sử dụng đất",ex:"The council controls land use in rural areas."},
+{sec:1,w:"legal obligations",ipa:"/ˈliːɡl ˌɒblɪˈɡeɪʃnz/",vi:"nghĩa vụ pháp lý",ex:"Landowners must meet their legal obligations."},
+{sec:1,w:"reduce reliance on",ipa:"/rɪˈdjuːs rɪˈlaɪəns ɒn/",vi:"giảm sự phụ thuộc vào",ex:"Farmers are trying to reduce their reliance on chemicals."},
+{sec:1,w:"restore an ecosystem",ipa:"/rɪˈstɔːr ən ˈiːkəʊsɪstəm/",vi:"phục hồi hệ sinh thái",ex:"The project aims to restore the wetland ecosystem."},
+{sec:1,w:"health and safety regulations",ipa:"/ˌhelθ ənd ˈseɪfti ˌreɡjuˈleɪʃnz/",vi:"quy định an toàn lao động",ex:"All sites must comply with health and safety regulations."},
+{sec:1,w:"present a challenge",ipa:"/prɪˈzent ə ˈtʃælɪndʒ/",vi:"đặt ra một thách thức",ex:"Heavy rain presented a challenge for the builders."},
+{sec:1,w:"future generations",ipa:"/ˈfjuːtʃə ˌdʒenəˈreɪʃnz/",vi:"các thế hệ tương lai",ex:"We must protect forests for future generations."},
+{sec:1,w:"be grateful for",ipa:"/bi ˈɡreɪtfl fɔː/",vi:"biết ơn vì điều gì",ex:"I am grateful for all the help you gave me."},
+{sec:1,w:"major in something",ipa:"/ˈmeɪdʒər ɪn/",vi:"học chuyên ngành gì",ex:"He majored in psychology at university."},
+
+{sec:2,w:"book in advance",ipa:"/bʊk ɪn ədˈvɑːns/",vi:"đặt trước",ex:"The meeting room can be booked in advance."},
+{sec:2,w:"out of use",ipa:"/ˌaʊt əv ˈjuːs/",vi:"không dùng được, đang ngừng hoạt động",ex:"The lift has been out of use since Monday."},
+{sec:2,w:"give somebody enough notice",ipa:"/ɡɪv ɪˈnʌf ˈnəʊtɪs/",vi:"báo trước đủ sớm cho ai",ex:"Please give us enough notice if you cancel."},
+{sec:2,w:"cater for somebody",ipa:"/ˈkeɪtə fɔː/",vi:"lo phần ăn uống cho ai",ex:"The centre can cater for large groups."},
+{sec:2,w:"self-catering",ipa:"/ˌself ˈkeɪtərɪŋ/",vi:"tự nấu ăn (không có suất ăn)",ex:"We stayed in a self-catering apartment."},
+{sec:2,w:"eat out",ipa:"/ˌiːt ˈaʊt/",vi:"ăn ở ngoài",ex:"Some guests prefer to eat out in the village."},
+{sec:2,w:"rear livestock",ipa:"/rɪə ˈlaɪvstɒk/",vi:"chăn nuôi gia súc",ex:"The farm rears livestock as well as growing crops."},
+{sec:2,w:"artificial fertilizers",ipa:"/ˌɑːtɪˈfɪʃl ˈfɜːtəlaɪzəz/",vi:"phân bón hoá học",ex:"Organic farming avoids artificial fertilizers."},
+{sec:2,w:"within walking distance",ipa:"/wɪˈðɪn ˈwɔːkɪŋ ˈdɪstəns/",vi:"trong khoảng cách đi bộ được",ex:"The beach is within walking distance of the hotel."},
+{sec:2,w:"be well worth a visit",ipa:"/bi wel wɜːθ ə ˈvɪzɪt/",vi:"rất đáng để ghé thăm",ex:"The old abbey is well worth a visit."},
+{sec:2,w:"pay a deposit",ipa:"/peɪ ə dɪˈpɒzɪt/",vi:"đặt cọc",ex:"You need to pay a deposit to secure the booking."},
+{sec:2,w:"pay the balance",ipa:"/peɪ ðə ˈbæləns/",vi:"trả nốt số tiền còn lại",ex:"You can pay the balance on arrival."},
+
+{sec:3,w:"revise for an exam",ipa:"/rɪˈvaɪz fɔːr ən ɪɡˈzæm/",vi:"ôn tập cho kỳ thi",ex:"She is revising for her final exams."},
+{sec:3,w:"narrow something down",ipa:"/ˌnærəʊ ˈdaʊn/",vi:"thu hẹp lựa chọn lại",ex:"Talking it through helped me narrow down the list."},
+{sec:3,w:"entry requirements",ipa:"/ˈentri rɪˈkwaɪəmənts/",vi:"điều kiện đầu vào",ex:"Each college sets its own entry requirements."},
+{sec:3,w:"attend an interview",ipa:"/əˈtend ən ˈɪntəvjuː/",vi:"tham dự buổi phỏng vấn",ex:"Candidates must attend an interview with the head of school."},
+{sec:3,w:"compose a piece of music",ipa:"/kəmˈpəʊz ə piːs əv ˈmjuːzɪk/",vi:"sáng tác một bản nhạc",ex:"Applicants are asked to compose a piece of music."},
+{sec:3,w:"tuition fees",ipa:"/tjuˈɪʃn fiːz/",vi:"học phí",ex:"Tuition fees vary widely between institutions."},
+{sec:3,w:"take something into consideration",ipa:"/teɪk ˌɪntə kənˌsɪdəˈreɪʃn/",vi:"cân nhắc, tính đến điều gì",ex:"You should take travel costs into consideration."},
+{sec:3,w:"process an application",ipa:"/ˈprəʊses ən ˌæplɪˈkeɪʃn/",vi:"xử lý hồ sơ đăng ký",ex:"They will not process your application without the fee."},
+{sec:3,w:"meet a deadline",ipa:"/miːt ə ˈdedlaɪn/",vi:"kịp hạn chót",ex:"She worked all night to meet the deadline."},
+{sec:3,w:"closing date",ipa:"/ˈkləʊzɪŋ deɪt/",vi:"ngày hết hạn nộp hồ sơ",ex:"The closing date for applications is 19 January."},
+{sec:3,w:"a selling point",ipa:"/ə ˈselɪŋ pɔɪnt/",vi:"điểm hấp dẫn, lợi thế thu hút",ex:"The recording studio is a real selling point."},
+{sec:3,w:"cutting edge",ipa:"/ˌkʌtɪŋ ˈedʒ/",vi:"tiên tiến nhất, dẫn đầu",ex:"The institute uses cutting-edge technology."}
+];
+
+var PARAPHRASE=[
+{sec:1,q:"James enjoys the location",s:"It's a terrific location"},
+{sec:1,q:"does not enjoy",s:"I don't like"},
+{sec:1,q:"Her job involves",s:"What does that involve? A lot of surveying"},
+{sec:1,q:"proposes the best utilization",s:"suggest the best use"},
+{sec:1,q:"two difficult things",s:"presents a challenge"},
+{sec:1,q:"offspring",s:"future generations"},
+{sec:1,q:"a tram service ceased",s:"buses took over completely"},
+{sec:1,q:"studies at university",s:"major in"},
+
+{sec:2,q:"has enough accommodation for",s:"we can sleep 38 at any one time"},
+{sec:2,q:"currently unavailable",s:"it's out of use just now"},
+{sec:2,q:"tell the centre in advance",s:"give us enough notice"},
+{sec:2,q:"have meals cooked for them",s:"we can cater for you"},
+{sec:2,q:"get information about organic farming",s:"explains some of the principles of organic farming"},
+{sec:2,q:"find their own food",s:"collecting food and water"},
+{sec:2,q:"easy to walk to",s:"about ten minutes walk away"},
+{sec:2,q:"a cycling route",s:"a cycle path"},
+{sec:2,q:"part of the cost in advance",s:"a deposit within five days"},
+
+{sec:3,q:"Chris suggests would be best",s:"wouldn't the Henry Music Institute be the best?"},
+{sec:3,q:"entry requirements common to all",s:"attend a face-to-face interview like the other two places"},
+{sec:3,q:"application fee",s:"the charges for applying"},
+{sec:3,q:"deadline",s:"closing date"},
+{sec:3,q:"research facility",s:"a dedicated historical research section"},
+{sec:3,q:"multiple sites",s:"four campuses all around Central London"},
+{sec:3,q:"practice rooms",s:"over 100 teaching and practice studios"},
+{sec:3,q:"technology suite",s:"a new suite with the latest that technology has to offer"},
+{sec:3,q:"recording studio",s:"a professional studio for recording albums"}
+];
+
+var GRAMMAR=[
+{sec:1,name:"Cleft sentence: It is + N + that + V",ex:"It's the wetland that presents a challenge.",use:"Dùng để nhấn mạnh đúng một yếu tố. Speaking Part 3: It's the cost that puts most students off, not the workload."},
+{sec:1,name:"The one thing (that) S + V + is + N",ex:"The one thing I don't like about my job is all the traveling.",use:"Cách nêu MỘT điểm nổi bật mà không lặp cấu trúc I like / I don't like. Rất hợp Speaking Part 1 và Part 2."},
+{sec:1,name:"Preposition + which",ex:"a carefully controlled use of land for which future generations will be grateful",use:"Mệnh đề quan hệ trang trọng. Writing Task 2: a policy for which there is broad public support."},
+{sec:1,name:"by + V-ing chỉ phương thức",ex:"reduce her reliance on sheep by planting olives",use:"Nêu cách thức đạt được mục tiêu. Writing Task 2: Governments can cut emissions by investing in public transport."},
+{sec:1,name:"as long as + mệnh đề điều kiện",ex:"as long as it's on high ground",use:"Nêu điều kiện bắt buộc. Speaking Part 3: Technology is beneficial as long as it is properly regulated."},
+
+{sec:2,name:"As long as + S + V, S + can + V",ex:"As long as you give us enough notice, we can cater for you.",use:"Câu điều kiện loại 1 dạng trang trọng hơn if. Dùng khi nêu điều kiện dịch vụ hoặc chính sách."},
+{sec:2,name:"unless = if not",ex:"they're both a bit far, unless you're very fit",use:"Rút gọn mệnh đề phủ định. Writing Task 2: Unless action is taken now, the problem will worsen."},
+{sec:2,name:"Once + hiện tại hoàn thành, S + would/will + V",ex:"once you've made a booking, we would need a deposit within five days",use:"Diễn tả trình tự bắt buộc. Dùng khi mô tả quy trình trong Writing Task 1 dạng process."},
+{sec:2,name:"Mệnh đề quan hệ không xác định + be worth + N",ex:"an old abbey, which is well worth a visit",use:"Bổ sung đánh giá mà không tách câu. Speaking Part 2 khi mô tả một địa điểm."},
+{sec:2,name:"whether A or B or whatever",ex:"whether there are 10 or 20 of you or whatever",use:"Nêu điều kiện không đổi bất kể trường hợp nào. Speaking tự nhiên, không dùng cho Writing học thuật."},
+
+{sec:3,name:"Đảo ngữ: ..., as does + S",ex:"The Academy in London requires an audition, as does the Henry Music Institute.",use:"Tránh lặp động từ khi hai chủ thể giống nhau. Cực mạnh cho Writing Task 1: Sales rose in Japan, as did those in Korea."},
+{sec:3,name:"Câu hỏi phủ định để gợi ý",ex:"Wouldn't the Henry Music Institute be the best?",use:"Cách nêu ý kiến nhẹ nhàng trong Speaking Part 3 khi muốn đề xuất mà không áp đặt."},
+{sec:3,name:"Although + mệnh đề nhượng bộ",ex:"Although the Academy in London is less well known, they've got some excellent modules on offer.",use:"Thừa nhận điểm yếu rồi nêu điểm mạnh. Cấu trúc lõi của đoạn thân bài Writing Task 2."},
+{sec:3,name:"as well as + V-ing",ex:"all of its courses have a business element, as well as having a professional studio",use:"Thêm thông tin mà không dùng and lặp lại. Lưu ý sau as well as phải là V-ing, không phải V nguyên thể."},
+{sec:3,name:"So sánh nhất khi mô tả dữ liệu",ex:"the Henry Music Institute is the most expensive at 8,000 pounds a year ... the cheapest is Leeds",use:"Bộ khung mô tả bảng số liệu Writing Task 1: the highest figure ... followed by ... the lowest is."}
+];
+
+QUESTIONS=QUESTIONS.concat(QUESTIONS3);
+
+var BLOCK_TNAME=["Note Completion","Multiple Choice","Note / Form Completion","Multiple Choice","Matching Features"];
+var STRATEGY=[
+"Note Completion: đọc trước và đoán TỪ LOẠI của từng chỗ trống (danh từ, tính từ, V-ing, số). Bám vào từ in sẵn đứng ngay trước và ngay sau chỗ trống. Đếm số từ cho phép trước khi viết.",
+"Multiple Choice: gạch chân từ giới hạn trong câu hỏi (all, currently, must, easy to walk). Nghe hết cả đoạn rồi mới chọn, vì phương án đúng thường nằm sau một câu bị bác bỏ.",
+"Note / Form Completion: dạng địa chỉ và mã số luôn đi kèm đánh vần hoặc đọc từng ký tự. Viết ngay khi nghe, viết IN HOA với mã số, không chờ nhớ lại.",
+"Multiple Choice: chú ý AI là người nói. Câu hỏi có tên người (Chris suggests) thì ý kiến của người còn lại là bẫy.",
+"Matching Features: đọc trước 7 phương án và gạch chân danh từ chính. Khi nghe, luôn xác định CHỦ THỂ trước rồi mới ghép đặc điểm, vì bài có cái bẫy đặc điểm thuộc về nơi khác."
+];
+
+var studentName="",answers={},timerSec=TOTAL_SECONDS,timerInt=null,done=false,reviewing=false,curSec=1;
+var savedRange=null,pendingNoteRange=null;
+
+function qById(n){for(var i=0;i<QUESTIONS.length;i++){if(QUESTIONS[i].n===n)return QUESTIONS[i]}return null}
+function show(id){
+  var s=document.querySelectorAll(".screen");
+  for(var i=0;i<s.length;i++){s[i].classList.remove("active")}
+  document.getElementById(id).classList.add("active");
+}
+function pad2(x){return x<10?"0"+x:""+x}
+
+function beginTest(){
+  var v=document.getElementById("nameInput").value.trim();
+  if(!v){document.getElementById("entryErr").style.display="block";return}
+  studentName=v;
+  document.getElementById("nameTag").textContent=studentName;
+  show("screenTest");
+  renderTabs();goSection(1);buildNav();updateNav();
+  startTimer();initResizer();
+}
+
+function startTimer(){
+  var t=document.getElementById("timer");
+  t.textContent=pad2(Math.floor(timerSec/60))+":"+pad2(timerSec%60);
+  timerInt=setInterval(function(){
+    timerSec--;
+    if(timerSec<=120)t.classList.add("warn");
+    if(timerSec<=0){timerSec=0;t.textContent="00:00";clearInterval(timerInt);forceSubmit();return}
+    t.textContent=pad2(Math.floor(timerSec/60))+":"+pad2(timerSec%60);
+  },1000);
+}
+
+function renderTabs(){
+  var h="";
+  for(var i=0;i<SECTIONS.length;i++){
+    h+="<button class='section-tab' data-s='"+SECTIONS[i].n+"' onclick='goSection("+SECTIONS[i].n+")'>Section "+SECTIONS[i].n+"</button>";
+  }
+  document.getElementById("sectionTabs").innerHTML=h;
+}
+
+function goSection(n){
+  curSec=n;
+  var tabs=document.querySelectorAll(".section-tab");
+  for(var i=0;i<tabs.length;i++){
+    if(parseInt(tabs[i].getAttribute("data-s"),10)===n)tabs[i].classList.add("active");
+    else tabs[i].classList.remove("active");
+  }
+  renderLeft();renderRight();
+  document.getElementById("leftPanel").scrollTop=0;
+  document.getElementById("rightPanel").scrollTop=0;
+}
+
+function secByN(n){for(var i=0;i<SECTIONS.length;i++){if(SECTIONS[i].n===n)return SECTIONS[i]}return SECTIONS[0]}
+
+function renderLeft(){
+  var el=document.getElementById("leftPanel");
+  if(!reviewing){
+    var keep=document.getElementById("scratch");
+    var val=keep?keep.value:"";
+    var h="<div class='pad-title'>Giấy nháp</div>";
+    h+="<div class='pad-hint'><b>Nghe một lần duy nhất.</b> Ghi nhanh từ khóa vào đây, đừng chờ đến khi nghe hết câu mới viết.<br>Bôi đen chữ ở cột phải để <b>highlight</b> hoặc <b>ghi note</b>.<br>Đổi section bằng thanh tab bên trên.</div>";
+    h+="<textarea class='scratch' id='scratch' spellcheck='false'></textarea>";
+    el.innerHTML=h;
+    document.getElementById("scratch").value=val;
+  }else{
+    var s=secByN(curSec);
+    el.innerHTML="<div class='tr-title'>Transcript - "+s.title+"</div><div class='tr-body' id='trBody'>"+s.transcript+"</div>";
+    tagScript();
+  }
+}
+
+function tagScript(){
+  var marks=document.querySelectorAll("#trBody .ans-mark");
+  for(var i=0;i<marks.length;i++){
+    var tag=marks[i].querySelector(".qtag");
+    if(tag){
+      var num=parseInt(tag.textContent.replace(/[^0-9]/g,""),10);
+      if(!isNaN(num))marks[i].id="sm-"+num;
+    }
+  }
+}
+
+function focusScript(n){
+  setTimeout(function(){
+    var el=document.getElementById("sm-"+n);
+    if(!el)return;
+    if(el.scrollIntoView)el.scrollIntoView({block:"center"});
+    el.classList.add("sm-active");
+    setTimeout(function(){el.classList.remove("sm-active")},2600);
+  },80);
+}
+
+function renderRight(){
+  var el=document.getElementById("rightPanel"),h="";
+  for(var i=0;i<BLOCKS.length;i++){
+    var b=BLOCKS[i];
+    if(b.sec!==curSec)continue;
+    h+="<div class='q-block'>";
+    h+="<div class='q-range'>"+b.range+"</div>";
+    h+="<div class='q-instruction'>"+b.instruction+"</div>";
+    if(b.type==="inline")h+=renderInline(b);
+    else if(b.type==="mcq")h+=renderMcq(b);
+    else if(b.type==="match")h+=renderMatch(b);
+    h+="</div>";
+  }
+  if(reviewing){
+    h+="<div style='text-align:center;margin:24px 0'><button class='cf-btn cf-yes' style='padding:12px 34px' onclick='showAnalysis()'>Xem Analysis và lời khuyên</button></div>";
+  }
+  el.innerHTML=h;
+  bindInputs();
+}
+
+function renderInline(b){
+  var html=b.html;
+  var re=/\[\[(\d+)\]\]/g;
+  html=html.replace(re,function(m,d){
+    var n=parseInt(d,10);
+    return gapHtml(n);
+  });
+  return "<div class='note-card'>"+html+"</div>";
+}
+
+function gapHtml(n){
+  var q=qById(n);
+  var val=answers[n]?answers[n]:"";
+  var s="<span class='gap'><span class='gap-n' id='gn-"+n+"'>"+n+"</span>";
+  if(!reviewing){
+    s+="<input class='fillbox' id='fb-"+n+"' data-q='"+n+"' autocomplete='off' spellcheck='false' value=\""+esc(val)+"\">";
+  }else{
+    var ok=isCorrect(q,val);
+    s+="<input class='fillbox "+(ok?"ok":"no")+"' id='fb-"+n+"' data-q='"+n+"' readonly value=\""+esc(val)+"\" onclick='openExp("+n+")'>";
+    if(!ok)s+="<span class='corr-tag'>"+q.answer+"</span>";
+  }
+  s+="</span>";
+  return s;
+}
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+
+function renderMcq(b){
+  var h="";
+  for(var i=0;i<b.qs.length;i++){
+    var n=b.qs[i],q=qById(n),val=answers[n]?answers[n]:"";
+    var cls="q-card";
+    if(reviewing)cls+=isCorrect(q,val)?" is-correct":" is-wrong";
+    h+="<div class='"+cls+"' id='qc-"+n+"'"+(reviewing?" onclick='focusScript("+n+")'":"")+">";
+    h+="<div class='q-head'><span class='q-num "+(val?(reviewing?(isCorrect(q,val)?"done":"no"):"done"):"")+"' id='gn-"+n+"'>"+n+"</span><span class='q-stem'>"+q.stem+"</span></div>";
+    h+="<div class='q-opts'>";
+    for(var j=0;j<q.options.length;j++){
+      var o=q.options[j],sel=(val===o.k);
+      var ocls="q-opt";
+      if(reviewing){
+        if(o.k===q.answer)ocls+=" pick-ok";
+        else if(sel)ocls+=" pick-no";
+      }
+      h+="<div class='"+ocls+"'><input type='radio' name='q-"+n+"' id='r-"+n+"-"+o.k+"' value='"+o.k+"'"+(sel?" checked":"")+(reviewing?" disabled":"")+"><label for='r-"+n+"-"+o.k+"'><b>"+o.k+"</b>&nbsp;&nbsp;"+o.t+"</label></div>";
+    }
+    h+="</div>";
+    if(reviewing)h+=fbHtml(q,val);
+    h+="</div>";
+  }
+  return h;
+}
+
+function renderMatch(b){
+  var h="<div class='opt-box'><div class='obt'>List of options</div>";
+  for(var i=0;i<b.box.length;i++){h+="<div><b>"+b.box[i].k+"</b>&nbsp;&nbsp;"+b.box[i].t+"</div>"}
+  h+="</div>";
+  for(var j=0;j<b.qs.length;j++){
+    var n=b.qs[j],q=qById(n),val=answers[n]?answers[n]:"";
+    var cls="match-row";
+    if(reviewing)cls+=isCorrect(q,val)?" is-correct":" is-wrong";
+    h+="<div class='"+cls+"' id='qc-"+n+"'"+(reviewing?" onclick='openExp("+n+")'":"")+">";
+    h+="<span class='q-num "+(val?(reviewing?(isCorrect(q,val)?"done":"no"):"done"):"")+"' id='gn-"+n+"'>"+n+"</span>";
+    h+="<span class='mlabel'>"+q.stem+"</span>";
+    if(!reviewing){
+      h+="<select class='matchsel' data-q='"+n+"'><option value=''>- select -</option>";
+      for(var k=0;k<b.box.length;k++){
+        h+="<option value='"+b.box[k].k+"'"+(val===b.box[k].k?" selected":"")+">"+b.box[k].k+" - "+b.box[k].t+"</option>";
+      }
+      h+="</select>";
+    }else{
+      h+="<span style='font-size:13.5px;font-weight:700'>"+(val?val:"(bỏ trống)")+(isCorrect(q,val)?"":" &rarr; "+q.answer)+"</span>";
+    }
+    h+="</div>";
+  }
+  return h;
+}
+
+function fbHtml(q,val){
+  var ok=isCorrect(q,val);
+  var h="<div class='fb-verdict "+(ok?"ok":"no")+"'>"+(ok?"ĐÚNG":"SAI - đáp án: "+q.answer)+"</div>";
+  h+="<div class='fb-explain'>";
+  h+="<span class='step'>Bước 1 - Câu hỏi đòi gì</span>"+q.explain.s1;
+  h+="<span class='step'>Bước 2 - Dẫn chứng trong transcript</span>"+q.explain.s2;
+  h+="<span class='step'>Bước 3 - Cơ chế paraphrase</span>"+q.explain.s3;
+  h+="<span class='step'>Bước 4 - Bẫy</span>"+q.explain.s4;
+  if(q.explain.d){
+    for(var i=0;i<q.explain.d.length;i++){
+      h+="<div class='distractor'><b>"+q.explain.d[i].k+".</b> "+q.explain.d[i].t+"</div>";
+    }
+  }
+  h+="</div>";
+  return h;
+}
+
+function bindInputs(){
+  var ins=document.querySelectorAll("input.fillbox");
+  for(var i=0;i<ins.length;i++){
+    if(reviewing)continue;
+    ins[i].addEventListener("input",function(){
+      var n=parseInt(this.getAttribute("data-q"),10);
+      answers[n]=this.value.trim();
+      updateNav();markGap(n);
+    });
+  }
+  var rs=document.querySelectorAll(".q-opt input[type=radio]");
+  for(var j=0;j<rs.length;j++){
+    if(reviewing)continue;
+    rs[j].addEventListener("change",function(){
+      var n=parseInt(this.name.split("-")[1],10);
+      answers[n]=this.value;
+      updateNav();markGap(n);
+    });
+  }
+  var ss=document.querySelectorAll("select.matchsel");
+  for(var k=0;k<ss.length;k++){
+    if(reviewing)continue;
+    ss[k].addEventListener("change",function(){
+      var n=parseInt(this.getAttribute("data-q"),10);
+      answers[n]=this.value;
+      updateNav();markGap(n);
+    });
+  }
+}
+
+function markGap(n){
+  var g=document.getElementById("gn-"+n);
+  if(!g)return;
+  if(answers[n])g.classList.add("done");else g.classList.remove("done");
+}
+
+function buildNav(){
+  var h="";
+  for(var s=0;s<SECTIONS.length;s++){
+    var sec=SECTIONS[s].n;
+    h+="<div class='qnav-group'><span class='gl'>S"+sec+"</span>";
+    for(var i=0;i<QUESTIONS.length;i++){
+      if(QUESTIONS[i].sec!==sec)continue;
+      var n=QUESTIONS[i].n;
+      h+="<button class='qnav-btn' id='nav-"+n+"' onclick='navGo("+n+")'>"+n+"</button>";
+    }
+    h+="</div>";
+  }
+  document.getElementById("qnav").innerHTML=h;
+}
+
+function updateNav(){
+  for(var i=0;i<QUESTIONS.length;i++){
+    var q=QUESTIONS[i],b=document.getElementById("nav-"+q.n);
+    if(!b)continue;
+    b.classList.remove("done");b.classList.remove("ok");b.classList.remove("wrong");
+    var val=answers[q.n]?answers[q.n]:"";
+    if(done){
+      if(isCorrect(q,val))b.classList.add("ok");else b.classList.add("wrong");
+    }else if(val){b.classList.add("done")}
+  }
+}
+
+function navGo(n){
+  var q=qById(n);
+  if(!q)return;
+  if(q.sec!==curSec)goSection(q.sec);
+  setTimeout(function(){
+    var t=document.getElementById("fb-"+n)||document.getElementById("qc-"+n)||document.getElementById("gn-"+n);
+    if(t&&t.scrollIntoView)t.scrollIntoView({block:"center"});
+    if(t&&t.focus&&t.tagName==="INPUT"&&!reviewing)t.focus();
+  },60);
+}
+
+function norm(s){
+  s=String(s==null?"":s).toLowerCase().trim();
+  s=s.replace(/[.,;:!?]+$/,"");
+  s=s.replace(/\s+/g," ");
+  return s;
+}
+function isCorrect(q,val){
+  var v=norm(val);
+  if(!v)return false;
+  for(var i=0;i<q.accept.length;i++){
+    if(norm(q.accept[i])===v)return true;
+  }
+  return false;
+}
+
+function submitTest(){
+  if(done)return;
+  var un=0;
+  for(var i=0;i<QUESTIONS.length;i++){if(!answers[QUESTIONS[i].n])un++}
+  var msg=un>0?("Em còn "+un+" câu chưa trả lời. Nộp bài bây giờ?"):"Em đã trả lời hết 30 câu. Nộp bài bây giờ?";
+  document.getElementById("cfMsg").textContent=msg;
+  document.getElementById("confirmOverlay").classList.add("show");
+}
+function confirmSubmitNo(){document.getElementById("confirmOverlay").classList.remove("show")}
+function confirmSubmitYes(){document.getElementById("confirmOverlay").classList.remove("show");doGrade()}
+function forceSubmit(){
+  if(done)return;
+  document.getElementById("confirmOverlay").classList.remove("show");
+  doGrade();
+}
+
+function doGrade(){
+  if(done)return;
+  done=true;
+  if(timerInt)clearInterval(timerInt);
+  var correct=0;
+  for(var i=0;i<QUESTIONS.length;i++){
+    var q=QUESTIONS[i];
+    if(isCorrect(q,answers[q.n]?answers[q.n]:""))correct++;
+  }
+  var total=QUESTIONS.length;
+  var wrong=total-correct;
+  var pct=Math.round((correct/total)*100);
+  var used=TOTAL_SECONDS-timerSec;
+  var timeUsed=Math.floor(used/60)+"m "+(used%60)+"s";
+  document.getElementById("resName").textContent=studentName;
+  document.getElementById("resOk").textContent=correct;
+  document.getElementById("resNo").textContent=wrong;
+  document.getElementById("resPct").textContent=pct+"%";
+  document.getElementById("resultOverlay").classList.add("show");
+  document.getElementById("btnSubmit").textContent="ĐÃ NỘP";
+  document.getElementById("btnSubmit").disabled=true;
+  document.getElementById("btnAna").classList.add("show");
+  updateNav();
+  pushToSheets({name:studentName,correct:correct,total:total,band:"",timeUsed:timeUsed,answers:answers});
+}
+
+function pushToSheets(data){
+  var m=document.getElementById("gsMsg");
+  if(!SCRIPT_URL){m.textContent="";return}
+  m.textContent="Đang lưu kết quả...";m.style.color="#888";
+  fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify(data),mode:"no-cors"}).then(function(){
+    m.textContent="Đã lưu kết quả";m.style.color="#2e7d32";
+  }).catch(function(){m.textContent="Không lưu được, báo giáo viên";m.style.color="#c62828"});
+}
+
+function reviewMode(){
+  reviewing=true;
+  document.getElementById("resultOverlay").classList.remove("show");
+  show("screenTest");
+  document.getElementById("navHint").textContent="Xanh là đúng, đỏ là sai. Bấm vào ô trả lời để xem giải thích.";
+  goSection(curSec);updateNav();
+}
+
+function openExp(n){
+  var q=qById(n);
+  if(!q)return;
+  var val=answers[n]?answers[n]:"";
+  var ok=isCorrect(q,val);
+  document.getElementById("expTitle").textContent="Câu "+n+" - "+(ok?"Đúng":"Sai");
+  document.getElementById("expSub").textContent="Em điền: "+(val?val:"(bỏ trống)")+"   |   Đáp án: "+q.answer;
+  document.getElementById("expBody").innerHTML=fbHtml(q,val);
+  document.getElementById("expOverlay").classList.add("show");
+  focusScript(n);
+}
+function closeExp(){document.getElementById("expOverlay").classList.remove("show")}
+function closeExpBg(e){if(e.target&&e.target.id==="expOverlay")closeExp()}
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeExp()});
+
+// ANALYSIS
+function showAnalysis(){
+  document.getElementById("resultOverlay").classList.remove("show");
+  reviewing=true;
+  var correct=0,i,q;
+  for(i=0;i<QUESTIONS.length;i++){if(isCorrect(QUESTIONS[i],answers[QUESTIONS[i].n]||""))correct++}
+  var h="<div class='analysis-wrap'>";
+  h+="<h2>Phân tích bài làm</h2><div class='asub'>"+studentName+" - "+correct+"/"+QUESTIONS.length+" câu đúng ("+Math.round(correct/QUESTIONS.length*100)+"%)</div>";
+  h+="<button class='abtn-back' onclick='backToReview()'>Quay lại Review</button>";
+
+  // 1. section scores
+  h+="<div class='a-section'><h3>1. Điểm từng section</h3><table class='a-table'><tr><th>Section</th><th>Đúng</th><th>Mục tiêu</th><th>Nhận xét</th></tr>";
+  for(i=0;i<SECTIONS.length;i++){
+    var sn=SECTIONS[i].n,c=0,t=0;
+    for(var j=0;j<QUESTIONS.length;j++){
+      if(QUESTIONS[j].sec!==sn)continue;
+      t++;
+      if(isCorrect(QUESTIONS[j],answers[QUESTIONS[j].n]||""))c++;
+    }
+    var goal=sn===3?7:8;
+    var cls=c>=goal?"good":"bad";
+    var note=c>=goal?"Đạt mục tiêu, giữ nhịp này.":"Chưa đạt. Xem lại phần chiến lược ở mục 2.";
+    h+="<tr class='"+cls+"'><td>Section "+sn+"</td><td>"+c+"/"+t+"</td><td>"+goal+"/"+t+"</td><td>"+note+"</td></tr>";
+  }
+  h+="</table><div class='a-tip'><b>Cách đọc bảng:</b> Section 1 và 2 là phần dễ nhất của bài thi, mục tiêu tối thiểu 8/10 mỗi section. Section 3 là hội thoại học thuật nhiều người nói nên mục tiêu 7/10. Nếu Section 1 hoặc 2 thấp hơn 8 thì vấn đề nằm ở kỹ năng nghe chi tiết (số, tên riêng, chính tả), không phải ở vốn từ.</div></div>";
+
+  // 2. errors by block type
+  h+="<div class='a-section'><h3>2. Lỗi theo dạng câu hỏi</h3>";
+  var anyWrongType=false;
+  for(i=0;i<BLOCKS.length;i++){
+    var b=BLOCKS[i],list=[],ns=[];
+    if(b.type==="inline"){
+      var mm=b.html.match(/\[\[(\d+)\]\]/g)||[];
+      for(var z=0;z<mm.length;z++){ns.push(parseInt(mm[z].replace(/[^0-9]/g,""),10))}
+    }else{ns=b.qs}
+    for(var y=0;y<ns.length;y++){
+      var qq=qById(ns[y]);
+      if(qq&&!isCorrect(qq,answers[qq.n]||""))list.push(qq.n);
+    }
+    var name=BLOCK_TNAME[i]?BLOCK_TNAME[i]:b.type;
+    h+="<div class='a-tip'><b>"+name+" (Section "+b.sec+", "+b.range+")</b> - sai "+list.length+"/"+ns.length+" câu"+(list.length?": câu "+list.join(", "):"")+"<br>";
+    if(list.length){anyWrongType=true;h+=STRATEGY[i]}
+    else{h+="Dạng này em làm tốt, giữ nguyên cách làm."}
+    h+="</div>";
+  }
+  if(!anyWrongType)h+="<div class='a-tip'><b>Không sai dạng nào.</b> Bước tiếp theo là tăng tốc độ ghi và làm đề đầy đủ 40 câu.</div>";
+  h+="</div>";
+
+  // 3. wrong detail
+  h+="<div class='a-section'><h3>3. Chi tiết câu sai</h3>";
+  var wrongs=[];
+  for(i=0;i<QUESTIONS.length;i++){if(!isCorrect(QUESTIONS[i],answers[QUESTIONS[i].n]||""))wrongs.push(QUESTIONS[i])}
+  if(wrongs.length===0){h+="<div class='a-tip'><b>Không có câu nào sai.</b></div>"}
+  else{
+    h+="<table class='a-table'><tr><th style='width:48px'>Câu</th><th style='width:130px'>Em điền</th><th style='width:130px'>Đáp án</th><th>Bẫy ở đâu</th></tr>";
+    for(i=0;i<wrongs.length;i++){
+      q=wrongs[i];
+      h+="<tr><td><b>"+q.n+"</b></td><td>"+esc(answers[q.n]?answers[q.n]:"(bỏ trống)")+"</td><td><b>"+esc(q.answer)+"</b></td><td>"+q.explain.s4+"</td></tr>";
+    }
+    h+="</table>";
+  }
+  h+="</div>";
+
+  // 4. collocations
+  h+="<div class='a-section'><h3>4. Collocations lấy từ bài nghe</h3><div class='a-tip'>Rê chuột vào từng cụm để xem phiên âm, nghĩa tiếng Việt và ví dụ. Toàn bộ cụm dưới đây đều tra được trong Oxford Learner's Dictionaries hoặc Cambridge Dictionary.</div>";
+  for(i=0;i<SECTIONS.length;i++){
+    h+="<div class='sec-label'>Section "+SECTIONS[i].n+"</div><div class='a-vocab'>";
+    for(var c2=0;c2<COLLOCATIONS.length;c2++){
+      var cc=COLLOCATIONS[c2];
+      if(cc.sec!==SECTIONS[i].n)continue;
+      h+="<div class='col-chip'>"+cc.w+"<div class='col-detail'><div class='cd-word'>"+cc.w+"</div><div class='cd-ipa'>"+cc.ipa+"</div><div class='cd-vi'>"+cc.vi+"</div><div class='cd-ex'>"+cc.ex+"</div></div></div>";
+    }
+    h+="</div>";
+  }
+  h+="</div>";
+
+  // 5. paraphrase
+  h+="<div class='a-section'><h3>5. Bảng paraphrase đề bài so với bài nghe</h3><div class='a-tip'>Cột trái là từ trong ĐỀ, cột phải là từ trong BÀI NGHE. Bài thi không bao giờ đọc lại nguyên văn từ của đề, nên việc của em là đọc đề trước và tự đoán trước các cách diễn đạt khác.</div>";
+  h+="<table class='a-table'><tr><th style='width:44px'>Sec</th><th style='width:38%'>Trong đề</th><th>Trong bài nghe</th></tr>";
+  for(i=0;i<PARAPHRASE.length;i++){
+    h+="<tr><td>"+PARAPHRASE[i].sec+"</td><td>"+PARAPHRASE[i].q+"</td><td><b>"+PARAPHRASE[i].s+"</b></td></tr>";
+  }
+  h+="</table></div>";
+
+  // 6. grammar
+  h+="<div class='a-section'><h3>6. Cấu trúc ngữ pháp lấy từ transcript</h3><div class='a-tip'>Những cấu trúc này xuất hiện trong chính bài nghe vừa rồi. Học thuộc và dùng lại trong Speaking và Writing thì vừa chắc chắn đúng, vừa tự nhiên.</div>";
+  for(i=0;i<GRAMMAR.length;i++){
+    h+="<div class='g-item'><div class='g-name'>Section "+GRAMMAR[i].sec+" - "+GRAMMAR[i].name+"</div><div class='g-ex'>"+GRAMMAR[i].ex+"</div><div class='g-use'>"+GRAMMAR[i].use+"</div></div>";
+  }
+  h+="</div>";
+
+  // 7. three costly errors
+  h+="<div class='a-section'><h3>7. Ba lỗi mất điểm oan</h3>";
+  h+="<div class='a-tip'><b>Lỗi 1 - Chính tả và con số.</b> Câu 19 Cotehele được ĐÁNH VẦN từng chữ cái trong bài (C-O-T-E-H-E-L-E). Viết theo phần đọc trôi (Coteal) là mất điểm dù nghe đúng ý. Câu 20 là mã bưu chính SH121LQ, chỉ nhầm một ký tự là sai. Câu 9 có hai năm 1902 và 1956 đọc liền nhau: 1902 đi với began, 1956 đi với took over. Nguyên tắc: khi người nói đánh vần hoặc đọc số, viết ngay lập tức, đừng chờ nhớ lại.</div>";
+  h+="<div class='a-tip'><b>Lỗi 2 - Vượt giới hạn số từ.</b> Đề ghi ONE WORD AND/OR A NUMBER. Câu 4 chỉ được viết <b>ecological</b> vì từ Assessment đã in sẵn trong đề; viết ecological assessment là hai từ, chấm sai. Câu 5 chỉ được viết <b>best</b> vì đề đã có the; viết the best là sai. Trước khi viết, đọc lại cả dòng xem từ nào đã có sẵn.</div>";
+  h+="<div class='a-tip'><b>Lỗi 3 - Sai dạng từ.</b> Câu 3 phải là <b>surveying</b> vì cấu trúc involves + V-ing và phải song song với offering advice. Câu 8 phải là <b>grateful</b> vì đứng sau will be nên cần tính từ, viết gratitude là sai. Mẹo: trước khi nghe, nhìn chỗ trống và tự đoán từ loại, ghi ký hiệu N / V-ing / Adj ngay cạnh chỗ trống.</div></div>";
+
+  // 8. seven day plan
+  h+="<div class='a-section'><h3>8. Lộ trình 7 ngày tiếp theo</h3>";
+  h+="<div class='day-row'><b>Ngày 1</b><span>Nghe lại toàn bộ 3 section, vừa nghe vừa đọc transcript. Đánh dấu mọi chỗ mà tai không bắt kịp.</span></div>";
+  h+="<div class='day-row'><b>Ngày 2</b><span>Chép chính tả (dictation) riêng Section 1, từng câu một. Mục tiêu: chép đúng 100% các câu chứa đáp án.</span></div>";
+  h+="<div class='day-row'><b>Ngày 3</b><span>Học thuộc 36 collocations ở mục 4. Tự đặt 1 câu cho mỗi cụm, ưu tiên cụm dùng được trong Speaking Part 1 và 2.</span></div>";
+  h+="<div class='day-row'><b>Ngày 4</b><span>Luyện riêng dạng Multiple Choice: làm 20 câu từ đề khác, mỗi câu tự viết ra lý do loại 2 phương án sai.</span></div>";
+  h+="<div class='day-row'><b>Ngày 5</b><span>Luyện số, ngày tháng, đánh vần, mã bưu chính trong 30 phút. Đây là phần mất điểm oan nhiều nhất.</span></div>";
+  h+="<div class='day-row'><b>Ngày 6</b><span>Viết lại 5 cấu trúc ngữ pháp ở mục 6 thành câu của riêng em, áp vào 1 đoạn Writing Task 2.</span></div>";
+  h+="<div class='day-row'><b>Ngày 7</b><span>Làm lại đề này full 30 câu không nhìn transcript. So sánh với lần đầu, mục tiêu tăng ít nhất 3 câu.</span></div>";
+  h+="</div>";
+
+  h+="<button class='abtn-back bottom' onclick='backToReview()'>Quay lại Review</button></div>";
+  document.getElementById("screenAnalysis").innerHTML=h;
+  show("screenAnalysis");
+  if(window.scrollTo)window.scrollTo(0,0);
+}
+function backToReview(){show("screenTest");reviewing=true;goSection(curSec);updateNav()}
+
+// HIGHLIGHT + NOTE
+function inPanel(node){
+  while(node){
+    if(node.id==="leftPanel"||node.id==="rightPanel")return true;
+    node=node.parentNode;
+  }
+  return false;
+}
+document.addEventListener("mouseup",function(e){
+  setTimeout(function(){
+    var sel=window.getSelection();
+    if(!sel||sel.isCollapsed||!sel.rangeCount){hideSelPopup();return}
+    var r=sel.getRangeAt(0);
+    if(!inPanel(r.commonAncestorContainer)){hideSelPopup();return}
+    if(!String(sel).trim()){hideSelPopup();return}
+    savedRange=r.cloneRange();
+    var rect=r.getBoundingClientRect();
+    var p=document.getElementById("selPopup");
+    p.classList.add("show");
+    var top=rect.top+window.pageYOffset-p.offsetHeight-8;
+    var left=rect.left+window.pageXOffset+(rect.width/2)-(p.offsetWidth/2);
+    if(left<6)left=6;
+    p.style.top=(top<6?6:top)+"px";
+    p.style.left=left+"px";
+  },10);
+});
+function hideSelPopup(){
+  var p=document.getElementById("selPopup");
+  if(p)p.classList.remove("show");
+}
+function clearSel(){
+  hideSelPopup();
+  var s=window.getSelection();
+  if(s&&s.removeAllRanges)s.removeAllRanges();
+  savedRange=null;
+}
+function applyHl(cls){
+  if(!savedRange)return;
+  var m=document.createElement("mark");
+  m.className=cls;
+  try{savedRange.surroundContents(m)}
+  catch(err){
+    try{
+      var frag=savedRange.extractContents();
+      m.appendChild(frag);
+      savedRange.insertNode(m);
+    }catch(e2){}
+  }
+  clearSel();
+}
+function openNoteInput(){
+  if(!savedRange)return;
+  pendingNoteRange=savedRange.cloneRange();
+  var p=document.getElementById("selPopup");
+  var w=document.getElementById("noteWrap");
+  w.style.top=p.style.top;
+  w.style.left=p.style.left;
+  w.classList.add("show");
+  hideSelPopup();
+  document.getElementById("noteText").value="";
+  document.getElementById("noteText").focus();
+}
+function cancelNote(){
+  document.getElementById("noteWrap").classList.remove("show");
+  pendingNoteRange=null;clearSel();
+}
+function saveNote(){
+  var txt=document.getElementById("noteText").value.trim();
+  if(!txt||!pendingNoteRange){cancelNote();return}
+  var m=document.createElement("mark");
+  m.className="hl-y";
+  m.setAttribute("data-note",txt);
+  try{pendingNoteRange.surroundContents(m)}
+  catch(err){
+    try{
+      var frag=pendingNoteRange.extractContents();
+      m.appendChild(frag);
+      pendingNoteRange.insertNode(m);
+    }catch(e2){}
+  }
+  document.getElementById("noteWrap").classList.remove("show");
+  pendingNoteRange=null;clearSel();
+}
+document.addEventListener("mouseover",function(e){
+  var t=e.target;
+  if(t&&t.tagName==="MARK"&&t.getAttribute("data-note")){
+    var tt=document.getElementById("noteTooltip");
+    tt.textContent=t.getAttribute("data-note");
+    tt.style.display="block";
+    var r=t.getBoundingClientRect();
+    tt.style.top=(r.top+window.pageYOffset-tt.offsetHeight-8)+"px";
+    tt.style.left=(r.left+window.pageXOffset)+"px";
+  }
+});
+document.addEventListener("mouseout",function(e){
+  var t=e.target;
+  if(t&&t.tagName==="MARK"&&t.getAttribute("data-note")){
+    document.getElementById("noteTooltip").style.display="none";
+  }
+});
+function clearHighlights(){
+  var ms=document.querySelectorAll("#leftPanel mark, #rightPanel mark");
+  for(var i=ms.length-1;i>=0;i--){
+    var m=ms[i];
+    if(m.classList.contains("ans-mark"))continue;
+    var par=m.parentNode;
+    while(m.firstChild)par.insertBefore(m.firstChild,m);
+    par.removeChild(m);
+    if(par.normalize)par.normalize();
+  }
+  document.getElementById("noteTooltip").style.display="none";
+}
+
+// COPY / PASTE BLOCKING
+function blockEvt(e){e.preventDefault();return false}
+document.addEventListener("copy",blockEvt);
+document.addEventListener("cut",blockEvt);
+document.addEventListener("paste",blockEvt);
+document.addEventListener("dragstart",blockEvt);
+document.addEventListener("drop",blockEvt);
+document.addEventListener("contextmenu",blockEvt);
+document.addEventListener("keydown",function(e){
+  var k=e.key?e.key.toLowerCase():"";
+  if((e.ctrlKey||e.metaKey)&&(k==="c"||k==="x"||k==="v"||k==="p"||k==="s"||k==="u")){e.preventDefault();return false}
+  if(k==="f12"){e.preventDefault();return false}
+});
+
+// RESIZER
+function initResizer(){
+  var rs=document.getElementById("resizer"),wrap=document.getElementById("mainWrap");
+  var left=document.getElementById("leftPanel"),right=document.getElementById("rightPanel"),on=false;
+  if(!rs)return;
+  rs.addEventListener("mousedown",function(e){on=true;rs.classList.add("on");document.body.style.cursor="col-resize";document.body.style.userSelect="none";e.preventDefault()});
+  document.addEventListener("mousemove",function(e){
+    if(!on)return;
+    var r=wrap.getBoundingClientRect();
+    var pct=((e.clientX-r.left)/r.width)*100;
+    if(pct<20||pct>70)return;
+    left.style.flex="none";right.style.flex="none";
+    left.style.width=pct+"%";right.style.width=(100-pct)+"%";
+  });
+  document.addEventListener("mouseup",function(){
+    if(on){on=false;rs.classList.remove("on");document.body.style.cursor="";document.body.style.userSelect=""}
+  });
+}
+
+// PRIVACY
+var SHIELD_DEFAULT="Nội dung đã được ẩn.<br>Quay lại cửa sổ bài thi để tiếp tục.";
+function showShield(msg){
+  document.getElementById("shieldMsg").innerHTML=msg?msg:SHIELD_DEFAULT;
+  document.body.classList.add("shielded");
+  document.getElementById("privacyShield").classList.add("show");
+}
+function hideShield(){
+  document.body.classList.remove("shielded");
+  document.getElementById("privacyShield").classList.remove("show");
+}
+window.addEventListener("blur",function(){if(studentName&&!done)showShield()});
+window.addEventListener("focus",function(){hideShield()});
+
+var ni=document.getElementById("nameInput");
+if(ni)ni.addEventListener("keydown",function(e){if(e.key==="Enter")beginTest()});
+
+</script>
+</body>
+</html>
