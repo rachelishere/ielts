@@ -262,13 +262,6 @@ body.shielded .screen{filter:blur(16px);pointer-events:none}
   <div class="entry-card">
     <h1>IELTS Listening - Mock Test 1</h1>
     <div class="sub">Sections 1 to 3 - 30 câu - Định dạng thi trên máy</div>
-    <div class="info-box">
-      <strong>Trước khi bắt đầu:</strong><br>
-      1. Giáo viên mở file audio ở ngoài trình duyệt. File này không có trình phát.<br>
-      2. Thời gian: <strong>26 phút</strong> (nghe và chuyển đáp án). Hết giờ hệ thống tự nộp bài.<br>
-      3. Câu 1-10, 19-20: <strong>ONE WORD AND/OR A NUMBER</strong>. Viết quá số từ là sai.<br>
-      4. Không copy / paste được. Vẫn bôi đen để highlight và ghi note bình thường.<br>
-      5. Nộp bài bằng nút <strong>SUBMIT</strong> ở góc trên bên phải.
     </div>
     <div class="entry-err" id="entryErr">Vui lòng nhập họ tên.</div>
     <input class="entry-input" id="nameInput" placeholder="Họ và tên học viên" autocomplete="off">
@@ -284,7 +277,7 @@ body.shielded .screen{filter:blur(16px);pointer-events:none}
       <span class="name-tag" id="nameTag"></span>
     </div>
     <div class="right">
-      <span class="timer" id="timer">26:00</span>
+      <span class="timer" id="timer">50:00</span>
       <button class="btn-ana" id="btnAna" onclick="showAnalysis()">ANALYSIS</button>
       <button class="btn-submit" id="btnSubmit" onclick="submitTest()">SUBMIT</button>
     </div>
@@ -367,7 +360,7 @@ body.shielded .screen{filter:blur(16px);pointer-events:none}
 
 <script>
 var TOTAL_SECONDS=26*60;
-var SCRIPT_URL="https://script.google.com/macros/s/AKfycbyEg5kKRiYdm4d-TMw_smX8AD5UlXmD5IjjLdU8BeDauFCoBqyxxDYH_Qa_9hbW69At/exec";
+var SCRIPT_URL="";
 var MAP_IMG="";
 
 var SECTIONS=[
