@@ -448,12 +448,12 @@ textarea::placeholder{color:rgba(240,233,218,.28)}
     <p class="byline">IELTS Speaking - bộ đề Quý 3</p>
   </div>
 
-  <div class="chips" id="chips" role="group" aria-label="Chọn nhóm chủ đề"></div>
+  <div class="chips" id="chips" role="group" aria-label="Choose the topic"></div>
   <p class="chip-note" id="chipNote"></p>
 
   <main class="stage">
-    <div class="eyebrow" id="eyebrow">Sẵn sàng</div>
-    <p class="question len-m" id="question" aria-live="polite">Bấm Quay đề để nhận câu hỏi.</p>
+    <div class="eyebrow" id="eyebrow">Let's go with the flow and go beyond the limitation of your brain</div>
+    <p class="question len-m" id="question" aria-live="polite">Click "Let's roll" for a new question</p>
     <p class="topic" id="topic"></p>
     <div class="dots" id="dots"></div>
     <div class="tips" id="tips"></div>
@@ -461,12 +461,12 @@ textarea::placeholder{color:rgba(240,233,218,.28)}
   </main>
 
   <div class="actions">
-    <button class="btn primary" id="spinBtn">Quay đề</button>
-    <button class="btn ghost" id="prevBtn" hidden>Câu trước</button>
-    <button class="btn ghost" id="nextBtn" hidden>Câu tiếp</button>
-    <button class="btn ghost" id="tipBtn" hidden>Gợi ý</button>
-    <button class="btn ghost" id="timerBtn">Bấm giờ 1 phút</button>
-    <button class="btn icon" id="settingsBtn" aria-label="Cài đặt">
+    <button class="btn primary" id="spinBtn">Let's roll</button>
+    <button class="btn ghost" id="prevBtn" hidden>Back</button>
+    <button class="btn ghost" id="nextBtn" hidden>Next</button>
+    <button class="btn ghost" id="tipBtn" hidden>Vocab hints</button>
+    <button class="btn ghost" id="timerBtn">1 minute timer</button>
+    <button class="btn icon" id="settingsBtn" aria-label="Settings">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="3"></circle>
         <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -474,12 +474,12 @@ textarea::placeholder{color:rgba(240,233,218,.28)}
     </button>
   </div>
 
-  <p class="hint"><kbd>S</kbd> quay đề &nbsp; <kbd>P</kbd> câu trước &nbsp; <kbd>N</kbd> câu tiếp &nbsp; <kbd>G</kbd> gợi ý &nbsp; <kbd>T</kbd> bấm giờ</p>
+  <p class="hint"><kbd>S</kbd> Let's roll &nbsp; <kbd>P</kbd> Back &nbsp; <kbd>N</kbd> Next &nbsp; <kbd>G</kbd> Vocab hints &nbsp; <kbd>T</kbd> 1 minute timer</p>
 </div>
 
 <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="setTitle">
   <div class="sheet">
-    <h2 id="setTitle">Cài đặt</h2>
+    <h2 id="setTitle">Settings</h2>
     <p class="sub">Chỉnh cách quay đề và thêm câu hỏi của riêng bạn.</p>
 
     <div class="field">
