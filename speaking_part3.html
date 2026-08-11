@@ -453,7 +453,8 @@ textarea::placeholder{color:rgba(240,233,218,.28)}
 
   <main class="stage">
     <div class="eyebrow" id="eyebrow">Let's go with the flow and go beyond the limitation of your brain</div>
-    <p class="question len-m" id="question" aria-live="polite">Click "Let's roll" for a new question</p>
+    <p class="question len-m" id="question" aria-live="polite"> Click "Let's roll" 
+      for a new question </p>
     <p class="topic" id="topic"></p>
     <div class="dots" id="dots"></div>
     <div class="tips" id="tips"></div>
@@ -4748,7 +4749,7 @@ textarea::placeholder{color:rgba(240,233,218,.28)}
     el.bar.classList.remove("on","low");
     el.barFill.style.transform = "scaleX(1)";
     el.timerBtn.classList.remove("running");
-    el.timerBtn.textContent = "Bấm giờ " + labelOf(state.seconds);
+    el.timerBtn.textContent = "Set a timer for" + labelOf(state.seconds);
   }
 
   function labelOf(v){
