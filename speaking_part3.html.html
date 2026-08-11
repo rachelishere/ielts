@@ -1,0 +1,4931 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="description" content="Quay ngẫu nhiên câu hỏi IELTS Speaking Part 3 và luyện nói trong 1 phút." />
+<meta name="theme-color" content="#101614" />
+<meta name="color-scheme" content="dark" />
+<title>Part 3 - luyện nói IELTS Speaking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#101614;
+  --cream:#F0E9DA;
+  --cream-2:rgba(240,233,218,.62);
+  --cream-3:rgba(240,233,218,.38);
+  --stroke:rgba(240,233,218,.14);
+  --surface:rgba(240,233,218,.05);
+  --accent:#C87F4E;
+  --accent-hi:#D68F5E;
+  --accent-ink:#1B1310;
+  --ok:#7FA88C;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--body);
+  color:var(--cream);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:
+    radial-gradient(120% 80% at 8% -10%, rgba(133,84,45,.45) 0%, rgba(133,84,45,0) 55%),
+    radial-gradient(110% 75% at 95% -5%, rgba(23,79,63,.5) 0%, rgba(23,79,63,0) 55%),
+    radial-gradient(90% 60% at 50% 115%, rgba(31,52,46,.55) 0%, rgba(31,52,46,0) 60%),
+    var(--bg);
+}
+button{font-family:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--accent-hi);outline-offset:3px;border-radius:4px}
+
+.app{
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:34px 20px 132px;
+  max-width:900px;
+  margin:0 auto;
+}
+
+/* header */
+.brand{text-align:center}
+.brand h1{
+  font-family:var(--display);
+  font-weight:600;
+  font-size:clamp(2.6rem,7vw,3.6rem);
+  line-height:1;
+  margin:0;
+  letter-spacing:-.01em;
+}
+.byline{
+  margin:10px 0 0;
+  font-size:.9rem;
+  color:var(--cream-3);
+  letter-spacing:.02em;
+}
+
+/* category chips */
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:6px;
+  margin-top:26px;
+  padding:6px;
+  border:1px solid var(--stroke);
+  border-radius:999px;
+  background:var(--surface);
+}
+.chip{
+  padding:9px 18px;
+  border-radius:999px;
+  font-size:.95rem;
+  font-weight:500;
+  color:var(--cream-2);
+  transition:background .18s ease,color .18s ease;
+}
+.chip:hover{color:var(--cream)}
+.chip[aria-pressed="true"]{
+  background:var(--accent);
+  color:var(--accent-ink);
+  font-weight:600;
+  box-shadow:0 0 24px rgba(200,127,78,.35);
+}
+.chip-note{
+  margin:12px 0 0;
+  font-size:.88rem;
+  color:var(--cream-3);
+  text-align:center;
+}
+
+/* stage */
+.stage{
+  flex:1;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:48px 0 28px;
+  min-height:44vh;
+}
+.eyebrow{
+  font-size:.76rem;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:20px;
+}
+.eyebrow.is-live{color:var(--ok)}
+.question{
+  font-family:var(--display);
+  font-weight:500;
+  line-height:1.14;
+  letter-spacing:-.015em;
+  margin:0;
+  max-width:19ch;
+  transition:opacity .16s ease;
+}
+.question.len-s{font-size:clamp(2rem,5.6vw,3.6rem);max-width:16ch}
+.question.len-m{font-size:clamp(1.65rem,4.2vw,2.75rem);max-width:20ch}
+.question.len-l{font-size:clamp(1.35rem,3.2vw,2.1rem);max-width:26ch}
+.question.is-blur{opacity:.35}
+.topic{
+  margin:26px 0 0;
+  font-size:.9rem;
+  color:var(--cream-3);
+  max-width:44ch;
+}
+.topic b{color:var(--cream-2);font-weight:500}
+
+/* progress dots */
+.dots{display:flex;gap:8px;margin-top:22px;min-height:8px}
+.dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(240,233,218,.18);
+  transition:background .2s ease,transform .2s ease;
+}
+.dot.on{background:var(--accent);transform:scale(1.15)}
+.dot.done{background:rgba(200,127,78,.45)}
+
+/* timer bar */
+.bar{
+  width:min(420px,80%);
+  height:3px;
+  border-radius:3px;
+  background:rgba(240,233,218,.12);
+  margin-top:30px;
+  overflow:hidden;
+  opacity:0;
+  transition:opacity .2s ease;
+}
+.bar.on{opacity:1}
+.bar span{
+  display:block;height:100%;width:100%;
+  background:var(--ok);
+  transform-origin:left center;
+}
+.bar.low span{background:var(--accent-hi)}
+
+/* actions */
+.actions{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+  width:100%;
+}
+.btn{
+  border-radius:999px;
+  font-size:1rem;
+  font-weight:600;
+  padding:15px 30px;
+  transition:transform .12s ease,background .18s ease,border-color .18s ease;
+}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:var(--accent-hi)}
+.btn.ghost{border:1px solid var(--stroke);color:var(--cream-2);background:transparent}
+.btn.ghost:hover{border-color:rgba(240,233,218,.34);color:var(--cream)}
+.btn.ghost.running{border-color:var(--ok);color:var(--ok);font-variant-numeric:tabular-nums}
+.btn.icon{
+  width:52px;height:52px;
+  display:grid;place-items:center;
+  border:1px solid var(--stroke);
+  border-radius:50%;
+  padding:0;
+}
+.btn.icon:hover{border-color:rgba(240,233,218,.34)}
+.btn[hidden]{display:none}
+.hint{
+  margin-top:22px;
+  font-size:.8rem;
+  color:var(--cream-3);
+  text-align:center;
+}
+.hint kbd{
+  font-family:var(--body);
+  font-size:.76rem;
+  border:1px solid var(--stroke);
+  border-radius:5px;
+  padding:1px 6px;
+  color:var(--cream-2);
+}
+
+/* tip panel */
+.tips{
+  display:none;
+  width:min(620px,100%);
+  margin-top:28px;
+  text-align:left;
+  border:1px solid var(--stroke);
+  border-radius:18px;
+  background:rgba(240,233,218,.04);
+  padding:22px 22px 18px;
+}
+.tips.open{display:block}
+.tips .badge{
+  display:inline-block;
+  font-size:.7rem;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--accent);
+  border:1px solid rgba(200,127,78,.4);
+  border-radius:999px;
+  padding:5px 12px;
+  margin-bottom:18px;
+}
+.step{
+  display:grid;
+  grid-template-columns:70px 1fr;
+  gap:14px;
+  padding:12px 0;
+  border-top:1px solid rgba(240,233,218,.08);
+}
+.step:first-of-type{border-top:0;padding-top:0}
+.step .k{
+  font-family:var(--display);
+  font-size:.95rem;
+  font-weight:600;
+  color:var(--accent);
+  padding-top:1px;
+}
+.step .vi{font-size:.9rem;color:var(--cream-2);line-height:1.5}
+.step .en{
+  margin-top:7px;
+  font-size:.92rem;
+  color:var(--cream);
+  line-height:1.65;
+}
+.step .en span{display:block}
+.step .en i{color:var(--cream-3);font-style:italic}
+.colloc{
+  margin-top:16px;
+  padding-top:16px;
+  border-top:1px solid rgba(240,233,218,.08);
+}
+.colloc h3{
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--cream-3);
+  margin:0 0 12px;
+}
+.colloc ul{list-style:none;margin:0;padding:0}
+.colloc li{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px 10px;
+  padding:6px 0;
+  font-size:.92rem;
+  line-height:1.5;
+}
+.colloc b{font-weight:600;color:var(--cream)}
+.colloc em{font-style:normal;color:var(--cream-3);font-size:.85rem}
+.src{
+  margin:14px 0 0;
+  font-size:.74rem;
+  color:var(--cream-3);
+}
+@media (max-width:620px){
+  .tips{padding:18px 16px 14px}
+  .step{grid-template-columns:1fr;gap:4px}
+  .step .k{padding-top:0}
+}
+
+/* overlay */
+.overlay{
+  position:fixed;inset:0;
+  background:rgba(8,12,11,.72);
+  backdrop-filter:blur(6px);
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  padding:28px 18px;
+  overflow-y:auto;
+  z-index:40;
+}
+.overlay.open{display:flex}
+.sheet{
+  width:100%;
+  max-width:560px;
+  background:#161D1B;
+  border:1px solid var(--stroke);
+  border-radius:20px;
+  padding:26px;
+  margin:auto 0;
+}
+.sheet h2{
+  font-family:var(--display);
+  font-weight:600;
+  font-size:1.5rem;
+  margin:0 0 4px;
+}
+.sheet .sub{margin:0 0 22px;font-size:.88rem;color:var(--cream-3)}
+.field{margin-bottom:22px}
+.field > label{
+  display:block;
+  font-size:.82rem;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--cream-3);
+  margin-bottom:10px;
+}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{
+  padding:9px 16px;
+  border:1px solid var(--stroke);
+  border-radius:999px;
+  font-size:.92rem;
+  color:var(--cream-2);
+  transition:background .16s ease,color .16s ease,border-color .16s ease;
+}
+.seg button[aria-pressed="true"]{
+  background:var(--cream);
+  color:#141A18;
+  border-color:var(--cream);
+  font-weight:600;
+}
+.switch{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:13px 0;
+  border-top:1px solid rgba(240,233,218,.08);
+  font-size:.95rem;
+}
+.switch small{display:block;color:var(--cream-3);font-size:.8rem;margin-top:3px}
+.toggle{
+  flex:none;
+  width:46px;height:26px;
+  border-radius:999px;
+  background:rgba(240,233,218,.16);
+  position:relative;
+  transition:background .18s ease;
+}
+.toggle::after{
+  content:"";
+  position:absolute;top:3px;left:3px;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--cream);
+  transition:transform .18s ease;
+}
+.toggle[aria-pressed="true"]{background:var(--accent)}
+.toggle[aria-pressed="true"]::after{transform:translateX(20px)}
+textarea{
+  width:100%;
+  min-height:120px;
+  resize:vertical;
+  background:rgba(8,12,11,.5);
+  border:1px solid var(--stroke);
+  border-radius:12px;
+  padding:13px 14px;
+  color:var(--cream);
+  font-family:var(--body);
+  font-size:.92rem;
+  line-height:1.55;
+}
+textarea::placeholder{color:rgba(240,233,218,.28)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.mini{
+  padding:10px 18px;
+  border-radius:999px;
+  font-size:.9rem;
+  font-weight:600;
+  border:1px solid var(--stroke);
+  color:var(--cream-2);
+}
+.mini.solid{background:var(--cream);color:#141A18;border-color:var(--cream)}
+.mini:hover{border-color:rgba(240,233,218,.34)}
+.status{margin-top:10px;font-size:.85rem;color:var(--ok);min-height:1.2em}
+.status.warn{color:var(--accent-hi)}
+.close{
+  width:100%;
+  margin-top:6px;
+  padding:14px;
+  border-radius:999px;
+  background:var(--accent);
+  color:var(--accent-ink);
+  font-weight:600;
+  font-size:1rem;
+}
+.close:hover{background:var(--accent-hi)}
+
+@media (max-width:620px){
+  .app{padding:26px 16px 120px}
+  .btn{padding:14px 24px;font-size:.95rem}
+  .stage{padding:36px 0 22px}
+  .chip{padding:8px 14px;font-size:.88rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="brand">
+    <h1>Part&nbsp;3</h1>
+    <p class="byline">IELTS Speaking - bộ đề Quý 3</p>
+  </div>
+
+  <div class="chips" id="chips" role="group" aria-label="Chọn nhóm chủ đề"></div>
+  <p class="chip-note" id="chipNote"></p>
+
+  <main class="stage">
+    <div class="eyebrow" id="eyebrow">Sẵn sàng</div>
+    <p class="question len-m" id="question" aria-live="polite">Bấm Quay đề để nhận câu hỏi.</p>
+    <p class="topic" id="topic"></p>
+    <div class="dots" id="dots"></div>
+    <div class="tips" id="tips"></div>
+    <div class="bar" id="bar"><span id="barFill"></span></div>
+  </main>
+
+  <div class="actions">
+    <button class="btn primary" id="spinBtn">Quay đề</button>
+    <button class="btn ghost" id="prevBtn" hidden>Câu trước</button>
+    <button class="btn ghost" id="nextBtn" hidden>Câu tiếp</button>
+    <button class="btn ghost" id="tipBtn" hidden>Gợi ý</button>
+    <button class="btn ghost" id="timerBtn">Bấm giờ 1 phút</button>
+    <button class="btn icon" id="settingsBtn" aria-label="Cài đặt">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <p class="hint"><kbd>S</kbd> quay đề &nbsp; <kbd>P</kbd> câu trước &nbsp; <kbd>N</kbd> câu tiếp &nbsp; <kbd>G</kbd> gợi ý &nbsp; <kbd>T</kbd> bấm giờ</p>
+</div>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+  <div class="sheet">
+    <h2 id="setTitle">Cài đặt</h2>
+    <p class="sub">Chỉnh cách quay đề và thêm câu hỏi của riêng bạn.</p>
+
+    <div class="field">
+      <label id="lblTime">Thời gian trả lời</label>
+      <div class="seg" id="segTime" role="group" aria-labelledby="lblTime"></div>
+    </div>
+
+    <div class="field">
+      <label id="lblMode">Cách ra câu hỏi</label>
+      <div class="seg" id="segMode" role="group" aria-labelledby="lblMode"></div>
+    </div>
+
+    <div class="field">
+      <div class="switch">
+        <div>Không lặp lại<small>Chỉ quay lại từ đầu khi đã hết đề.</small></div>
+        <button class="toggle" id="tgRepeat" aria-pressed="true" aria-label="Không lặp lại"></button>
+      </div>
+      <div class="switch">
+        <div>Tiếng báo hết giờ<small>Ba tiếng bíp ngắn khi đồng hồ về 0.</small></div>
+        <button class="toggle" id="tgSound" aria-pressed="true" aria-label="Tiếng báo hết giờ"></button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="paste">Thêm câu hỏi của bạn</label>
+      <textarea id="paste" placeholder="# A person you admire&#10;Why do people admire successful athletes?&#10;Should schools invite role models to talk to students?&#10;&#10;# A skill you want to learn&#10;What skills are most useful today?"></textarea>
+      <p class="sub" style="margin:10px 0 0">Dòng bắt đầu bằng <b>#</b> là tên cue card. Các dòng dưới nó là câu hỏi Part 3.</p>
+      <div class="row">
+        <button class="mini solid" id="addBtn">Thêm vào bộ đề</button>
+        <button class="mini" id="resetBtn">Về bộ đề gốc</button>
+      </div>
+      <p class="status" id="status"></p>
+    </div>
+
+    <button class="close" id="closeBtn">Xong</button>
+  </div>
+</div>
+
+<script type="application/json" id="bank">[
+ {
+  "cat": "People",
+  "topic": "A person who helps to protect the environment",
+  "qs": [
+   "What things can people do to help to protect nature?",
+   "Do you think there is a need for new laws to protect nature?",
+   "Are punishments or rewards more effective in encouraging people to protect nature?"
+  ],
+  "col": [
+   "aw_raise",
+   "aw_env",
+   "law_env",
+   "im_cut",
+   "law_tackle",
+   "cm_build"
+  ],
+  "qcol": [
+   [
+    "aw_raise",
+    "hb_get",
+    "im_cut",
+    "cm_build",
+    "aw_envly"
+   ],
+   [
+    "law_pass",
+    "law_env",
+    "law_enf",
+    "law_hard",
+    "im_cut"
+   ],
+   [
+    "law_enf",
+    "cf_boost",
+    "aw_raise",
+    "law_break",
+    "hb_get"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A person you know who successfully achieved something difficult",
+  "qs": [
+   "Is determination important for success?",
+   "What motivates people to achieve difficult goals?",
+   "Why do some people succeed while others give up?"
+  ],
+  "col": [
+   "cf_gain",
+   "pr_under",
+   "xp_learn",
+   "op_take",
+   "de_key",
+   "cf_give"
+  ],
+  "qcol": [
+   [
+    "su_key",
+    "go_pur",
+    "am_succ",
+    "su_over",
+    "pr_under"
+   ],
+   [
+    "am_burn",
+    "go_set",
+    "cf_give",
+    "su_sec",
+    "am_driv"
+   ],
+   [
+    "su_fail",
+    "am_thw",
+    "cf_lose",
+    "su_learn",
+    "am_lack"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A person who has not replied to your messages for a long time",
+  "qs": [
+   "Why do people sometimes ignore messages?",
+   "Is it rude not to reply to messages? Why?",
+   "Can texting damage relationships?"
+  ],
+  "col": [
+   "re_strain",
+   "co_get",
+   "em_show",
+   "fr_ruin",
+   "pr_work",
+   "em_check"
+  ],
+  "qcol": [
+   [
+    "pr_work",
+    "em_check",
+    "co_get",
+    "pr_str",
+    "hb_out"
+   ],
+   [
+    "re_strain",
+    "em_show",
+    "co_close",
+    "fr_ruin",
+    "re_trust"
+   ],
+   [
+    "re_strain",
+    "fr_ruin",
+    "re_face",
+    "co_close",
+    "em_show"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A person you know who would like to choose a career in the medical field (e.g. a doctor, a nurse)",
+  "qs": [
+   "Is working in the medical field more stressful than other jobs? Why?",
+   "Do you think doctors should be paid more? Why?",
+   "Why is some doctors' pay high and others' low?"
+  ],
+  "col": [
+   "ca_pur",
+   "pr_suff",
+   "pr_src",
+   "mo_good",
+   "xp_high",
+   "ca_pros"
+  ],
+  "qcol": [
+   [
+    "pr_suff",
+    "pr_src",
+    "pr_work",
+    "pr_ill",
+    "pr_cope"
+   ],
+   [
+    "mo_good",
+    "ca_pros",
+    "xp_high",
+    "mo_worth",
+    "pr_work"
+   ],
+   [
+    "xp_high",
+    "sk_short",
+    "ca_pur",
+    "mo_good",
+    "sk_master"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A person who is good at learning and speaking new languages",
+  "qs": [
+   "Should schools teach more foreign languages?",
+   "What is the most important thing for learning a language well?",
+   "How do people learn new things?"
+  ],
+  "col": [
+   "sk_pick",
+   "sk_dev",
+   "xp_hands",
+   "op_rare",
+   "cf_grow",
+   "sk_master"
+  ],
+  "qcol": [
+   [
+    "op_edu",
+    "sk_pick",
+    "op_job",
+    "sk_dev",
+    "cf_grow"
+   ],
+   [
+    "sk_master",
+    "xp_hands",
+    "hb_get",
+    "sk_sharp",
+    "sk_dev"
+   ],
+   [
+    "sk_pick",
+    "xp_learn",
+    "xp_hands",
+    "hb_dev",
+    "sk_study"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A person you know who has a successful business",
+  "qs": [
+   "Do you think starting a business is risky? Why?",
+   "Why do some businesses succeed while others fail?",
+   "Do young people today prefer entrepreneurship? Why?"
+  ],
+  "col": [
+   "ca_pur",
+   "op_take",
+   "mo_inv",
+   "xp_val",
+   "de_key",
+   "pr_under"
+  ],
+  "qcol": [
+   [
+    "ri_take",
+    "ri_elem",
+    "ri_calc",
+    "mo_life",
+    "ri_run"
+   ],
+   [
+    "su_att",
+    "ri_weigh",
+    "su_make",
+    "de_key",
+    "su_lit"
+   ],
+   [
+    "am_succ",
+    "op_job",
+    "ca_chg",
+    "ri_worth",
+    "op_create"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A person who loves to grow plants (e.g. vegetables, flowers) at home or in the garden",
+  "qs": [
+   "How can plants improve people's quality of life?",
+   "Is gardening easier now than in the past? Why?",
+   "What preparations do you need for planting?"
+  ],
+  "col": [
+   "aw_env",
+   "hb_well",
+   "pr_esc",
+   "im_pos",
+   "cm_local",
+   "hb_get"
+  ],
+  "qcol": [
+   [
+    "hb_well",
+    "pr_esc",
+    "pr_rel",
+    "im_pos",
+    "aw_env"
+   ],
+   [
+    "te_adv",
+    "aw_env",
+    "hb_get",
+    "te_use",
+    "im_pos"
+   ],
+   [
+    "hb_get",
+    "sk_prac",
+    "xp_hands",
+    "sk_dev",
+    "aw_make"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A person who works in a successful company",
+  "qs": [
+   "Do you think customer satisfaction is important for a company?",
+   "Do you think companies should donate money to help society?",
+   "Do you think governments should provide financial support to companies?"
+  ],
+  "col": [
+   "re_work",
+   "ca_dev",
+   "mo_raise",
+   "cm_large",
+   "op_job",
+   "im_pos"
+  ],
+  "qcol": [
+   [
+    "re_work",
+    "im_big",
+    "mo_worth",
+    "re_trust",
+    "ca_dev"
+   ],
+   [
+    "mo_raise",
+    "cm_large",
+    "cm_local",
+    "im_pos",
+    "mo_on"
+   ],
+   [
+    "mo_inv",
+    "op_job",
+    "im_big",
+    "mo_on",
+    "cm_large"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A friend from your childhood",
+  "qs": [
+   "Why are childhood friendships special?",
+   "Is it easy to maintain friendships as people get older?",
+   "Can online friendships replace real-life friendships?"
+  ],
+  "col": [
+   "fr_close",
+   "me_child",
+   "me_fond",
+   "fr_keep",
+   "fr_ties",
+   "re_face"
+  ],
+  "qcol": [
+   [
+    "me_child",
+    "me_fond",
+    "fr_close",
+    "fr_ties",
+    "cm_bel"
+   ],
+   [
+    "fr_keep",
+    "pr_work",
+    "re_main",
+    "co_close",
+    "fr_circ"
+   ],
+   [
+    "re_face",
+    "fr_close",
+    "co_come",
+    "re_trust",
+    "fr_strike"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A person who likes to look after the natural world",
+  "qs": [
+   "Is it important to teach students environmental protection at school?",
+   "What can people do to protect the natural world?",
+   "Is it easy for children in cities to get close to the natural world?"
+  ],
+  "col": [
+   "aw_raise",
+   "aw_env",
+   "co_bring",
+   "im_cut",
+   "cm_build",
+   "aw_make"
+  ],
+  "qcol": [
+   [
+    "aw_raise",
+    "co_bring",
+    "aw_make",
+    "hb_get",
+    "op_edu"
+   ],
+   [
+    "im_cut",
+    "hb_get",
+    "aw_envly",
+    "law_comp",
+    "cm_build"
+   ],
+   [
+    "co_bring",
+    "ci_live",
+    "aw_env",
+    "ci_rural",
+    "op_prov"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A person who often helps others",
+  "qs": [
+   "What kinds of machines do people usually use at home to help them?",
+   "Do you agree that it's important for everyone in a family to help at home?",
+   "Should students do community service? Why?"
+  ],
+  "col": [
+   "cm_sense",
+   "cm_spir",
+   "em_supp",
+   "re_close",
+   "cm_large",
+   "sk_life"
+  ],
+  "qcol": [
+   [
+    "te_use",
+    "te_lat",
+    "te_adv",
+    "im_pos",
+    "hb_get"
+   ],
+   [
+    "sk_life",
+    "re_close",
+    "cm_spir",
+    "hb_get",
+    "em_supp"
+   ],
+   [
+    "cm_sense",
+    "cm_large",
+    "sk_life",
+    "cm_local",
+    "xp_hands"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A child who loves drawing/painting",
+  "qs": [
+   "At what age do children usually start to paint and draw?",
+   "Why do many people enjoy going to galleries and museums to see art?",
+   "What are the differences between reading a book and visiting a museum?"
+  ],
+  "col": [
+   "ex_art",
+   "em_conv",
+   "to_vis",
+   "sk_dev",
+   "em_dev",
+   "me_child"
+  ],
+  "qcol": [
+   [
+    "em_dev",
+    "ex_art",
+    "sk_dev",
+    "co_bring",
+    "hb_dev"
+   ],
+   [
+    "ex_art",
+    "em_stir",
+    "to_vis",
+    "em_conv",
+    "pr_esc"
+   ],
+   [
+    "st_read",
+    "to_vis",
+    "xp_hands",
+    "em_stir",
+    "me_vivid"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A person who makes plans a lot and is good at planning",
+  "qs": [
+   "Is it important for people to plan special events, such as weddings?",
+   "Why don't some people like to plan their social life in advance?",
+   "What are the advantages for young people of planning their future careers?"
+  ],
+  "col": [
+   "de_key",
+   "de_inf",
+   "pr_rel",
+   "op_miss",
+   "ca_dev",
+   "de_to"
+  ],
+  "qcol": [
+   [
+    "go_real",
+    "de_key",
+    "pr_rel",
+    "me_fond",
+    "go_imm"
+   ],
+   [
+    "hb_out",
+    "pr_esc",
+    "de_lack",
+    "hb_creat",
+    "go_real"
+   ],
+   [
+    "go_set",
+    "ca_adv",
+    "ca_pros",
+    "go_pur",
+    "de_inf"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A famous person you would like to meet",
+  "qs": [
+   "What kinds of famous people are often in the news in your country?",
+   "Are there more celebrities in the news now?",
+   "Do you agree that everyone enjoys reading news about celebrities?"
+  ],
+  "col": [
+   "nw_in",
+   "nw_front",
+   "nw_story",
+   "im_big",
+   "st_top",
+   "nw_bias"
+  ],
+  "qcol": [
+   [
+    "nw_in",
+    "nw_front",
+    "st_top",
+    "nw_chan",
+    "nw_story"
+   ],
+   [
+    "nw_chan",
+    "nw_in",
+    "te_adv",
+    "st_top",
+    "nw_gath"
+   ],
+   [
+    "nw_bias",
+    "nw_story",
+    "im_big",
+    "pr_esc",
+    "nw_front"
+   ]
+  ]
+ },
+ {
+  "cat": "People",
+  "topic": "A person who solved a problem in a smart way",
+  "qs": [
+   "Is it important for schools to identify and develop each student's talents?",
+   "Do you think smart children are happier than other children?",
+   "Why does modern society need talents of all kinds?"
+  ],
+  "col": [
+   "sk_master",
+   "sk_dev",
+   "de_inf",
+   "op_edu",
+   "sk_prac",
+   "cf_boost"
+  ],
+  "qcol": [
+   [
+    "sk_dev",
+    "go_acad",
+    "cf_boost",
+    "sk_master",
+    "op_equal"
+   ],
+   [
+    "pr_peer",
+    "cf_lack",
+    "em_dev",
+    "hb_well",
+    "pr_under"
+   ],
+   [
+    "sk_short",
+    "sk_prac",
+    "op_job",
+    "sk_life",
+    "im_big"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A problem of technology you have encountered, like a computer or a cell phone",
+  "qs": [
+   "What kinds of technological problems do people often face?",
+   "Do older people have more difficulty using technology than young people?",
+   "Do you think people depend too much on technology nowadays?"
+  ],
+  "col": [
+   "te_adv",
+   "te_chg",
+   "sk_lack",
+   "im_pos",
+   "te_acc",
+   "pr_src"
+  ],
+  "qcol": [
+   [
+    "te_chg",
+    "sk_lack",
+    "pr_src",
+    "te_acc",
+    "te_adv"
+   ],
+   [
+    "sk_lack",
+    "te_chg",
+    "hb_creat",
+    "sk_pick",
+    "te_acc"
+   ],
+   [
+    "hb_get",
+    "im_pos",
+    "te_use",
+    "hb_out",
+    "re_face"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "An environmental law you would like your country to introduce",
+  "qs": [
+   "What environmental problems are common in cities?",
+   "Should governments or individuals take more responsibility?",
+   "Do you think environmental laws are effective?"
+  ],
+  "col": [
+   "law_pass",
+   "law_enf",
+   "law_env",
+   "aw_raise",
+   "law_hard",
+   "im_cut"
+  ],
+  "qcol": [
+   [
+    "ci_live",
+    "im_cut",
+    "law_env",
+    "ci_bust",
+    "aw_env"
+   ],
+   [
+    "law_pass",
+    "law_enf",
+    "hb_get",
+    "cm_large",
+    "aw_raise"
+   ],
+   [
+    "law_enf",
+    "law_hard",
+    "law_comp",
+    "law_env",
+    "im_cut"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A law on environmental protection",
+  "qs": [
+   "Do you think school rules are important?",
+   "How can parents and teachers help children understand and follow rules?",
+   "Are children unhappy with the school rules?"
+  ],
+  "col": [
+   "law_break",
+   "law_req",
+   "law_comp",
+   "co_bring",
+   "hb_get",
+   "law_hard"
+  ],
+  "qcol": [
+   [
+    "law_req",
+    "hb_get",
+    "co_bring",
+    "law_comp",
+    "sk_life"
+   ],
+   [
+    "aw_make",
+    "hb_dev",
+    "co_bring",
+    "law_comp",
+    "cf_give"
+   ],
+   [
+    "law_hard",
+    "pr_peer",
+    "em_show",
+    "law_break",
+    "cf_und"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A long-term goal/ambition you would like to achieve",
+  "qs": [
+   "Should parents support their children in pursuing their ambitions?",
+   "Is it good for a person to be ambitious?",
+   "Why should children have ambitions?"
+  ],
+  "col": [
+   "cf_give",
+   "op_take",
+   "pr_under",
+   "xp_learn",
+   "cf_grow",
+   "de_to"
+  ],
+  "qcol": [
+   [
+    "am_ach",
+    "em_supp",
+    "cf_give",
+    "am_thw",
+    "go_pur"
+   ],
+   [
+    "am_driv",
+    "am_lack",
+    "go_amb",
+    "su_over",
+    "pr_ill"
+   ],
+   [
+    "am_life",
+    "go_set",
+    "am_burn",
+    "go_real",
+    "cf_give"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A story/book with animals in it",
+  "qs": [
+   "Do films influence how people view animals?",
+   "Why are animals often used in stories?",
+   "What can people learn from animal stories?"
+  ],
+  "col": [
+   "st_read",
+   "em_stir",
+   "me_child",
+   "em_conv",
+   "st_tf",
+   "co_bring"
+  ],
+  "qcol": [
+   [
+    "em_stir",
+    "im_big",
+    "aw_raise",
+    "em_conv",
+    "aw_make"
+   ],
+   [
+    "st_read",
+    "em_stir",
+    "co_bring",
+    "st_tf",
+    "em_conv"
+   ],
+   [
+    "sk_life",
+    "xp_learn",
+    "aw_env",
+    "em_dev",
+    "st_read"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A food that people eat on special occasions/events",
+  "qs": [
+   "What kinds of food do people usually eat during festivals or family celebrations?",
+   "Do you think young people prefer traditional food or fast food? Why?",
+   "Do you think eating together helps strengthen family relationships?"
+  ],
+  "col": [
+   "fo_out",
+   "fo_cook",
+   "fo_main",
+   "me_fond",
+   "cm_spir",
+   "hb_eat"
+  ],
+  "qcol": [
+   [
+    "fo_cook",
+    "fo_main",
+    "fo_three",
+    "cm_spir",
+    "me_fond"
+   ],
+   [
+    "fo_out",
+    "hb_eat",
+    "fo_cook",
+    "mo_val",
+    "hb_get"
+   ],
+   [
+    "re_close",
+    "fo_main",
+    "co_close",
+    "cm_bel",
+    "me_share"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "An interesting video",
+  "qs": [
+   "What types of videos are popular nowadays?",
+   "Are online videos educational? Why or why not?",
+   "What makes a video go viral online?"
+  ],
+  "col": [
+   "nw_story",
+   "im_big",
+   "te_use",
+   "st_read",
+   "nw_in",
+   "op_prov"
+  ],
+  "qcol": [
+   [
+    "nw_story",
+    "st_top",
+    "te_use",
+    "nw_chan",
+    "op_prov"
+   ],
+   [
+    "op_edu",
+    "sk_pick",
+    "te_acc",
+    "xp_learn",
+    "nw_bias"
+   ],
+   [
+    "em_stir",
+    "nw_in",
+    "im_big",
+    "nw_broke",
+    "em_conv"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A tall building you like or dislike",
+  "qs": [
+   "Why do cities build more tall buildings nowadays?",
+   "Do tall buildings make cities look more attractive?",
+   "Are there any disadvantages to having too many tall buildings?"
+  ],
+  "col": [
+   "ci_live",
+   "ci_bust",
+   "cm_sense",
+   "im_pos",
+   "to_attr",
+   "ci_pace"
+  ],
+  "qcol": [
+   [
+    "ci_live",
+    "to_dest",
+    "mo_on",
+    "ci_bust",
+    "op_job"
+   ],
+   [
+    "to_attr",
+    "ci_live",
+    "im_pos",
+    "to_flock",
+    "ci_bust"
+   ],
+   [
+    "ci_pace",
+    "cm_knit",
+    "im_pos",
+    "pr_src",
+    "ci_rural"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A plan that you had to change recently",
+  "qs": [
+   "Can changing plans sometimes lead to better results?",
+   "How can people deal with unexpected changes?",
+   "Do you think people like the process of making plans more, or the moment of carrying them out?"
+  ],
+  "col": [
+   "de_to",
+   "pr_cope",
+   "de_inf",
+   "op_take",
+   "pr_rel",
+   "de_irr"
+  ],
+  "qcol": [
+   [
+    "op_rare",
+    "su_learn",
+    "go_real",
+    "de_to",
+    "ri_worth"
+   ],
+   [
+    "pr_cope",
+    "pr_hand",
+    "de_inf",
+    "go_imm",
+    "cf_grow"
+   ],
+   [
+    "go_set",
+    "de_key",
+    "me_happy",
+    "go_work",
+    "pr_rel"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A special cake you received from others",
+  "qs": [
+   "What do you think of people using their mobile phones during a meal?",
+   "In your country, do people nowadays cook at home as frequently as people did in the past?",
+   "Do you think it's good to communicate when eating with your family?"
+  ],
+  "col": [
+   "fo_out",
+   "fo_cook",
+   "re_face",
+   "co_close",
+   "fo_main",
+   "hb_get"
+  ],
+  "qcol": [
+   [
+    "fo_main",
+    "co_close",
+    "re_face",
+    "hb_get",
+    "em_show"
+   ],
+   [
+    "fo_cook",
+    "fo_out",
+    "pr_work",
+    "hb_eat",
+    "mo_val"
+   ],
+   [
+    "re_close",
+    "fo_main",
+    "me_share",
+    "co_close",
+    "cm_bel"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "An advertisement with a famous person in it",
+  "qs": [
+   "Why do companies use celebrities in advertisements?",
+   "Are advertisements more creative nowadays?",
+   "What makes an advertisement effective?"
+  ],
+  "col": [
+   "nw_in",
+   "im_big",
+   "im_have",
+   "nw_bias",
+   "op_prov",
+   "mo_on"
+  ],
+  "qcol": [
+   [
+    "nw_in",
+    "im_big",
+    "re_trust",
+    "mo_on",
+    "im_have"
+   ],
+   [
+    "te_use",
+    "ex_art",
+    "im_big",
+    "te_adv",
+    "em_stir"
+   ],
+   [
+    "em_stir",
+    "im_have",
+    "mo_val",
+    "aw_raise",
+    "nw_front"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A new law you would like to introduce in your country",
+  "qs": [
+   "How can parents teach children to obey rules?",
+   "What are the benefits for people to obey rules?",
+   "Do you think children can learn about the law outside of school?"
+  ],
+  "col": [
+   "law_break",
+   "law_pass",
+   "law_req",
+   "co_bring",
+   "law_comp",
+   "hb_get"
+  ],
+  "qcol": [
+   [
+    "hb_dev",
+    "aw_make",
+    "co_bring",
+    "cf_give",
+    "law_comp"
+   ],
+   [
+    "law_comp",
+    "cm_sense",
+    "im_cut",
+    "law_req",
+    "cm_large"
+   ],
+   [
+    "co_bring",
+    "xp_learn",
+    "law_break",
+    "aw_make",
+    "cm_local"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "An important decision that you made",
+  "qs": [
+   "Why do some people find decision-making difficult?",
+   "Do men and women make decisions differently?",
+   "Is it better to make decisions alone or ask for advice?"
+  ],
+  "col": [
+   "de_inf",
+   "de_key",
+   "cf_lack",
+   "de_res",
+   "de_irr",
+   "op_take"
+  ],
+  "qcol": [
+   [
+    "de_lack",
+    "de_irr",
+    "ri_weigh",
+    "cf_lack",
+    "vw_subj"
+   ],
+   [
+    "em_rat",
+    "ri_take",
+    "de_key",
+    "vw_str",
+    "de_inf"
+   ],
+   [
+    "ad_take",
+    "ad_seek",
+    "de_inf",
+    "ad_piece",
+    "de_res"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A short-term job you want to have in a foreign country",
+  "qs": [
+   "Why are some people unwilling to work in other countries?",
+   "What kind of work can young people do in foreign countries?",
+   "What personal skills are required to work in an international company?"
+  ],
+  "col": [
+   "op_job",
+   "xp_hands",
+   "sk_life",
+   "ca_pros",
+   "xp_prev",
+   "op_take"
+  ],
+  "qcol": [
+   [
+    "pr_under",
+    "fr_keep",
+    "cm_bel",
+    "sk_lack",
+    "mo_on"
+   ],
+   [
+    "op_job",
+    "xp_work",
+    "sk_prac",
+    "to_dep",
+    "xp_hands"
+   ],
+   [
+    "sk_life",
+    "sk_dev",
+    "re_work",
+    "sk_master",
+    "xp_prev"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "An event you attended in which you didn't enjoy the music played",
+  "qs": [
+   "What do people enjoy about going to large music events?",
+   "Do you agree or disagree that playing music in shops or stores is an effective way of selling more products?",
+   "What are the differences between listening to music at home and at a live concert?"
+  ],
+  "col": [
+   "em_stir",
+   "em_conv",
+   "em_show",
+   "im_pos",
+   "mo_on",
+   "pr_rel"
+  ],
+  "qcol": [
+   [
+    "em_over",
+    "cm_sense",
+    "em_stir",
+    "cm_bel",
+    "pr_esc"
+   ],
+   [
+    "em_stir",
+    "mo_on",
+    "im_have",
+    "hb_get",
+    "im_big"
+   ],
+   [
+    "em_over",
+    "cm_sense",
+    "xp_hands",
+    "pr_esc",
+    "em_conv"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "One of your friends who learned something without a teacher",
+  "qs": [
+   "Does a good teacher make learning more interesting?",
+   "What are the benefits for adults of returning to studying after leaving full-time education?",
+   "Might it ever be a good idea for retired people to go back to full-time education?"
+  ],
+  "col": [
+   "sk_pick",
+   "xp_learn",
+   "op_edu",
+   "cf_grow",
+   "sk_study",
+   "op_rare"
+  ],
+  "qcol": [
+   [
+    "cf_give",
+    "sk_study",
+    "op_edu",
+    "em_stir",
+    "hb_dev"
+   ],
+   [
+    "ca_chg",
+    "op_job",
+    "cf_grow",
+    "sk_dev",
+    "ca_lad"
+   ],
+   [
+    "op_edu",
+    "cm_bel",
+    "sk_pick",
+    "hb_well",
+    "cf_grow"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A piece of technology (not a phone) that you would like to own",
+  "qs": [
+   "Do you agree or disagree that technology has a positive effect on young people's lives?",
+   "How healthy is it for young people to spend a lot of time online?",
+   "What are the differences between making friends in real life and online?"
+  ],
+  "col": [
+   "te_lat",
+   "te_adv",
+   "im_pos",
+   "re_face",
+   "hb_get",
+   "te_use"
+  ],
+  "qcol": [
+   [
+    "im_pos",
+    "te_acc",
+    "op_edu",
+    "im_big",
+    "hb_get"
+   ],
+   [
+    "hb_well",
+    "sl_lack",
+    "pr_src",
+    "hb_get",
+    "im_pos"
+   ],
+   [
+    "re_face",
+    "fr_strike",
+    "co_come",
+    "re_trust",
+    "fr_close"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A perfect job you would like to have in the future",
+  "qs": [
+   "What are the dream jobs of people in your country?",
+   "What kind of jobs are the most popular in your country?",
+   "Is salary the main reason why people choose a certain job?"
+  ],
+  "col": [
+   "ca_pur",
+   "ca_pros",
+   "op_job",
+   "mo_save",
+   "ca_adv",
+   "ca_start"
+  ],
+  "qcol": [
+   [
+    "ca_pur",
+    "op_job",
+    "ca_pros",
+    "mo_good",
+    "ca_start"
+   ],
+   [
+    "op_job",
+    "ca_pros",
+    "sk_short",
+    "mo_good",
+    "ca_lad"
+   ],
+   [
+    "mo_good",
+    "ca_dev",
+    "pr_work",
+    "hb_well",
+    "ca_pros"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A program or app on your computer or phone",
+  "qs": [
+   "What are the benefits of using apps as a tool for education?",
+   "What are the drawbacks of having too many apps?",
+   "What do you think about some countries banning children from using social media?"
+  ],
+  "col": [
+   "op_edu",
+   "te_use",
+   "im_pos",
+   "hb_get",
+   "sk_dev",
+   "law_comp"
+  ],
+  "qcol": [
+   [
+    "op_edu",
+    "te_acc",
+    "sk_pick",
+    "xp_hands",
+    "im_pos"
+   ],
+   [
+    "hb_get",
+    "pr_src",
+    "im_pos",
+    "hb_out",
+    "sl_lack"
+   ],
+   [
+    "law_pass",
+    "co_bring",
+    "law_enf",
+    "hb_well",
+    "law_hard"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "An interesting building",
+  "qs": [
+   "Is it better to live in a new building or an old one?",
+   "Do you think it's reasonable to charge an entry fee for visiting interesting buildings?",
+   "Why do people like to visit historical sites?"
+  ],
+  "col": [
+   "to_attr",
+   "to_vis",
+   "ci_live",
+   "mo_on",
+   "to_flock",
+   "im_pos"
+  ],
+  "qcol": [
+   [
+    "ci_live",
+    "mo_on",
+    "me_fond",
+    "mo_val",
+    "ci_rural"
+   ],
+   [
+    "to_vis",
+    "mo_val",
+    "mo_worth",
+    "to_dep",
+    "mo_on"
+   ],
+   [
+    "to_attr",
+    "me_share",
+    "xp_hands",
+    "to_flock",
+    "aw_make"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "A TV or online program you like to watch",
+  "qs": [
+   "Do younger and older people enjoy watching similar programmes or shows?",
+   "Why do some people spend so much time watching TV and online programmes or shows?",
+   "Do you agree or disagree that there are too many programmes/shows for people to choose from these days?"
+  ],
+  "col": [
+   "hb_get",
+   "hb_out",
+   "im_pos",
+   "st_top",
+   "nw_chan",
+   "hb_life"
+  ],
+  "qcol": [
+   [
+    "hb_creat",
+    "st_top",
+    "hb_gb",
+    "nw_chan",
+    "hb_out"
+   ],
+   [
+    "hb_get",
+    "pr_esc",
+    "hb_out",
+    "sl_late",
+    "pr_rel"
+   ],
+   [
+    "de_key",
+    "te_use",
+    "hb_get",
+    "st_top",
+    "de_inf"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "An item on which you spent more than expected",
+  "qs": [
+   "How important is saving money for the future?",
+   "How important is it to teach children about giving money to support people in need?",
+   "What kind of things are people happy to pay a high price for?"
+  ],
+  "col": [
+   "mo_val",
+   "mo_worth",
+   "mo_save",
+   "mo_good",
+   "mo_waste",
+   "mo_raise"
+  ],
+  "qcol": [
+   [
+    "mo_save",
+    "mo_life",
+    "mo_waste",
+    "mo_inv",
+    "pr_rel"
+   ],
+   [
+    "mo_raise",
+    "cm_large",
+    "co_bring",
+    "em_supp",
+    "aw_make"
+   ],
+   [
+    "mo_good",
+    "mo_val",
+    "mo_worth",
+    "mo_poor",
+    "xp_val"
+   ]
+  ]
+ },
+ {
+  "cat": "Object",
+  "topic": "Something important that has been kept in your family for a long time",
+  "qs": [
+   "Why do people visit museums?",
+   "What are the benefits of technology for learning history?",
+   "What's the influence of technology on museums?"
+  ],
+  "col": [
+   "me_fond",
+   "to_vis",
+   "te_use",
+   "me_share",
+   "to_attr",
+   "im_pos"
+  ],
+  "qcol": [
+   [
+    "to_vis",
+    "me_share",
+    "xp_hands",
+    "to_attr",
+    "ex_art"
+   ],
+   [
+    "te_acc",
+    "te_use",
+    "op_edu",
+    "im_pos",
+    "xp_hands"
+   ],
+   [
+    "te_lat",
+    "to_vis",
+    "im_have",
+    "te_break",
+    "to_flock"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A time when someone you know found a clever solution to a problem",
+  "qs": [
+   "How important are schools in helping children become more clever?",
+   "Do you agree or disagree that very clever children are usually happy?",
+   "Why may a person be very good at one thing, but not another?"
+  ],
+  "col": [
+   "sk_master",
+   "op_edu",
+   "sk_dev",
+   "cf_boost",
+   "sk_prac",
+   "hb_well"
+  ],
+  "qcol": [
+   [
+    "op_edu",
+    "sk_dev",
+    "sk_study",
+    "cf_boost",
+    "em_dev"
+   ],
+   [
+    "pr_peer",
+    "hb_well",
+    "cf_lack",
+    "pr_under",
+    "em_dev"
+   ],
+   [
+    "sk_master",
+    "sk_lack",
+    "go_rem",
+    "sk_sharp",
+    "su_att"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A difficult decision that you made and had a good result",
+  "qs": [
+   "Do you think people should always think carefully before making decisions?",
+   "Can difficult decisions help people grow as individuals? Why?",
+   "Do you prefer making decisions alone or with other people's advice?"
+  ],
+  "col": [
+   "de_inf",
+   "xp_learn",
+   "de_key",
+   "cf_grow",
+   "de_res",
+   "op_take"
+  ],
+  "qcol": [
+   [
+    "ri_weigh",
+    "de_irr",
+    "de_res",
+    "de_inf",
+    "ri_out"
+   ],
+   [
+    "su_learn",
+    "cf_grow",
+    "xp_val",
+    "ri_take",
+    "pr_cope"
+   ],
+   [
+    "ad_take",
+    "ad_seek",
+    "ad_sound",
+    "de_inf",
+    "ad_ag"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "An ambition that you haven't achieved",
+  "qs": [
+   "Can ambition help people become successful? Why?",
+   "What can stop people from achieving their ambitions?",
+   "Is it easier to achieve ambitions nowadays?"
+  ],
+  "col": [
+   "op_miss",
+   "cf_lose",
+   "pr_under",
+   "cf_give",
+   "op_take",
+   "de_to"
+  ],
+  "qcol": [
+   [
+    "am_succ",
+    "am_driv",
+    "su_key",
+    "go_pur",
+    "su_ach"
+   ],
+   [
+    "am_thw",
+    "op_miss",
+    "su_lit",
+    "am_lack",
+    "go_real"
+   ],
+   [
+    "op_create",
+    "te_acc",
+    "am_ach",
+    "op_equal",
+    "go_set"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A change that you made recently",
+  "qs": [
+   "Who tend to change their daily routine more, young people or old people?",
+   "Do people often make plans around their regular routines?",
+   "Is it good for people to get a job promotion?"
+  ],
+  "col": [
+   "hb_get",
+   "hb_out",
+   "hb_creat",
+   "ca_lad",
+   "hb_life",
+   "de_to"
+  ],
+  "qcol": [
+   [
+    "hb_creat",
+    "hb_life",
+    "hb_out",
+    "hb_get",
+    "ca_lad"
+   ],
+   [
+    "hb_creat",
+    "hb_out",
+    "de_key",
+    "hb_get",
+    "pr_rel"
+   ],
+   [
+    "ca_lad",
+    "ca_dev",
+    "pr_work",
+    "mo_good",
+    "ca_turn"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A piece of local news that people are interested in",
+  "qs": [
+   "How do people usually get local news nowadays?",
+   "Can news influence public opinion? How?",
+   "Do you think all news is reliable nowadays? Why or why not?"
+  ],
+  "col": [
+   "nw_break",
+   "nw_story",
+   "nw_bias",
+   "nw_gath",
+   "nw_broke",
+   "cm_local"
+  ],
+  "qcol": [
+   [
+    "nw_chan",
+    "te_use",
+    "nw_gath",
+    "nw_break",
+    "cm_local"
+   ],
+   [
+    "nw_bias",
+    "aw_raise",
+    "im_big",
+    "nw_front",
+    "im_have"
+   ],
+   [
+    "nw_bias",
+    "st_tf",
+    "nw_gath",
+    "nw_broke",
+    "re_trust"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A time when you changed an important opinion of yours",
+  "qs": [
+   "Is it easy for people to admit they were wrong?",
+   "Is it important to listen to different viewpoints?",
+   "Should people always stick to their own opinions?"
+  ],
+  "col": [
+   "de_res",
+   "de_inf",
+   "em_check",
+   "cf_lack",
+   "xp_learn",
+   "de_key"
+  ],
+  "qcol": [
+   [
+    "vw_chg",
+    "vw_str",
+    "cf_lack",
+    "vw_keep",
+    "de_res"
+   ],
+   [
+    "vw_diff",
+    "vw_mix",
+    "vw_resp",
+    "vw_inf",
+    "de_inf"
+   ],
+   [
+    "vw_str",
+    "vw_chg",
+    "vw_subj",
+    "vw_expr",
+    "de_res"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A time when you sent a message or an email to someone but received no reply for a long time",
+  "qs": [
+   "Why do some people feel angry when others don't reply to their message?",
+   "How do you show your respect in your messages?",
+   "Why do some people prefer sending a message instead of making a call?"
+  ],
+  "col": [
+   "re_strain",
+   "co_get",
+   "em_show",
+   "em_check",
+   "fr_ruin",
+   "co_close"
+  ],
+  "qcol": [
+   [
+    "em_show",
+    "re_strain",
+    "em_check",
+    "co_close",
+    "em_lose"
+   ],
+   [
+    "re_trust",
+    "em_show",
+    "co_get",
+    "re_work",
+    "em_check"
+   ],
+   [
+    "pr_rel",
+    "co_get",
+    "em_check",
+    "hb_get",
+    "re_face"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A time when you were stuck in a traffic jam for a very long time",
+  "qs": [
+   "Would you rather be in a car or a bus in a traffic jam?",
+   "Do you like to use public transport?",
+   "What are good ways to manage traffic?"
+  ],
+  "col": [
+   "ci_pub",
+   "ci_bust",
+   "pr_src",
+   "im_cut",
+   "ci_pace",
+   "pr_cope"
+  ],
+  "qcol": [
+   [
+    "ci_pub",
+    "pr_src",
+    "ci_bust",
+    "pr_cope",
+    "mo_on"
+   ],
+   [
+    "ci_pub",
+    "mo_val",
+    "im_cut",
+    "ci_bust",
+    "hb_get"
+   ],
+   [
+    "ci_pub",
+    "im_cut",
+    "law_enf",
+    "law_pass",
+    "ci_pace"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A time when you organized a happy event successfully",
+  "qs": [
+   "Do you prefer to prepare and organize an activity or just take part in an activity?",
+   "How would you feel when you were not well prepared for something?",
+   "Do people need others' help when organizing things?"
+  ],
+  "col": [
+   "de_key",
+   "pr_cope",
+   "re_work",
+   "cf_boost",
+   "op_prov",
+   "pr_rel"
+  ],
+  "qcol": [
+   [
+    "go_work",
+    "de_key",
+    "re_work",
+    "pr_under",
+    "go_real"
+   ],
+   [
+    "cf_lack",
+    "pr_under",
+    "em_check",
+    "pr_cope",
+    "cf_lose"
+   ],
+   [
+    "re_work",
+    "em_supp",
+    "sk_life",
+    "cm_spir",
+    "xp_wealth"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A live sports event you watched and liked",
+  "qs": [
+   "How can sports events benefit a city or a country?",
+   "Why do some people become passionate sports fans?",
+   "Do international sports events help bring people together?"
+  ],
+  "col": [
+   "cm_sense",
+   "cm_spir",
+   "em_over",
+   "to_inf",
+   "cm_bel",
+   "im_pos"
+  ],
+  "qcol": [
+   [
+    "to_inf",
+    "op_job",
+    "cm_sense",
+    "to_dep",
+    "im_big"
+   ],
+   [
+    "em_over",
+    "cm_bel",
+    "em_stir",
+    "cm_sense",
+    "me_vivid"
+   ],
+   [
+    "cm_sense",
+    "cm_build",
+    "em_over",
+    "cm_large",
+    "im_pos"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A time when you worked in a group",
+  "qs": [
+   "How can you tell if a person is a good leader?",
+   "What advantages are there for students experiencing teamwork at school?",
+   "What group tasks are there in schools?"
+  ],
+  "col": [
+   "re_work",
+   "sk_life",
+   "cf_boost",
+   "de_key",
+   "op_prov",
+   "sk_dev"
+  ],
+  "qcol": [
+   [
+    "re_work",
+    "de_key",
+    "cf_give",
+    "sk_life",
+    "em_supp"
+   ],
+   [
+    "sk_life",
+    "re_work",
+    "cf_boost",
+    "sk_dev",
+    "xp_hands"
+   ],
+   [
+    "op_prov",
+    "sk_prac",
+    "xp_hands",
+    "sk_study",
+    "re_work"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A time when you got up early",
+  "qs": [
+   "Do young people and older people have different sleeping habits?",
+   "How can people develop good sleeping habits?",
+   "Do modern lifestyles affect people's sleep?"
+  ],
+  "col": [
+   "hb_get",
+   "hb_gb",
+   "hb_well",
+   "hb_creat",
+   "pr_rel",
+   "hb_life"
+  ],
+  "qcol": [
+   [
+    "sl_owl",
+    "sl_bird",
+    "sl_late",
+    "hb_creat",
+    "sl_four"
+   ],
+   [
+    "hb_get",
+    "sl_night",
+    "sl_get",
+    "hb_gb",
+    "sl_well"
+   ],
+   [
+    "sl_lack",
+    "sl_stress",
+    "sl_wink",
+    "hb_out",
+    "sl_dist"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A challenging technological problem you faced",
+  "qs": [
+   "What can teachers do to stop students from relying too much on AI?",
+   "Do you think students are overly reliant on AI?",
+   "How can AI help in our lives?"
+  ],
+  "col": [
+   "te_adv",
+   "sk_lack",
+   "op_edu",
+   "im_pos",
+   "te_use",
+   "sk_dev"
+  ],
+  "qcol": [
+   [
+    "hb_get",
+    "sk_dev",
+    "op_edu",
+    "sk_study",
+    "aw_make"
+   ],
+   [
+    "hb_get",
+    "sk_lack",
+    "te_use",
+    "hb_out",
+    "sk_dev"
+   ],
+   [
+    "te_adv",
+    "te_break",
+    "im_pos",
+    "te_use",
+    "op_edu"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A special day out that cost you little money/didn't cost you much",
+  "qs": [
+   "Going out to have holidays is tiring. Why do people still want to do it?",
+   "Why do people like to have days off?",
+   "Do you think only old people have time for leisure?"
+  ],
+  "col": [
+   "pr_esc",
+   "pr_rel",
+   "mo_val",
+   "hb_well",
+   "me_happy",
+   "mo_waste"
+  ],
+  "qcol": [
+   [
+    "pr_esc",
+    "me_happy",
+    "hb_well",
+    "xp_val",
+    "pr_rel"
+   ],
+   [
+    "pr_rel",
+    "pr_esc",
+    "hb_well",
+    "pr_work",
+    "sl_night"
+   ],
+   [
+    "pr_work",
+    "hb_well",
+    "pr_esc",
+    "mo_val",
+    "hb_creat"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A thing you did to learn another language",
+  "qs": [
+   "Some people think that technology has made it unnecessary to learn languages. What do you think?",
+   "What are the advantages and disadvantages of learning a language?",
+   "What's the best way to learn a language?"
+  ],
+  "col": [
+   "sk_pick",
+   "sk_master",
+   "xp_learn",
+   "te_use",
+   "op_rare",
+   "sk_dev"
+  ],
+  "qcol": [
+   [
+    "te_use",
+    "sk_pick",
+    "op_job",
+    "im_pos",
+    "sk_master"
+   ],
+   [
+    "op_job",
+    "sk_pick",
+    "cf_grow",
+    "op_take",
+    "pr_under"
+   ],
+   [
+    "xp_hands",
+    "sk_pick",
+    "hb_get",
+    "sk_sharp",
+    "sk_master"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A time when you gave advice to others",
+  "qs": [
+   "In what situations is it important to think carefully before giving advice to someone?",
+   "What kinds of personal qualities do people need to give good advice?",
+   "In general, what kind of person is most suitable for giving advice to others?"
+  ],
+  "col": [
+   "de_inf",
+   "re_trust",
+   "em_check",
+   "de_res",
+   "sk_life",
+   "cf_give"
+  ],
+  "qcol": [
+   [
+    "ad_ag",
+    "vw_keep",
+    "de_res",
+    "re_strain",
+    "ad_piece"
+   ],
+   [
+    "ad_sound",
+    "ad_imp",
+    "xp_wealth",
+    "re_trust",
+    "em_supp"
+   ],
+   [
+    "xp_high",
+    "ad_seek",
+    "ad_give",
+    "ad_sound",
+    "re_close"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A movie you watched and enjoyed recently",
+  "qs": [
+   "Which is more important for an actor, acting skills or appearance?",
+   "Do you agree or disagree that being an actor is a difficult job?",
+   "Why do people prefer to watch movies in the cinema?"
+  ],
+  "col": [
+   "em_stir",
+   "em_conv",
+   "st_read",
+   "sk_dev",
+   "im_big",
+   "ex_art"
+  ],
+  "qcol": [
+   [
+    "sk_master",
+    "em_conv",
+    "sk_dev",
+    "ex_art",
+    "sk_sharp"
+   ],
+   [
+    "pr_under",
+    "sk_master",
+    "ca_pur",
+    "pr_work",
+    "cf_lose"
+   ],
+   [
+    "em_stir",
+    "xp_hands",
+    "pr_esc",
+    "cm_sense",
+    "em_over"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A time when you felt proud of a family member",
+  "qs": [
+   "Why do giving academic prizes or rewards help promote children's progress?",
+   "Does any job bring people a sense of pride?",
+   "Have the things that people are proud of changed compared to the past?"
+  ],
+  "col": [
+   "em_over",
+   "cf_boost",
+   "em_supp",
+   "me_fond",
+   "cm_bel",
+   "ca_turn"
+  ],
+  "qcol": [
+   [
+    "cf_boost",
+    "cf_give",
+    "hb_dev",
+    "em_dev",
+    "op_edu"
+   ],
+   [
+    "ca_turn",
+    "cf_gain",
+    "cm_large",
+    "sk_master",
+    "ca_pur"
+   ],
+   [
+    "mo_good",
+    "ca_pros",
+    "cm_bel",
+    "hb_life",
+    "me_fond"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A bicycle/motorcycle/car trip you would like to go",
+  "qs": [
+   "Do you agree that more and more people want to buy cars these days?",
+   "Do city planners consider the needs of pedestrians enough?",
+   "What impact can an inadequate transport or transportation system have on a country?"
+  ],
+  "col": [
+   "ci_pub",
+   "ci_bust",
+   "im_cut",
+   "ci_pace",
+   "mo_on",
+   "ci_rural"
+  ],
+  "qcol": [
+   [
+    "mo_on",
+    "ci_pub",
+    "mo_good",
+    "ci_bust",
+    "im_pos"
+   ],
+   [
+    "ci_live",
+    "ci_pub",
+    "im_cut",
+    "ci_pace",
+    "law_pass"
+   ],
+   [
+    "im_big",
+    "ci_pub",
+    "op_job",
+    "im_have",
+    "pr_src"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "An occasion when many people were smiling",
+  "qs": [
+   "Do children tend to smile more frequently than adults?",
+   "Do elderly older people have better control over their feelings compared to young people?",
+   "Do you agree or disagree that people might be motivated more by their emotions than by logical thinking?"
+  ],
+  "col": [
+   "sm_bring",
+   "sm_broad",
+   "sm_all",
+   "em_check",
+   "em_show",
+   "sm_supp"
+  ],
+  "qcol": [
+   [
+    "sm_broad",
+    "sm_all",
+    "sm_bring",
+    "pr_work",
+    "em_show"
+   ],
+   [
+    "em_check",
+    "em_none",
+    "sm_supp",
+    "xp_wealth",
+    "em_lose"
+   ],
+   [
+    "em_rat",
+    "de_inf",
+    "em_stir",
+    "em_check",
+    "de_res"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "An occasion when you were not allowed to use your mobile phone",
+  "qs": [
+   "In your country, which places are not allowed people to use phones?",
+   "Do you think it is important to introduce new rules for using mobile phones?",
+   "When should parents allow their children to have mobile phones?"
+  ],
+  "col": [
+   "law_req",
+   "law_break",
+   "hb_get",
+   "co_bring",
+   "law_comp",
+   "law_hard"
+  ],
+  "qcol": [
+   [
+    "law_req",
+    "law_break",
+    "law_comp",
+    "law_enf",
+    "hb_get"
+   ],
+   [
+    "law_pass",
+    "hb_get",
+    "law_enf",
+    "law_hard",
+    "hb_well"
+   ],
+   [
+    "co_bring",
+    "law_req",
+    "hb_get",
+    "em_dev",
+    "cf_give"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A time when you encouraged someone to do something that he/she didn't want to do",
+  "qs": [
+   "Do you agree or disagree that the most important role of a boss is to encourage employees?",
+   "Should children do everything their parents ask them to do?",
+   "What kind of encouragement should parents give?"
+  ],
+  "col": [
+   "cf_give",
+   "cf_boost",
+   "em_supp",
+   "pr_under",
+   "cf_und",
+   "cf_grow"
+  ],
+  "qcol": [
+   [
+    "cf_boost",
+    "em_supp",
+    "re_work",
+    "cf_give",
+    "ca_dev"
+   ],
+   [
+    "cf_und",
+    "cf_give",
+    "de_inf",
+    "em_supp",
+    "law_req"
+   ],
+   [
+    "cf_boost",
+    "em_supp",
+    "cf_give",
+    "hb_dev",
+    "cf_build"
+   ]
+  ]
+ },
+ {
+  "cat": "Activity",
+  "topic": "A time you needed to use your imagination",
+  "qs": [
+   "What kinds of games do children need to use imagination to play?",
+   "Do you think reading stories needs more imagination or watching cartoons?",
+   "What are some jobs that require a good imagination?"
+  ],
+  "col": [
+   "ex_art",
+   "em_conv",
+   "co_bring",
+   "op_prov",
+   "sk_dev",
+   "em_dev"
+  ],
+  "qcol": [
+   [
+    "ex_art",
+    "em_dev",
+    "co_bring",
+    "hb_dev",
+    "op_prov"
+   ],
+   [
+    "st_read",
+    "em_stir",
+    "ex_art",
+    "em_conv",
+    "me_vivid"
+   ],
+   [
+    "ex_art",
+    "ca_pur",
+    "sk_master",
+    "op_job",
+    "sk_dev"
+   ]
+  ]
+ },
+ {
+  "cat": "Place",
+  "topic": "A place (city/town) that is good for people to live in",
+  "qs": [
+   "What factors make a place suitable for living?",
+   "Do you think people move more often nowadays? Why?",
+   "What are the advantages of living in a big city rather than a small town?"
+  ],
+  "col": [
+   "ci_live",
+   "cm_sense",
+   "cm_knit",
+   "ci_pace",
+   "ci_rural",
+   "op_job"
+  ],
+  "qcol": [
+   [
+    "ci_live",
+    "cm_sense",
+    "op_job",
+    "ci_pace",
+    "mo_on"
+   ],
+   [
+    "op_job",
+    "ca_chg",
+    "ci_live",
+    "mo_on",
+    "ci_rural"
+   ],
+   [
+    "op_job",
+    "ci_bust",
+    "ci_pub",
+    "cm_knit",
+    "ci_pace"
+   ]
+  ]
+ },
+ {
+  "cat": "Place",
+  "topic": "A country in which you would like to work or live for a short period of time",
+  "qs": [
+   "What jobs can people do abroad for a short period of time?",
+   "Why do people like travelling?",
+   "Is it good that now people have an opportunity to work abroad?"
+  ],
+  "col": [
+   "op_job",
+   "xp_hands",
+   "ca_pros",
+   "to_dest",
+   "xp_prev",
+   "op_take"
+  ],
+  "qcol": [
+   [
+    "op_job",
+    "xp_work",
+    "sk_prac",
+    "to_dep",
+    "xp_hands"
+   ],
+   [
+    "pr_esc",
+    "xp_val",
+    "to_dest",
+    "me_vivid",
+    "xp_learn"
+   ],
+   [
+    "op_job",
+    "xp_val",
+    "ca_pros",
+    "op_take",
+    "cm_bel"
+   ]
+  ]
+ },
+ {
+  "cat": "Place",
+  "topic": "A boring place",
+  "qs": [
+   "Do people have different ideas of what is interesting?",
+   "How can tourist attractions become more appealing?",
+   "Is it important to try new experiences?"
+  ],
+  "col": [
+   "to_attr",
+   "to_off",
+   "xp_learn",
+   "to_dest",
+   "op_rare",
+   "im_pos"
+  ],
+  "qcol": [
+   [
+    "xp_learn",
+    "em_stir",
+    "hb_creat",
+    "to_attr",
+    "xp_val"
+   ],
+   [
+    "to_attr",
+    "to_draw",
+    "xp_hands",
+    "to_flock",
+    "te_use"
+   ],
+   [
+    "xp_val",
+    "op_take",
+    "cf_grow",
+    "xp_learn",
+    "op_rare"
+   ]
+  ]
+ },
+ {
+  "cat": "Place",
+  "topic": "A place you have travelled to that you would like to recommend to others",
+  "qs": [
+   "What makes a place attractive to tourists?",
+   "How has tourism changed in recent years?",
+   "What are the benefits of traveling?"
+  ],
+  "col": [
+   "to_attr",
+   "to_draw",
+   "to_dest",
+   "to_boom",
+   "to_inf",
+   "xp_val"
+  ],
+  "qcol": [
+   [
+    "to_attr",
+    "to_dest",
+    "to_draw",
+    "ci_live",
+    "xp_val"
+   ],
+   [
+    "to_boom",
+    "to_inf",
+    "te_use",
+    "to_dep",
+    "to_off"
+   ],
+   [
+    "xp_val",
+    "pr_esc",
+    "xp_learn",
+    "me_vivid",
+    "cf_grow"
+   ]
+  ]
+ },
+ {
+  "cat": "Place",
+  "topic": "A place you would like to visit in your free time",
+  "qs": [
+   "Do you agree or disagree that practical experience is more useful than qualifications when working in an international company?",
+   "Do you think a gap period in life is important?",
+   "Why do you think some people choose not to travel abroad?"
+  ],
+  "col": [
+   "xp_hands",
+   "xp_prac",
+   "op_take",
+   "to_dest",
+   "xp_learn",
+   "op_rare"
+  ],
+  "qcol": [
+   [
+    "xp_hands",
+    "xp_prac",
+    "sk_prac",
+    "xp_prev",
+    "sk_master"
+   ],
+   [
+    "pr_rel",
+    "xp_val",
+    "cf_grow",
+    "op_take",
+    "hb_well"
+   ],
+   [
+    "mo_on",
+    "cm_bel",
+    "pr_under",
+    "fr_keep",
+    "sk_lack"
+   ]
+  ]
+ },
+ {
+  "cat": "Place",
+  "topic": "A home that you like to visit but do not want to live in",
+  "qs": [
+   "Do modern homes differ from homes in the past?",
+   "How important is location when choosing a home?",
+   "What's the difference between homes in cities and those in the countryside?"
+  ],
+  "col": [
+   "ci_live",
+   "ci_rural",
+   "ci_bust",
+   "cm_knit",
+   "mo_on",
+   "im_pos"
+  ],
+  "qcol": [
+   [
+    "ci_live",
+    "te_lat",
+    "mo_on",
+    "im_pos",
+    "ci_rural"
+   ],
+   [
+    "ci_pub",
+    "op_job",
+    "mo_on",
+    "ci_live",
+    "cm_knit"
+   ],
+   [
+    "ci_bust",
+    "ci_rural",
+    "cm_knit",
+    "ci_pace",
+    "mo_val"
+   ]
+  ]
+ },
+ {
+  "cat": "Place",
+  "topic": "An important river/lake in your country",
+  "qs": [
+   "Are rivers and lakes important to a country?",
+   "What are the popular water sports in your country?",
+   "Are rivers and lakes good for transport? Why?"
+  ],
+  "col": [
+   "aw_env",
+   "im_cut",
+   "to_attr",
+   "ci_pub",
+   "im_tour",
+   "law_env"
+  ],
+  "qcol": [
+   [
+    "aw_env",
+    "im_tour",
+    "ci_pub",
+    "to_attr",
+    "im_cut"
+   ],
+   [
+    "to_attr",
+    "hb_well",
+    "cm_sense",
+    "to_dest",
+    "op_prov"
+   ],
+   [
+    "ci_pub",
+    "im_cut",
+    "mo_val",
+    "to_dep",
+    "im_big"
+   ]
+  ]
+ },
+ {
+  "cat": "Place",
+  "topic": "A city you enjoyed visiting",
+  "qs": [
+   "Are there more or fewer quiet places now than in the past?",
+   "Can a place ever be completely quiet?",
+   "Do you agree or disagree that people today feel uncomfortable if there is no noise?"
+  ],
+  "col": [
+   "ci_bust",
+   "ci_pace",
+   "pr_esc",
+   "to_attr",
+   "ci_live",
+   "pr_rel"
+  ],
+  "qcol": [
+   [
+    "ci_bust",
+    "to_inf",
+    "ci_pace",
+    "pr_esc",
+    "ci_live"
+   ],
+   [
+    "ci_bust",
+    "pr_esc",
+    "ci_rural",
+    "to_off",
+    "pr_rel"
+   ],
+   [
+    "hb_get",
+    "hb_out",
+    "pr_esc",
+    "hb_creat",
+    "ci_pace"
+   ]
+  ]
+ },
+ {
+  "cat": "Place",
+  "topic": "A shop/store you enjoy visiting",
+  "qs": [
+   "What are the differences between shopping online and in-store?",
+   "What are the differences in the shopping habits of different age groups?",
+   "What are the differences between shopping in street markets and big shopping malls?"
+  ],
+  "col": [
+   "mo_val",
+   "mo_on",
+   "mo_worth",
+   "mo_poor",
+   "hb_get",
+   "mo_waste"
+  ],
+  "qcol": [
+   [
+    "mo_val",
+    "te_use",
+    "xp_hands",
+    "mo_on",
+    "hb_get"
+   ],
+   [
+    "hb_gb",
+    "hb_creat",
+    "mo_on",
+    "te_use",
+    "mo_val"
+   ],
+   [
+    "mo_val",
+    "mo_poor",
+    "ci_bust",
+    "mo_on",
+    "xp_hands"
+   ]
+  ]
+ },
+ {
+  "cat": "Place",
+  "topic": "A quiet place you like to go",
+  "qs": [
+   "Has shopping become a hobby for many people?",
+   "Do you agree or disagree that most people waste too much time shopping?",
+   "How much influence does advertising have when people are buying things?"
+  ],
+  "col": [
+   "mo_on",
+   "hb_get",
+   "mo_waste",
+   "im_big",
+   "mo_val",
+   "hb_out"
+  ],
+  "qcol": [
+   [
+    "hb_get",
+    "pr_esc",
+    "mo_on",
+    "hb_out",
+    "mo_waste"
+   ],
+   [
+    "mo_waste",
+    "hb_get",
+    "mo_on",
+    "hb_out",
+    "pr_rel"
+   ],
+   [
+    "im_have",
+    "im_big",
+    "mo_on",
+    "em_stir",
+    "aw_raise"
+   ]
+  ]
+ }
+]</script>
+<script type="application/json" id="pool">{
+ "ad_ag": [
+  "go against the advice of somebody",
+  "làm trái lời khuyên của ai"
+ ],
+ "ad_give": [
+  "give / offer / pass on advice",
+  "đưa ra / truyền lại lời khuyên"
+ ],
+ "ad_imp": [
+  "free, impartial advice",
+  "lời khuyên miễn phí và khách quan"
+ ],
+ "ad_piece": [
+  "a piece of advice / a word of advice",
+  "một lời khuyên"
+ ],
+ "ad_seek": [
+  "seek expert advice",
+  "tìm đến lời khuyên của chuyên gia"
+ ],
+ "ad_sound": [
+  "That's very sound advice.",
+  "Đó là lời khuyên rất chí lý."
+ ],
+ "ad_take": [
+  "take / follow somebody's advice",
+  "nghe theo lời khuyên của ai"
+ ],
+ "am_ach": [
+  "achieve / fulfil / realize your ambition",
+  "đạt được / thực hiện được hoài bão"
+ ],
+ "am_burn": [
+  "a burning ambition to do something",
+  "khát khao cháy bỏng được làm gì"
+ ],
+ "am_driv": [
+  "be driven by personal ambition",
+  "bị thôi thúc bởi tham vọng cá nhân"
+ ],
+ "am_lack": [
+  "suffer from a lack of ambition",
+  "thiếu chí tiến thủ"
+ ],
+ "am_life": [
+  "a lifelong ambition",
+  "hoài bão cả đời"
+ ],
+ "am_succ": [
+  "the ambition to succeed in your chosen career",
+  "khát vọng thành công trong nghề đã chọn"
+ ],
+ "am_thw": [
+  "have your ambition frustrated",
+  "bị chặn đường thực hiện hoài bão"
+ ],
+ "aw_env": [
+  "environmental awareness",
+  "ý thức về môi trường"
+ ],
+ "aw_envly": [
+  "be environmentally aware",
+  "có ý thức về môi trường"
+ ],
+ "aw_make": [
+  "make somebody aware of something",
+  "làm cho ai nhận ra điều gì"
+ ],
+ "aw_raise": [
+  "raise / increase public awareness of something",
+  "nâng cao nhận thức cộng đồng về cái gì"
+ ],
+ "ca_adv": [
+  "careers advice",
+  "tư vấn hướng nghiệp"
+ ],
+ "ca_chg": [
+  "a career change / a good career move",
+  "chuyển hướng nghề nghiệp / một nước đi nghề nghiệp khôn ngoan"
+ ],
+ "ca_dev": [
+  "career development",
+  "phát triển sự nghiệp"
+ ],
+ "ca_lad": [
+  "climb the career ladder",
+  "leo lên các nấc thang sự nghiệp"
+ ],
+ "ca_pros": [
+  "career prospects",
+  "triển vọng nghề nghiệp"
+ ],
+ "ca_pur": [
+  "pursue a successful career in something",
+  "theo đuổi sự nghiệp thành công trong lĩnh vực gì"
+ ],
+ "ca_start": [
+  "start your career as something",
+  "khởi nghiệp với vai trò gì"
+ ],
+ "ca_turn": [
+  "a turning point in your career",
+  "một bước ngoặt trong sự nghiệp"
+ ],
+ "cf_boost": [
+  "boost somebody's confidence",
+  "nâng sự tự tin của ai lên"
+ ],
+ "cf_build": [
+  "build your confidence",
+  "gây dựng sự tự tin"
+ ],
+ "cf_gain": [
+  "gain confidence",
+  "trở nên tự tin hơn"
+ ],
+ "cf_give": [
+  "give somebody the confidence to do something",
+  "cho ai đủ tự tin để làm gì"
+ ],
+ "cf_grow": [
+  "grow in confidence",
+  "tự tin dần lên"
+ ],
+ "cf_lack": [
+  "lack confidence / a lack of confidence",
+  "thiếu tự tin / sự thiếu tự tin"
+ ],
+ "cf_lose": [
+  "lose your confidence",
+  "mất tự tin"
+ ],
+ "cf_und": [
+  "undermine somebody's self-confidence",
+  "làm xói mòn sự tự tin của ai"
+ ],
+ "ci_bust": [
+  "the hustle and bustle of city life",
+  "sự nhộn nhịp của đời sống thành thị"
+ ],
+ "ci_live": [
+  "live in a city / an urban environment",
+  "sống ở thành phố / môi trường đô thị"
+ ],
+ "ci_pace": [
+  "the hectic pace of life",
+  "nhịp sống hối hả"
+ ],
+ "ci_pub": [
+  "rely on public transport",
+  "phụ thuộc vào giao thông công cộng"
+ ],
+ "ci_rural": [
+  "live in the countryside / an isolated area",
+  "sống ở nông thôn / vùng hẻo lánh"
+ ],
+ "cm_bel": [
+  "feel a sense of belonging",
+  "cảm thấy mình thuộc về nơi đó"
+ ],
+ "cm_build": [
+  "build / foster a sense of community",
+  "gây dựng tinh thần cộng đồng"
+ ],
+ "cm_knit": [
+  "a close-knit community",
+  "một cộng đồng gắn bó"
+ ],
+ "cm_large": [
+  "benefit the community at large",
+  "có lợi cho cả cộng đồng"
+ ],
+ "cm_local": [
+  "the local community",
+  "cộng đồng địa phương"
+ ],
+ "cm_sense": [
+  "a strong sense of community",
+  "tinh thần cộng đồng mạnh"
+ ],
+ "cm_spir": [
+  "community spirit",
+  "tinh thần cộng đồng"
+ ],
+ "co_bring": [
+  "bring children into contact with something",
+  "cho trẻ tiếp xúc với cái gì"
+ ],
+ "co_close": [
+  "be in close contact with somebody",
+  "giữ liên lạc mật thiết với ai"
+ ],
+ "co_come": [
+  "come into contact with somebody",
+  "tiếp xúc với ai"
+ ],
+ "co_get": [
+  "get in contact with somebody",
+  "liên lạc với ai"
+ ],
+ "de_inf": [
+  "make an informed decision",
+  "ra quyết định dựa trên hiểu biết đầy đủ"
+ ],
+ "de_irr": [
+  "The decision is irreversible.",
+  "Quyết định này không thể đảo ngược."
+ ],
+ "de_key": [
+  "take / make key decisions",
+  "đưa ra những quyết định then chốt"
+ ],
+ "de_lack": [
+  "lack decision",
+  "thiếu tính quyết đoán"
+ ],
+ "de_res": [
+  "reserve judgement until you know the facts",
+  "hoãn phán xét cho tới khi nắm đủ dữ kiện"
+ ],
+ "de_to": [
+  "the decision to do something",
+  "quyết định làm việc gì"
+ ],
+ "em_check": [
+  "keep your emotions in check",
+  "kiềm chế cảm xúc"
+ ],
+ "em_conv": [
+  "convey intense emotion",
+  "truyền tải cảm xúc mãnh liệt"
+ ],
+ "em_dev": [
+  "a child's emotional and intellectual development",
+  "sự phát triển cảm xúc và trí tuệ của trẻ"
+ ],
+ "em_lose": [
+  "lose control of your emotions",
+  "mất kiểm soát cảm xúc"
+ ],
+ "em_none": [
+  "show no emotion",
+  "không lộ cảm xúc"
+ ],
+ "em_over": [
+  "be overcome with emotion",
+  "xúc động không kìm được"
+ ],
+ "em_rat": [
+  "base a decision on emotion rather than rational thought",
+  "quyết định theo cảm xúc thay vì lý trí"
+ ],
+ "em_show": [
+  "show / express your feelings",
+  "bộc lộ / diễn đạt cảm xúc"
+ ],
+ "em_stir": [
+  "stir your emotions",
+  "khơi dậy cảm xúc"
+ ],
+ "em_supp": [
+  "provide emotional support",
+  "hỗ trợ về mặt tinh thần"
+ ],
+ "ex_art": [
+  "a personal form of artistic expression",
+  "một hình thức thể hiện nghệ thuật mang tính cá nhân"
+ ],
+ "fo_cook": [
+  "a cooked meal",
+  "một bữa nấu tại nhà"
+ ],
+ "fo_main": [
+  "the main meal of the day",
+  "bữa chính trong ngày"
+ ],
+ "fo_out": [
+  "go out for a meal / eat out",
+  "đi ăn ngoài"
+ ],
+ "fo_three": [
+  "a three-course meal",
+  "bữa ăn ba món"
+ ],
+ "fr_circ": [
+  "a wide circle of friends",
+  "một vòng bạn bè rộng"
+ ],
+ "fr_close": [
+  "a close / lasting / lifelong friendship",
+  "một tình bạn thân thiết / bền lâu / cả đời"
+ ],
+ "fr_keep": [
+  "keep in touch with school friends",
+  "giữ liên lạc với bạn học"
+ ],
+ "fr_ruin": [
+  "ruin a friendship",
+  "phá hỏng một tình bạn"
+ ],
+ "fr_strike": [
+  "strike up a friendship with somebody",
+  "bắt đầu kết bạn với ai"
+ ],
+ "fr_ties": [
+  "the ties of friendship",
+  "những sợi dây gắn kết tình bạn"
+ ],
+ "go_acad": [
+  "academic achievement",
+  "thành tích học tập"
+ ],
+ "go_amb": [
+  "set ambitious goals",
+  "đặt ra những mục tiêu tham vọng"
+ ],
+ "go_imm": [
+  "Our immediate goal is to...",
+  "Mục tiêu trước mắt của chúng ta là..."
+ ],
+ "go_pur": [
+  "pursue your goal of doing something",
+  "theo đuổi mục tiêu làm gì"
+ ],
+ "go_real": [
+  "set realistic aims and objectives",
+  "đặt mục tiêu thực tế"
+ ],
+ "go_rem": [
+  "a remarkable achievement",
+  "một thành tựu đáng nể"
+ ],
+ "go_set": [
+  "set yourself long-term goals",
+  "tự đặt ra mục tiêu dài hạn"
+ ],
+ "go_work": [
+  "work towards a common goal",
+  "cùng hướng tới một mục tiêu chung"
+ ],
+ "hb_creat": [
+  "be a creature of habit",
+  "là người sống theo nếp cố định"
+ ],
+ "hb_dev": [
+  "develop the habit of reading for fun",
+  "tạo thói quen đọc sách để giải trí"
+ ],
+ "hb_eat": [
+  "change your eating habits",
+  "thay đổi thói quen ăn uống"
+ ],
+ "hb_gb": [
+  "good and bad habits",
+  "thói quen tốt và xấu"
+ ],
+ "hb_get": [
+  "get into / break the habit of doing something",
+  "tạo được / bỏ được thói quen làm gì"
+ ],
+ "hb_life": [
+  "change the habits of a lifetime",
+  "thay đổi thói quen cả đời"
+ ],
+ "hb_out": [
+  "out of habit / force of habit",
+  "theo thói quen / do quán tính thói quen"
+ ],
+ "hb_well": [
+  "physical and emotional well-being",
+  "sức khoẻ thể chất và tinh thần"
+ ],
+ "im_big": [
+  "a significant / major / huge impact",
+  "tác động đáng kể / rất lớn"
+ ],
+ "im_cut": [
+  "reduce / minimize the impact of something",
+  "giảm thiểu tác động của cái gì"
+ ],
+ "im_have": [
+  "have / make an impact on something",
+  "tạo ra tác động tới cái gì"
+ ],
+ "im_pos": [
+  "a positive / negative / adverse impact",
+  "tác động tích cực / tiêu cực / bất lợi"
+ ],
+ "im_tour": [
+  "the environmental impact of tourism",
+  "tác động môi trường của du lịch"
+ ],
+ "law_break": [
+  "break the law / be against the law",
+  "vi phạm luật / trái luật"
+ ],
+ "law_comp": [
+  "comply with the new legislation",
+  "tuân thủ luật mới"
+ ],
+ "law_enf": [
+  "enforce the law",
+  "thực thi luật"
+ ],
+ "law_env": [
+  "Environmental laws are strict about polluting.",
+  "Luật môi trường rất nghiêm với hành vi gây ô nhiễm."
+ ],
+ "law_hard": [
+  "The legislation will be difficult to enforce.",
+  "Luật này sẽ khó thực thi."
+ ],
+ "law_pass": [
+  "introduce / draw up / pass a law",
+  "đưa ra / soạn / thông qua một luật"
+ ],
+ "law_req": [
+  "be required by law to do something",
+  "bị luật bắt buộc phải làm gì"
+ ],
+ "law_tackle": [
+  "tough legislation to tackle this problem",
+  "luật cứng rắn để xử lý vấn đề này"
+ ],
+ "me_child": [
+  "childhood memories",
+  "ký ức tuổi thơ"
+ ],
+ "me_fond": [
+  "fond memories of something",
+  "những kỷ niệm êm đẹp về cái gì"
+ ],
+ "me_happy": [
+  "happy memories of doing something",
+  "kỷ niệm vui về việc gì"
+ ],
+ "me_share": [
+  "share memories with somebody",
+  "cùng ai ôn lại kỷ niệm"
+ ],
+ "me_vivid": [
+  "vivid memories of something",
+  "ký ức rõ mồn một về cái gì"
+ ],
+ "mo_good": [
+  "pay good money for something",
+  "trả một khoản không nhỏ cho cái gì"
+ ],
+ "mo_inv": [
+  "invest money rather than spend it",
+  "đầu tư tiền thay vì tiêu"
+ ],
+ "mo_life": [
+  "life savings",
+  "tiền tiết kiệm cả đời"
+ ],
+ "mo_on": [
+  "spend money on something",
+  "chi tiền vào cái gì"
+ ],
+ "mo_poor": [
+  "good / poor value",
+  "đáng tiền / không đáng tiền"
+ ],
+ "mo_raise": [
+  "raise money for charity",
+  "quyên góp tiền cho từ thiện"
+ ],
+ "mo_save": [
+  "borrow / save / spend / earn money",
+  "vay / tiết kiệm / tiêu / kiếm tiền"
+ ],
+ "mo_val": [
+  "value for money",
+  "đáng đồng tiền"
+ ],
+ "mo_waste": [
+  "a waste of time and money",
+  "phí thời gian và tiền bạc"
+ ],
+ "mo_worth": [
+  "be well worth the money",
+  "rất đáng số tiền bỏ ra"
+ ],
+ "nw_bias": [
+  "News coverage was extremely biased.",
+  "Cách đưa tin rất thiên lệch."
+ ],
+ "nw_break": [
+  "breaking news",
+  "tin nóng đang diễn ra"
+ ],
+ "nw_broke": [
+  "The news broke while we were away.",
+  "Tin nổ ra khi chúng tôi đi vắng."
+ ],
+ "nw_chan": [
+  "a 24-hour news channel",
+  "một kênh tin tức 24 giờ"
+ ],
+ "nw_front": [
+  "front-page news",
+  "tin trang nhất"
+ ],
+ "nw_gath": [
+  "gather news",
+  "thu thập tin tức"
+ ],
+ "nw_in": [
+  "be in the news",
+  "xuất hiện trên mặt báo"
+ ],
+ "nw_story": [
+  "a news story / a news report",
+  "một bản tin"
+ ],
+ "op_create": [
+  "create real opportunities for young people",
+  "tạo cơ hội thực chất cho người trẻ"
+ ],
+ "op_edu": [
+  "educational opportunities",
+  "cơ hội học tập"
+ ],
+ "op_equal": [
+  "equality of opportunity",
+  "sự bình đẳng về cơ hội"
+ ],
+ "op_job": [
+  "job / employment opportunities",
+  "cơ hội việc làm"
+ ],
+ "op_miss": [
+  "miss an opportunity",
+  "bỏ lỡ một cơ hội"
+ ],
+ "op_prov": [
+  "provide / offer an opportunity for something",
+  "mang lại cơ hội cho việc gì"
+ ],
+ "op_rare": [
+  "a rare opportunity to do something",
+  "một cơ hội hiếm để làm gì"
+ ],
+ "op_take": [
+  "take advantage of an opportunity",
+  "tận dụng một cơ hội"
+ ],
+ "pr_cope": [
+  "cope with the pressure / stress",
+  "chịu đựng được áp lực / căng thẳng"
+ ],
+ "pr_esc": [
+  "escape the pressures of modern life",
+  "thoát khỏi áp lực của đời sống hiện đại"
+ ],
+ "pr_hand": [
+  "handle pressure",
+  "xử lý được áp lực"
+ ],
+ "pr_ill": [
+  "stress-related illnesses",
+  "các bệnh do căng thẳng gây ra"
+ ],
+ "pr_peer": [
+  "peer pressure",
+  "áp lực từ bạn bè đồng trang lứa"
+ ],
+ "pr_rel": [
+  "relieve / release the pressure",
+  "giải toả áp lực"
+ ],
+ "pr_src": [
+  "a major source of stress",
+  "một nguồn gây căng thẳng lớn"
+ ],
+ "pr_str": [
+  "cope with the stresses and strains of daily life",
+  "xoay xở với những căng thẳng của đời sống thường ngày"
+ ],
+ "pr_suff": [
+  "be suffering from stress",
+  "đang bị căng thẳng"
+ ],
+ "pr_under": [
+  "be under pressure to do something",
+  "chịu áp lực phải làm gì"
+ ],
+ "pr_work": [
+  "the pressure of work",
+  "áp lực công việc"
+ ],
+ "re_close": [
+  "have a close relationship with somebody",
+  "có quan hệ thân thiết với ai"
+ ],
+ "re_face": [
+  "develop face-to-face relationships",
+  "xây dựng quan hệ gặp mặt trực tiếp"
+ ],
+ "re_main": [
+  "maintain a successful relationship",
+  "duy trì một mối quan hệ tốt đẹp"
+ ],
+ "re_strain": [
+  "put a strain on a relationship",
+  "gây căng thẳng cho mối quan hệ"
+ ],
+ "re_trust": [
+  "a relationship of trust",
+  "một mối quan hệ dựa trên sự tin tưởng"
+ ],
+ "re_work": [
+  "establish a good working relationship",
+  "thiết lập quan hệ công việc tốt"
+ ],
+ "ri_calc": [
+  "a calculated risk",
+  "một rủi ro đã được tính toán"
+ ],
+ "ri_elem": [
+  "contain an element of risk",
+  "có yếu tố rủi ro trong đó"
+ ],
+ "ri_out": [
+  "The benefits outweigh the risks.",
+  "Lợi ích lớn hơn rủi ro."
+ ],
+ "ri_run": [
+  "run the risk of doing something",
+  "đối mặt với nguy cơ bị gì"
+ ],
+ "ri_take": [
+  "take a risk",
+  "chấp nhận rủi ro"
+ ],
+ "ri_weigh": [
+  "weigh risks and benefits",
+  "cân nhắc giữa rủi ro và lợi ích"
+ ],
+ "ri_worth": [
+  "be worth the risk",
+  "đáng để mạo hiểm"
+ ],
+ "sk_dev": [
+  "develop / acquire / hone your skills",
+  "phát triển / tiếp thu / mài giũa kỹ năng"
+ ],
+ "sk_lack": [
+  "lack the necessary skills",
+  "thiếu kỹ năng cần thiết"
+ ],
+ "sk_life": [
+  "life skills / people skills",
+  "kỹ năng sống / kỹ năng ứng xử"
+ ],
+ "sk_master": [
+  "master the skills necessary to do something",
+  "thành thạo các kỹ năng cần để làm gì"
+ ],
+ "sk_pick": [
+  "pick up a skill",
+  "học lỏm được một kỹ năng"
+ ],
+ "sk_prac": [
+  "practical skills",
+  "kỹ năng thực hành"
+ ],
+ "sk_sharp": [
+  "sharpen your skills",
+  "làm sắc bén thêm kỹ năng"
+ ],
+ "sk_short": [
+  "a skills shortage",
+  "tình trạng thiếu hụt kỹ năng"
+ ],
+ "sk_study": [
+  "develop good study skills",
+  "xây dựng kỹ năng học tập tốt"
+ ],
+ "sl_bird": [
+  "be an early bird",
+  "là người dậy sớm"
+ ],
+ "sl_dist": [
+  "wake up early after a disturbed sleep",
+  "dậy sớm sau một đêm ngủ chập chờn"
+ ],
+ "sl_four": [
+  "only sleep for four hours a night",
+  "chỉ ngủ bốn tiếng mỗi đêm"
+ ],
+ "sl_get": [
+  "get to sleep / get some sleep",
+  "đi vào giấc ngủ / ngủ được một chút"
+ ],
+ "sl_lack": [
+  "Anxiety can be caused by lack of sleep.",
+  "Lo âu có thể do thiếu ngủ."
+ ],
+ "sl_late": [
+  "sleep late at the weekend",
+  "ngủ nướng vào cuối tuần"
+ ],
+ "sl_night": [
+  "a good night's sleep",
+  "một giấc ngủ ngon trọn đêm"
+ ],
+ "sl_owl": [
+  "be a night owl",
+  "là cú đêm"
+ ],
+ "sl_stress": [
+  "can't sleep at night and feel stressed all the time",
+  "đêm không ngủ được và lúc nào cũng căng thẳng"
+ ],
+ "sl_well": [
+  "sleep well / soundly / badly",
+  "ngủ ngon / say / kém"
+ ],
+ "sl_wink": [
+  "not get a wink of sleep",
+  "không chợp mắt được chút nào"
+ ],
+ "sm_all": [
+  "be all smiles",
+  "tươi cười suốt"
+ ],
+ "sm_bring": [
+  "bring a smile to somebody's face",
+  "làm ai đó nở nụ cười"
+ ],
+ "sm_broad": [
+  "a broad / warm / bright smile",
+  "nụ cười rạng rỡ / ấm áp"
+ ],
+ "sm_supp": [
+  "suppress a smile",
+  "nén nụ cười"
+ ],
+ "st_read": [
+  "hear / read / write a story",
+  "nghe / đọc / viết một câu chuyện"
+ ],
+ "st_tf": [
+  "a true / false story",
+  "một câu chuyện thật / bịa"
+ ],
+ "st_top": [
+  "the top stories of the day",
+  "những tin nổi bật trong ngày"
+ ],
+ "su_ach": [
+  "achieve considerable success in something",
+  "gặt hái thành công đáng kể trong việc gì"
+ ],
+ "su_att": [
+  "attribute your success to something",
+  "cho rằng thành công của mình là nhờ cái gì"
+ ],
+ "su_fail": [
+  "Whether we succeed or fail depends on ingenuity and luck.",
+  "Thành hay bại còn tuỳ vào sự khéo léo và may mắn."
+ ],
+ "su_key": [
+  "Confidence is the key to success.",
+  "Tự tin là chìa khoá của thành công."
+ ],
+ "su_learn": [
+  "learn from both successes and failures",
+  "học từ cả thành công lẫn thất bại"
+ ],
+ "su_lit": [
+  "meet with little success",
+  "không mấy thành công"
+ ],
+ "su_make": [
+  "make a success of something",
+  "làm nên chuyện với việc gì"
+ ],
+ "su_over": [
+  "Success didn't come overnight.",
+  "Thành công không đến sau một đêm."
+ ],
+ "su_sec": [
+  "the secret of your success",
+  "bí quyết thành công của bạn"
+ ],
+ "te_acc": [
+  "access to advanced computer technology",
+  "được tiếp cận công nghệ máy tính tiên tiến"
+ ],
+ "te_adv": [
+  "recent advances in technology",
+  "những tiến bộ gần đây của công nghệ"
+ ],
+ "te_break": [
+  "a major technological breakthrough",
+  "một bước đột phá công nghệ lớn"
+ ],
+ "te_chg": [
+  "technological advances / technological change",
+  "tiến bộ công nghệ / thay đổi công nghệ"
+ ],
+ "te_lat": [
+  "invest in the latest technology",
+  "đầu tư vào công nghệ mới nhất"
+ ],
+ "te_use": [
+  "make use of the most modern technologies",
+  "tận dụng công nghệ hiện đại nhất"
+ ],
+ "to_attr": [
+  "a major tourist attraction",
+  "một điểm hút khách lớn"
+ ],
+ "to_boom": [
+  "Tourism boomed.",
+  "Du lịch bùng nổ."
+ ],
+ "to_dep": [
+  "be heavily dependent on tourism",
+  "phụ thuộc nặng vào du lịch"
+ ],
+ "to_dest": [
+  "a popular tourist destination",
+  "một điểm đến du lịch được ưa chuộng"
+ ],
+ "to_draw": [
+  "attract tourists from all over the world",
+  "thu hút khách du lịch từ khắp nơi"
+ ],
+ "to_flock": [
+  "Visitors flock to the town every summer.",
+  "Khách đổ về thị trấn mỗi mùa hè."
+ ],
+ "to_inf": [
+  "a huge influx of tourists",
+  "một lượng khách đổ về rất lớn"
+ ],
+ "to_off": [
+  "be off the usual tourist route",
+  "nằm ngoài tuyến du lịch thông thường"
+ ],
+ "to_vis": [
+  "be open to visitors / visitor numbers",
+  "mở cửa cho khách tham quan / lượng khách"
+ ],
+ "vw_chg": [
+  "change your opinion of somebody",
+  "thay đổi cách nhìn về ai"
+ ],
+ "vw_diff": [
+  "a difference of opinion",
+  "sự khác biệt quan điểm"
+ ],
+ "vw_expr": [
+  "express / voice / state your opinion",
+  "bày tỏ / nêu quan điểm"
+ ],
+ "vw_inf": [
+  "the informed opinions of locals",
+  "ý kiến có hiểu biết của người bản địa"
+ ],
+ "vw_keep": [
+  "keep your opinions to yourself",
+  "giữ quan điểm cho riêng mình"
+ ],
+ "vw_mix": [
+  "Opinions differ as to which approach is best.",
+  "Ý kiến khác nhau về cách nào là tốt nhất."
+ ],
+ "vw_resp": [
+  "respect somebody's opinion",
+  "tôn trọng quan điểm của ai"
+ ],
+ "vw_str": [
+  "hold strong opinions on something",
+  "có quan điểm rất mạnh về cái gì"
+ ],
+ "vw_subj": [
+  "These are all just subjective opinions.",
+  "Đây đều chỉ là ý kiến chủ quan."
+ ],
+ "xp_hands": [
+  "gain hands-on experience",
+  "có được kinh nghiệm thực tế"
+ ],
+ "xp_high": [
+  "be highly experienced in something",
+  "rất dày dạn trong lĩnh vực gì"
+ ],
+ "xp_learn": [
+  "learn by experience / learn from experience",
+  "học từ trải nghiệm"
+ ],
+ "xp_prac": [
+  "a lack of practical experience",
+  "sự thiếu kinh nghiệm thực tế"
+ ],
+ "xp_prev": [
+  "previous experience of this type of work",
+  "kinh nghiệm trước đó với loại công việc này"
+ ],
+ "xp_val": [
+  "gain valuable experience",
+  "thu được kinh nghiệm quý"
+ ],
+ "xp_wealth": [
+  "bring a wealth of experience",
+  "mang đến một vốn kinh nghiệm dày dặn"
+ ],
+ "xp_work": [
+  "do work experience in a local firm",
+  "đi thực tập tại một công ty địa phương"
+ ]
+}</script>
+<script>
+(function(){
+  "use strict";
+
+  var BASE = JSON.parse(document.getElementById("bank").textContent);
+  var POOL = JSON.parse(document.getElementById("pool").textContent);
+  var bank = BASE.slice();
+
+  var state = {
+    cat: "all",
+    seconds: 60,
+    fullSet: true,
+    noRepeat: true,
+    sound: true,
+    used: [],
+    setIdx: -1,
+    qPos: 0,
+    tipsOpen: false,
+    ticking: false,
+    left: 0,
+    handle: null
+  };
+
+  var el = {};
+  ["chips","chipNote","eyebrow","question","topic","dots","bar","barFill",
+   "spinBtn","prevBtn","nextBtn","tipBtn","tips","timerBtn","settingsBtn","overlay","segTime","segMode",
+   "tgRepeat","tgSound","paste","addBtn","resetBtn","status","closeBtn"]
+  .forEach(function(id){ el[id] = document.getElementById(id); });
+
+  var CATS = [
+    {id:"all",   label:"Tất cả"},
+    {id:"People",label:"People"},
+    {id:"Object",label:"Object"},
+    {id:"Activity",label:"Activity"},
+    {id:"Place", label:"Place"}
+  ];
+  var TIMES = [
+    {v:30,label:"30 giây"},
+    {v:45,label:"45 giây"},
+    {v:60,label:"1 phút"},
+    {v:90,label:"1 phút 30"},
+    {v:120,label:"2 phút"}
+  ];
+  var MODES = [
+    {v:true, label:"Cả bộ 3 câu"},
+    {v:false,label:"Ngẫu nhiên 1 câu"}
+  ];
+
+  var TOPICS = {
+   env: ["Môi trường và thiên nhiên", [
+     ["raise / increase public awareness of something","nâng cao nhận thức cộng đồng về cái gì"],
+     ["environmental awareness","ý thức về môi trường"],
+     ["a growing / increasing awareness of something","nhận thức ngày càng tăng về cái gì"],
+     ["reduce / minimize the impact of something","giảm thiểu tác động của cái gì"],
+     ["the environmental impact of tourism","tác động môi trường của du lịch"],
+     ["tough legislation to tackle this problem","luật cứng rắn để xử lý vấn đề này"]]],
+   law: ["Luật lệ và quy tắc", [
+     ["break the law / be against the law","vi phạm luật / trái luật"],
+     ["enforce the law","thực thi luật"],
+     ["be required by law to do something","bị luật bắt buộc phải làm gì"],
+     ["introduce / draw up / pass a law","đưa ra / soạn / thông qua một luật"],
+     ["comply with the new legislation","tuân thủ luật mới"],
+     ["The legislation will be difficult to enforce.","Luật này sẽ khó thực thi."]]],
+   tech: ["Công nghệ và AI", [
+     ["recent advances in technology","những tiến bộ gần đây của công nghệ"],
+     ["invest in the latest technology","đầu tư vào công nghệ mới nhất"],
+     ["make use of the most modern technologies","tận dụng công nghệ hiện đại nhất"],
+     ["technological advances / technological change","tiến bộ công nghệ / thay đổi công nghệ"],
+     ["a major technological breakthrough","một bước đột phá công nghệ lớn"],
+     ["have a positive / negative impact on something","tác động tích cực / tiêu cực tới cái gì"]]],
+   media: ["Truyền thông, tin tức, quảng cáo", [
+     ["breaking news","tin nóng đang diễn ra"],
+     ["a news story / a news report","một bản tin"],
+     ["front-page news","tin trang nhất"],
+     ["News coverage was extremely biased.","Cách đưa tin rất thiên lệch."],
+     ["be in the news","xuất hiện trên mặt báo"],
+     ["gather news","thu thập tin tức"],
+     ["a true / false story","một câu chuyện thật / bịa"]]],
+   art: ["Nghệ thuật, phim, sách, thể thao", [
+     ["hear / read / write a story","nghe / đọc / viết một câu chuyện"],
+     ["stir your emotions","khơi dậy cảm xúc của bạn"],
+     ["convey intense emotion","truyền tải cảm xúc mãnh liệt"],
+     ["a personal form of artistic expression","một hình thức thể hiện nghệ thuật mang tính cá nhân"],
+     ["the expression of emotion","sự thể hiện cảm xúc"],
+     ["bring a smile to somebody's face","làm ai đó nở nụ cười"]]],
+   social: ["Quan hệ, giao tiếp, cảm xúc", [
+     ["have a close relationship with somebody","có quan hệ thân thiết với ai"],
+     ["establish a good working relationship","thiết lập quan hệ công việc tốt"],
+     ["maintain a successful relationship","duy trì một mối quan hệ tốt đẹp"],
+     ["put a strain on a relationship","gây căng thẳng cho mối quan hệ"],
+     ["be in close contact with somebody","giữ liên lạc mật thiết với ai"],
+     ["keep your emotions in check","kiềm chế cảm xúc"],
+     ["show / express your feelings","bộc lộ / diễn đạt cảm xúc"]]],
+   family: ["Gia đình và trẻ em", [
+     ["a child's emotional and intellectual development","sự phát triển cảm xúc và trí tuệ của trẻ"],
+     ["provide emotional support","hỗ trợ về mặt tinh thần"],
+     ["develop the habit of reading for fun","tạo thói quen đọc sách để giải trí"],
+     ["develop children's literacy skills","phát triển kỹ năng đọc viết cho trẻ"],
+     ["bring children into contact with something","cho trẻ tiếp xúc với cái gì"],
+     ["have a close relationship with somebody","có quan hệ thân thiết với ai"]]],
+   money: ["Tiền bạc và mua sắm", [
+     ["save / spend / earn money","tiết kiệm / tiêu / kiếm tiền"],
+     ["spend money on something","chi tiền vào cái gì"],
+     ["pay good money for something","trả một khoản không nhỏ cho cái gì"],
+     ["value for money","đáng đồng tiền"],
+     ["good / poor value","đáng tiền / không đáng tiền"],
+     ["a waste of time and money","phí thời gian và tiền bạc"],
+     ["well worth the money","rất đáng số tiền bỏ ra"]]],
+   work: ["Việc làm, nghề nghiệp, kinh doanh", [
+     ["pursue a successful career in something","theo đuổi sự nghiệp thành công trong lĩnh vực gì"],
+     ["career prospects","triển vọng nghề nghiệp"],
+     ["career development","phát triển sự nghiệp"],
+     ["climb the career ladder","leo lên các nấc thang sự nghiệp"],
+     ["a career change","một cú chuyển hướng nghề nghiệp"],
+     ["a turning point in your career","một bước ngoặt trong sự nghiệp"],
+     ["careers advice","tư vấn hướng nghiệp"]]],
+   health: ["Sức khoẻ, giấc ngủ, thói quen", [
+     ["get into / break the habit of doing something","tạo được / bỏ được thói quen làm gì"],
+     ["change your eating habits","thay đổi thói quen ăn uống"],
+     ["good and bad habits","thói quen tốt và xấu"],
+     ["out of habit / force of habit","theo thói quen / do quán tính thói quen"],
+     ["be a creature of habit","là người sống theo nếp cố định"],
+     ["physical and emotional well-being","sức khoẻ thể chất và tinh thần"]]],
+   edu: ["Giáo dục, học tập, kỹ năng", [
+     ["develop / acquire / hone your skills","phát triển / tiếp thu / mài giũa kỹ năng"],
+     ["pick up a skill","học lỏm được một kỹ năng"],
+     ["master the skills necessary to do something","thành thạo các kỹ năng cần để làm gì"],
+     ["practical skills","kỹ năng thực hành"],
+     ["literacy and numeracy skills","kỹ năng đọc viết và tính toán"],
+     ["develop good study skills","xây dựng kỹ năng học tập tốt"],
+     ["lack the necessary skills","thiếu kỹ năng cần thiết"]]],
+   goal: ["Mục tiêu, quyết định, kế hoạch", [
+     ["make an informed decision","ra quyết định dựa trên hiểu biết đầy đủ"],
+     ["take / make key decisions","đưa ra những quyết định then chốt"],
+     ["the decision to do something","quyết định làm việc gì"],
+     ["The decision is irreversible.","Quyết định này không thể đảo ngược."],
+     ["a landmark decision","một quyết định mang tính bước ngoặt"],
+     ["have / make an impact on something","tạo ra tác động tới cái gì"]]],
+   food: ["Ăn uống và dịp lễ", [
+     ["go out for a meal","đi ăn ngoài"],
+     ["eat out","ăn ở ngoài thay vì ở nhà"],
+     ["the main meal of the day","bữa chính trong ngày"],
+     ["a cooked meal","một bữa nấu tại nhà"],
+     ["a three-course meal","bữa ăn ba món"],
+     ["eat between meals","ăn vặt giữa các bữa"],
+     ["change your eating habits","thay đổi thói quen ăn uống"]]],
+   place: ["Nơi chốn, du lịch, đô thị", [
+     ["a major tourist attraction","một điểm hút khách lớn"],
+     ["attract tourists from all over the world","thu hút khách du lịch từ khắp nơi"],
+     ["a popular tourist destination","một điểm đến du lịch được ưa chuộng"],
+     ["a huge influx of tourists","một lượng khách đổ về rất lớn"],
+     ["be heavily dependent on tourism","phụ thuộc nặng vào du lịch"],
+     ["be off the usual tourist route","nằm ngoài tuyến du lịch thông thường"],
+     ["the environmental impact of tourism","tác động môi trường của du lịch"]]]
+  };
+
+  var CLUSTER_RULES = [
+   ["food",   /\bfood\b|\beat\b|eating|cook|cake|\bmeals?\b|festival|restaurant/],
+   ["env",    /nature|environment|natural world|plants?\b|garden|pollut|climate|river|lake|water sport|animal/],
+   ["law",    /\blaws?\b|legislation|rules?\b|obey|punish|banning|not allowed|allow/],
+   ["media",  /news|advertis|celebrit|famous|videos?\b|\btv\b|programmes?\b|program\b|shows?\b|media|viral/],
+   ["art",    /\barts?\b|paint|draw|music|concert|sports?\b|games?\b|stor(y|ies)|books?\b|read|museums?\b|galler|films?\b|movies?\b|actor|cinema|cartoon|imagination/],
+   ["social", /friend|relationship|messages?\b|reply|texting|\bemail\b|communicat|respect|community service|smil|feelings?\b|emotion|proud|pride|advice|encourag/],
+   ["family", /famil(y|ies)|parents?\b|children|\bchild\b|kids?\b|wedding|celebrat/],
+   ["money",  /money|prices?\b|expensive|saving|shopping|\bshops?\b|\bbuy\b|buying|cost|budget|\bstores?\b|\bmarkets?\b|\bmalls?\b|donate|financial|salary/],
+   ["work",   /\bjobs?\b|career|work|employe|boss|compan|business|entrepreneur|\bpay\b|paid|profession|colleague|customer|teamwork|leader|promotion/],
+   ["health", /sleep|health|stress|routine|habit|leisure|days? off|holiday|tiring|up early/],
+   ["edu",    /school|student|teach|learn|educat|language|study|class|talent|clever|skill|university/],
+   ["tech",   /technolog|\bai\b|computers?\b|cell phone|mobile phone|phones?\b|apps?\b|online|internet|machine|device|digital/],
+   ["place",  /places?\b|cit(y|ies)|towns?\b|countr(y|ies)|abroad|travel|tourist|tourism|visit|building|home|house|live|living|move|traffic|transport|\bcars?\b|\bbus\b|pedestrian|quiet|noise|historical/]
+  ];
+
+  function matchCluster(s){
+    for (var i = 0; i < CLUSTER_RULES.length; i++){
+      if (CLUSTER_RULES[i][1].test(s)) return CLUSTER_RULES[i][0];
+    }
+    return null;
+  }
+  function detectCluster(q, topic){
+    return matchCluster(q.toLowerCase()) || matchCluster((topic || "").toLowerCase()) || "goal";
+  }
+
+  var FLOW = {
+    opinion: {
+      label: "Nêu quan điểm",
+      steps: [
+        ["Mở đầu", "Trả lời thẳng có hoặc không, kèm một lý do ngắn.",
+         ["I'd say yes, mainly because...", "Personally, I don't think so."]],
+        ["Vào bài", "Giải thích lý do đó, rồi lấy một ví dụ cụ thể.",
+         ["The main reason is that...", "For instance, in Vietnam..."]],
+        ["Kết bài", "Chốt lại, có thể thừa nhận mặt còn lại.",
+         ["So overall, ...", "although I can see the other side."]]
+      ]
+    },
+    reason: {
+      label: "Giải thích nguyên nhân",
+      steps: [
+        ["Mở đầu", "Báo trước sẽ đưa ra mấy lý do.",
+         ["There are a couple of reasons for that.", "I think it comes down to two things."]],
+        ["Vào bài", "Lý do 1, rồi lý do 2, mỗi lý do một câu giải thích.",
+         ["First and foremost, ...", "On top of that, ..."]],
+        ["Kết bài", "Gộp lại thành một câu chốt.",
+         ["So it's really a mix of ... and ..."]]
+      ]
+    },
+    list: {
+      label: "Liệt kê",
+      steps: [
+        ["Mở đầu", "Nói ngay có mấy loại chính.",
+         ["A few types spring to mind.", "Mainly two kinds, I'd say."]],
+        ["Vào bài", "Kể 2 loại, rồi khai thác sâu một loại.",
+         ["The most common one is...", "Another popular one is..."]],
+        ["Kết bài", "Chỉ ra loại nổi bật nhất và tại sao.",
+         ["But the one that really stands out is ... because..."]]
+      ]
+    },
+    compare: {
+      label: "So sánh",
+      steps: [
+        ["Mở đầu", "Nói ngay bên nào hơn, hoặc khác nhau ở mấy điểm.",
+         ["They differ in a couple of ways.", "I'd go for the first one."]],
+        ["Vào bài", "Đặt hai vế cạnh nhau bằng whereas, while.",
+         ["X tends to..., whereas Y...", "The other difference is that..."]],
+        ["Kết bài", "Chốt lựa chọn kèm điều kiện.",
+         ["So each has its place, but I'd say..."]]
+      ]
+    },
+    change: {
+      label: "Thay đổi theo thời gian",
+      steps: [
+        ["Mở đầu", "Xác nhận có thay đổi hay không, mức độ ra sao.",
+         ["Things have changed quite a lot.", "Yes, noticeably so."]],
+        ["Vào bài", "Trước kia thế nào, bây giờ thế nào, vì sao đổi.",
+         ["In the past, ...", "These days, however, ...", "This is largely down to..."]],
+        ["Kết bài", "Nêu động lực chính của thay đổi.",
+         ["So the shift has mostly been driven by..."]]
+      ]
+    },
+    advdis: {
+      label: "Lợi ích và hạn chế",
+      steps: [
+        ["Mở đầu", "Nói có mấy lợi ích hoặc hạn chế chính.",
+         ["There are several benefits to that.", "It does have a few drawbacks."]],
+        ["Vào bài", "Điểm rõ nhất trước, rồi điểm thứ hai kèm ví dụ.",
+         ["The most obvious one is...", "Another benefit is that..."]],
+        ["Kết bài", "Thêm mặt còn lại để câu trả lời cân bằng.",
+         ["That said, the downside is..."]]
+      ]
+    },
+    solution: {
+      label: "Đề xuất giải pháp",
+      steps: [
+        ["Mở đầu", "Khẳng định có nhiều việc làm được.",
+         ["There's quite a lot people can do.", "A few things would help."]],
+        ["Vào bài", "Việc dễ nhất trước, rồi việc ở tầm chính sách hoặc trường học.",
+         ["The simplest step is to...", "Beyond that, schools and governments could..."]],
+        ["Kết bài", "Nêu điều kiện để giải pháp có tác dụng.",
+         ["But none of that works unless..."]]
+      ]
+    }
+  };
+
+  function detectType(q){
+    var s = q.toLowerCase().trim();
+    if (/difference(s)? (between|in)/.test(s)) return "compare";
+    if (/\b(benefit|benefits|advantage|advantages|drawback|drawbacks|disadvantage|disadvantages)\b/.test(s)) return "advdis";
+    if (/^what (kinds? of|types? of|sorts? of)/.test(s)) return "list";
+    if (/^why/.test(s)) return "reason";
+    if (/^what (motivates|makes|causes|stops|prevents|can stop|factors)/.test(s)) return "reason";
+    if (/^(what can|what things can|how can|what should|how should|what are good ways|what preparations|how do (people|you)|what other|how would)/.test(s)
+        && !/^how (important|healthy|much|many|has|have)/.test(s)) return "solution";
+    if (/(in the past|than in the past|now than|as people did|recent years|changed|more and more|nowadays|these days|more or fewer)/.test(s)) return "change";
+    if (/(would you rather|do you prefer|more important|more effective|more stressful|which is more|rather than|compared to|compared with|more \w+ than|better \w+ than|or with other|alone or)/.test(s)) return "compare";
+    return "opinion";
+  }
+
+  function esc(t){
+    return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+
+  function renderTips(q, topic, cols){
+    var f = FLOW[detectType(q)];
+    var list, heading;
+    if (cols && cols.length){
+      list = cols.map(function(k){ return POOL[k]; }).filter(Boolean);
+      heading = "Collocations cho câu này";
+    }
+    if (!list || !list.length){
+      var t = TOPICS[detectCluster(q, topic)];
+      list = t[1];
+      heading = "Collocations - " + t[0];
+    }
+    var html = '<span class="badge">' + f.label + "</span>";
+    f.steps.forEach(function(st){
+      var en = st[2].map(function(x){ return "<span>" + esc(x) + "</span>"; }).join("");
+      html += '<div class="step"><div class="k">' + st[0] + '</div><div>'
+            + '<div class="vi">' + st[1] + "</div>"
+            + '<div class="en">' + en + "</div></div></div>";
+    });
+    html += '<div class="colloc"><h3>' + heading + "</h3><ul>";
+    list.forEach(function(c){
+      html += "<li><b>" + esc(c[0]) + "</b><em>" + esc(c[1]) + "</em></li>";
+    });
+    html += '</ul><p class="src">Nguồn: Oxford Advanced Learner\'s Dictionary.</p></div>';
+    el.tips.innerHTML = html;
+  }
+
+  function pool(){
+    if (state.cat === "all") return bank.map(function(_,i){ return i; });
+    return bank.reduce(function(acc,item,i){
+      if (item.cat === state.cat) acc.push(i);
+      return acc;
+    }, []);
+  }
+
+  function fmt(s){
+    var m = Math.floor(s/60), r = s%60;
+    return m + ":" + (r < 10 ? "0" + r : String(r));
+  }
+
+  function buildChips(){
+    el.chips.innerHTML = "";
+    CATS.forEach(function(c){
+      var b = document.createElement("button");
+      b.className = "chip";
+      b.textContent = c.label;
+      b.setAttribute("aria-pressed", state.cat === c.id ? "true" : "false");
+      b.addEventListener("click", function(){
+        state.cat = c.id;
+        state.used = [];
+        state.setIdx = -1;
+        buildChips();
+        countNote();
+      });
+      el.chips.appendChild(b);
+    });
+  }
+
+  function countNote(){
+    var n = pool().length;
+    var q = pool().reduce(function(a,i){ return a + bank[i].qs.length; }, 0);
+    el.chipNote.textContent = n + " chủ đề - " + q + " câu hỏi";
+  }
+
+  function sizeClass(text){
+    if (text.length <= 48) return "len-s";
+    if (text.length <= 90) return "len-m";
+    return "len-l";
+  }
+
+  function paint(){
+    var item = bank[state.setIdx];
+    if (!item) return;
+    var q = item.qs[state.qPos];
+    el.question.className = "question " + sizeClass(q);
+    el.question.textContent = q;
+    el.topic.innerHTML = "Cue card: <b></b>";
+    el.topic.querySelector("b").textContent = item.topic;
+
+    el.dots.innerHTML = "";
+    if (state.fullSet){
+      item.qs.forEach(function(_,i){
+        var d = document.createElement("span");
+        d.className = "dot" + (i === state.qPos ? " on" : (i < state.qPos ? " done" : ""));
+        el.dots.appendChild(d);
+      });
+    }
+    renderTips(q, item.topic, (item.qcol && item.qcol[state.qPos]) || item.col);
+    el.tipBtn.hidden = false;
+    el.tipBtn.textContent = state.tipsOpen ? "Ẩn gợi ý" : "Gợi ý";
+    el.tips.classList.toggle("open", state.tipsOpen);
+    el.prevBtn.hidden = !(state.fullSet && state.qPos > 0);
+    el.nextBtn.hidden = !(state.fullSet && state.qPos < item.qs.length - 1);
+    el.eyebrow.textContent = state.fullSet
+      ? "Câu " + (state.qPos + 1) + " / " + item.qs.length
+      : "Câu hỏi của bạn";
+    el.eyebrow.classList.remove("is-live");
+  }
+
+  function pick(){
+    var p = pool();
+    if (!p.length) return;
+    var avail = state.noRepeat ? p.filter(function(i){ return state.used.indexOf(i) === -1; }) : p;
+    if (!avail.length){ state.used = []; avail = p; }
+    var idx = avail[Math.floor(Math.random() * avail.length)];
+    state.used.push(idx);
+    state.setIdx = idx;
+    state.qPos = state.fullSet ? 0 : Math.floor(Math.random() * bank[idx].qs.length);
+  }
+
+  function spin(){
+    stopTimer();
+    var reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    if (reduce){ pick(); paint(); return; }
+    var p = pool();
+    if (!p.length) return;
+    el.question.classList.add("is-blur");
+    el.eyebrow.textContent = "Đang quay";
+    el.topic.textContent = "";
+    el.dots.innerHTML = "";
+    el.prevBtn.hidden = true;
+    el.nextBtn.hidden = true;
+    el.tipBtn.hidden = true;
+    el.tips.classList.remove("open");
+    var ticks = 0;
+    var roll = setInterval(function(){
+      var r = bank[p[Math.floor(Math.random() * p.length)]];
+      var t = r.qs[Math.floor(Math.random() * r.qs.length)];
+      el.question.className = "question is-blur " + sizeClass(t);
+      el.question.textContent = t;
+      ticks++;
+      if (ticks > 7){
+        clearInterval(roll);
+        el.question.classList.remove("is-blur");
+        pick();
+        paint();
+      }
+    }, 70);
+  }
+
+  function next(){
+    var item = bank[state.setIdx];
+    if (!item || !state.fullSet) return;
+    if (state.qPos < item.qs.length - 1){
+      state.qPos++;
+      stopTimer();
+      paint();
+    }
+  }
+
+  function prev(){
+    var item = bank[state.setIdx];
+    if (!item || !state.fullSet) return;
+    if (state.qPos > 0){
+      state.qPos--;
+      stopTimer();
+      paint();
+    }
+  }
+
+  function beep(){
+    if (!state.sound) return;
+    try{
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      var ctx = new Ctx();
+      [0, 0.28, 0.56].forEach(function(off){
+        var o = ctx.createOscillator();
+        var g = ctx.createGain();
+        o.type = "sine";
+        o.frequency.value = 660;
+        g.gain.setValueAtTime(0.0001, ctx.currentTime + off);
+        g.gain.exponentialRampToValueAtTime(0.16, ctx.currentTime + off + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + off + 0.2);
+        o.connect(g); g.connect(ctx.destination);
+        o.start(ctx.currentTime + off);
+        o.stop(ctx.currentTime + off + 0.22);
+      });
+      setTimeout(function(){ ctx.close(); }, 1400);
+    }catch(e){ /* audio không khả dụng */ }
+  }
+
+  function stopTimer(){
+    if (state.handle) clearInterval(state.handle);
+    state.handle = null;
+    state.ticking = false;
+    state.left = 0;
+    el.bar.classList.remove("on","low");
+    el.barFill.style.transform = "scaleX(1)";
+    el.timerBtn.classList.remove("running");
+    el.timerBtn.textContent = "Bấm giờ " + labelOf(state.seconds);
+  }
+
+  function labelOf(v){
+    for (var i = 0; i < TIMES.length; i++){ if (TIMES[i].v === v) return TIMES[i].label; }
+    return v + " giây";
+  }
+
+  function startTimer(){
+    if (state.ticking){ stopTimer(); return; }
+    state.ticking = true;
+    state.left = state.seconds;
+    el.bar.classList.add("on");
+    el.timerBtn.classList.add("running");
+    el.timerBtn.textContent = fmt(state.left);
+    el.barFill.style.transform = "scaleX(1)";
+    state.handle = setInterval(function(){
+      state.left--;
+      el.timerBtn.textContent = fmt(Math.max(state.left, 0));
+      el.barFill.style.transform = "scaleX(" + Math.max(state.left, 0) / state.seconds + ")";
+      if (state.left <= Math.round(state.seconds * 0.25)) el.bar.classList.add("low");
+      if (state.left <= 0){
+        stopTimer();
+        beep();
+        el.eyebrow.textContent = "Hết giờ";
+        el.eyebrow.classList.add("is-live");
+      }
+    }, 1000);
+  }
+
+  function buildSeg(node, items, get, set){
+    node.innerHTML = "";
+    items.forEach(function(it){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = it.label;
+      b.setAttribute("aria-pressed", get() === it.v ? "true" : "false");
+      b.addEventListener("click", function(){
+        set(it.v);
+        buildSeg(node, items, get, set);
+      });
+      node.appendChild(b);
+    });
+  }
+
+  function buildSettings(){
+    buildSeg(el.segTime, TIMES,
+      function(){ return state.seconds; },
+      function(v){ state.seconds = v; stopTimer(); });
+    buildSeg(el.segMode, MODES,
+      function(){ return state.fullSet; },
+      function(v){
+        state.fullSet = v;
+        if (state.setIdx >= 0){ state.qPos = 0; paint(); }
+      });
+    el.tgRepeat.setAttribute("aria-pressed", state.noRepeat ? "true" : "false");
+    el.tgSound.setAttribute("aria-pressed", state.sound ? "true" : "false");
+  }
+
+  function parsePaste(raw){
+    var lines = raw.split("\n");
+    var out = [];
+    var cur = null;
+    lines.forEach(function(line){
+      var t = line.trim();
+      if (!t) return;
+      if (t.charAt(0) === "#"){
+        cur = { cat:"Custom", topic: t.replace(/^#+\s*/, "").trim() || "Câu hỏi thêm", qs: [] };
+        out.push(cur);
+        return;
+      }
+      if (!cur){
+        cur = { cat:"Custom", topic:"Câu hỏi thêm", qs: [] };
+        out.push(cur);
+      }
+      cur.qs.push(t);
+    });
+    return out.filter(function(x){ return x.qs.length > 0; });
+  }
+
+  function say(msg, warn){
+    el.status.textContent = msg;
+    el.status.className = warn ? "status warn" : "status";
+  }
+
+  function toggleTips(){
+    if (el.tipBtn.hidden) return;
+    state.tipsOpen = !state.tipsOpen;
+    el.tips.classList.toggle("open", state.tipsOpen);
+    el.tipBtn.textContent = state.tipsOpen ? "Ẩn gợi ý" : "Gợi ý";
+  }
+
+  el.spinBtn.addEventListener("click", spin);
+  el.tipBtn.addEventListener("click", toggleTips);
+  el.prevBtn.addEventListener("click", prev);
+  el.nextBtn.addEventListener("click", next);
+  el.timerBtn.addEventListener("click", startTimer);
+  el.settingsBtn.addEventListener("click", function(){
+    buildSettings();
+    el.overlay.classList.add("open");
+    el.closeBtn.focus();
+  });
+  el.closeBtn.addEventListener("click", function(){
+    el.overlay.classList.remove("open");
+    say("");
+    el.settingsBtn.focus();
+  });
+  el.overlay.addEventListener("click", function(e){
+    if (e.target === el.overlay) el.closeBtn.click();
+  });
+  el.tgRepeat.addEventListener("click", function(){
+    state.noRepeat = !state.noRepeat;
+    el.tgRepeat.setAttribute("aria-pressed", state.noRepeat ? "true" : "false");
+  });
+  el.tgSound.addEventListener("click", function(){
+    state.sound = !state.sound;
+    el.tgSound.setAttribute("aria-pressed", state.sound ? "true" : "false");
+  });
+  el.addBtn.addEventListener("click", function(){
+    var added = parsePaste(el.paste.value);
+    if (!added.length){ say("Chưa có câu hỏi nào để thêm.", true); return; }
+    bank = bank.concat(added);
+    state.used = [];
+    var n = added.reduce(function(a,x){ return a + x.qs.length; }, 0);
+    CATS_ensureCustom();
+    buildChips();
+    countNote();
+    el.paste.value = "";
+    say("Đã thêm " + n + " câu hỏi vào nhóm Custom.");
+  });
+  el.resetBtn.addEventListener("click", function(){
+    bank = BASE.slice();
+    state.used = [];
+    state.setIdx = -1;
+    if (state.cat === "Custom") state.cat = "all";
+    var i = CATS.map(function(c){ return c.id; }).indexOf("Custom");
+    if (i > -1) CATS.splice(i, 1);
+    buildChips();
+    countNote();
+    el.question.className = "question len-m";
+    el.question.textContent = "Bấm Quay đề để nhận câu hỏi.";
+    el.topic.textContent = "";
+    el.dots.innerHTML = "";
+    el.eyebrow.textContent = "Sẵn sàng";
+    el.eyebrow.classList.remove("is-live");
+    el.prevBtn.hidden = true;
+    el.nextBtn.hidden = true;
+    el.tipBtn.hidden = true;
+    el.tips.classList.remove("open");
+    el.tips.innerHTML = "";
+    stopTimer();
+    say("Đã về bộ đề gốc.");
+  });
+
+  function CATS_ensureCustom(){
+    var has = CATS.some(function(c){ return c.id === "Custom"; });
+    if (!has) CATS.push({ id:"Custom", label:"Custom" });
+  }
+
+  document.addEventListener("keydown", function(e){
+    var tag = (e.target.tagName || "").toLowerCase();
+    if (tag === "textarea" || tag === "input") return;
+    if (e.key === "Escape" && el.overlay.classList.contains("open")){ el.closeBtn.click(); return; }
+    if (el.overlay.classList.contains("open")) return;
+    if (e.key === "ArrowLeft"){ e.preventDefault(); prev(); return; }
+    if (e.key === "ArrowRight"){ e.preventDefault(); next(); return; }
+    var k = e.key.toLowerCase();
+    if (k === "s"){ e.preventDefault(); spin(); }
+    if (k === "p"){ e.preventDefault(); prev(); }
+    if (k === "n"){ e.preventDefault(); next(); }
+    if (k === "g"){ e.preventDefault(); toggleTips(); }
+    if (k === "t"){ e.preventDefault(); startTimer(); }
+  });
+
+  buildChips();
+  countNote();
+  stopTimer();
+})();
+</script>
+</body>
+</html>
