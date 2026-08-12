@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Academic Reading - Mock Test 2</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bar:#222;--bg:#f5f5f5;--white:#fff;--text:#111;--text-mid:#555;
+  --text-light:#888;--border:#ddd;--border-dark:#bbb;--green:#2e7d32;--green-light:#e8f5e9;
+  --red:#c62828;--red-light:#ffebee;--blue:#1565c0;--blue-light:#e3f2fd;
+  --hl-y:rgba(255,235,59,.38);--hl-g:rgba(129,199,132,.35);--hl-b:rgba(100,181,246,.35);
+}
+html,body{height:100%;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+.screen{display:none}.screen.active{display:flex;flex-direction:column;height:100vh}
+
+/* ENTRY */
+.entry-screen.active{align-items:center;justify-content:center;background:#fafafa;overflow-y:auto}
+.entry-card{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:44px 48px;max-width:500px;width:92%;text-align:center;margin:auto}
+.entry-card h1{font-size:20px;font-weight:700;margin-bottom:4px}
+.entry-card .sub{font-size:13px;color:var(--text-mid);margin-bottom:24px}
+.info-box{text-align:left;background:#fafafa;border:1px solid var(--border);padding:14px 18px;margin-bottom:20px;font-size:13px;line-height:1.8;color:var(--text-mid)}
+.info-box strong{color:var(--text)}
+.entry-input{width:100%;padding:12px 16px;border:1px solid var(--border-dark);font-size:15px;outline:none;margin-bottom:16px}
+.entry-input:focus{border-color:var(--text)}
+.entry-input::placeholder{color:#aaa}
+.btn-start{width:100%;padding:12px;background:var(--bar);color:#fff;border:none;font-size:14px;font-weight:600;cursor:pointer}
+.btn-start:hover{background:#000}
+.entry-err{color:var(--red);font-size:12px;margin-bottom:10px;display:none}
+
+/* TOP BAR */
+.top-bar{height:46px;background:var(--bar);display:flex;align-items:center;justify-content:space-between;padding:0 16px;color:#fff;flex-shrink:0;gap:12px}
+.top-bar .left{display:flex;align-items:center;gap:12px;min-width:0}
+.top-bar .right{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.top-bar .title{font-size:13px;font-weight:600;white-space:nowrap}
+.name-tag{font-size:11px;color:#bbb;background:rgba(255,255,255,.08);padding:3px 10px;border-radius:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+.timer{font-variant-numeric:tabular-nums;font-size:17px;font-weight:700;letter-spacing:1px}
+.timer.warn{color:#ef5350;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.5}}
+.btn-submit{padding:8px 22px;background:#fff;color:var(--bar);border:none;font-size:12.5px;font-weight:700;cursor:pointer;border-radius:2px}
+.btn-submit:hover{background:#e0e0e0}
+.btn-submit:disabled{background:#555;color:#999;cursor:default}
+
+/* TABS */
+.section-tabs{height:36px;background:#2a2a2a;display:flex;align-items:stretch;padding:0 8px;gap:1px;flex-shrink:0;overflow-x:auto}
+.section-tab{padding:0 20px;display:flex;align-items:center;font-size:12px;font-weight:600;color:#777;cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;white-space:nowrap}
+.section-tab.active{color:#fff;border-bottom-color:#fff;background:rgba(255,255,255,.06)}
+.section-tab:hover{color:#ccc}
+
+/* CLEAR BAR */
+.clear-bar{height:30px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;flex-shrink:0;gap:14px}
+.clear-bar button{font-size:11px;color:var(--text-light);background:none;border:1px solid var(--border);padding:2px 12px;cursor:pointer;border-radius:2px}
+.clear-bar button:hover{background:#f0f0f0;color:var(--text)}
+.clear-bar .hint{font-size:11px;color:#aaa}
+
+/* SPLIT */
+.main-wrap{display:flex;flex:1;overflow:hidden}
+.panel{flex:1;overflow-y:auto;padding:26px 30px 90px}
+.panel::-webkit-scrollbar{width:7px}
+.panel::-webkit-scrollbar-track{background:#eee}
+.panel::-webkit-scrollbar-thumb{background:#c0c0c0;border-radius:3px}
+.passage-panel{background:var(--white);border-right:1px solid var(--border)}
+.question-panel{background:#fafafa}
+.resizer{width:5px;cursor:col-resize;background:var(--border);flex-shrink:0;z-index:10}
+.resizer:hover,.resizer.on{background:#999}
+
+/* PASSAGE */
+.passage-kicker{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-light);margin-bottom:6px}
+.passage-title{font-size:19px;font-weight:700;margin-bottom:8px;line-height:1.35}
+.passage-sub{font-size:13.5px;font-style:italic;color:var(--text-mid);margin-bottom:16px;line-height:1.6}
+.passage-body{font-size:14.5px;line-height:1.9;color:#222}
+.passage-body p{margin-bottom:12px;text-align:justify}
+.plabel{font-weight:700;margin-right:5px}
+mark.hl-y{background:var(--hl-y);padding:1px 0;border-radius:2px}
+mark.hl-g{background:var(--hl-g);padding:1px 0;border-radius:2px}
+mark.hl-b{background:var(--hl-b);padding:1px 0;border-radius:2px}
+
+/* NOTES */
+mark[data-note]{position:relative;cursor:pointer}
+mark[data-note]::after{content:"";position:absolute;top:-3px;right:-6px;width:8px;height:8px;background:var(--blue);border-radius:50%;border:1px solid #fff}
+.note-tooltip{position:fixed;z-index:150;background:#333;color:#fff;padding:8px 12px;border-radius:4px;font-size:12px;max-width:240px;line-height:1.5;white-space:pre-wrap;display:none}
+.note-tooltip.show{display:block}
+.note-tooltip .nt-close{display:block;margin-top:6px;font-size:11px;color:#8af;cursor:pointer;text-align:right}
+
+/* SELECTION POPUP */
+.sel-popup{position:fixed;z-index:160;background:var(--white);border:1px solid var(--border-dark);border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);display:none;padding:6px 4px;gap:2px;flex-direction:row;align-items:center}
+.sel-popup.show{display:flex}
+.sp-color{width:24px;height:24px;border-radius:4px;border:2px solid transparent;cursor:pointer}
+.sp-color:hover{transform:scale(1.12);border-color:#999}
+.sp-color.cy{background:rgba(255,235,59,.7)}.sp-color.cb{background:rgba(100,181,246,.6)}.sp-color.cg{background:rgba(129,199,132,.6)}
+.sp-divider{width:1px;height:20px;background:var(--border);margin:0 4px}
+.sp-note{display:flex;align-items:center;gap:4px;padding:4px 8px;cursor:pointer;border-radius:4px;font-size:12px;font-weight:600;color:var(--text-mid);border:none;background:none}
+.sp-note:hover{background:#f0f0f0;color:var(--text)}
+
+/* NOTE INPUT */
+.note-input-wrap{position:fixed;z-index:170;background:var(--white);border:1px solid var(--border-dark);border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);padding:10px;display:none;width:240px}
+.note-input-wrap.show{display:block}
+.note-input-wrap textarea{width:100%;height:60px;border:1px solid var(--border);border-radius:4px;padding:6px 8px;font-size:12.5px;resize:none;outline:none;font-family:inherit}
+.note-input-wrap .ni-btns{display:flex;justify-content:flex-end;gap:6px;margin-top:6px}
+.note-input-wrap .ni-btn{padding:4px 12px;font-size:11px;font-weight:600;border:none;border-radius:3px;cursor:pointer}
+.ni-save{background:var(--bar);color:#fff}.ni-cancel{background:#eee;color:var(--text-mid)}
+
+/* QUESTIONS */
+.q-block{margin-bottom:26px}
+.q-instruction{font-size:13px;color:var(--text-mid);margin-bottom:14px;line-height:1.7;padding:11px 14px;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--bar)}
+.q-instruction strong{color:var(--text)}
+.opt-box{background:var(--white);border:1px solid var(--border-dark);padding:12px 16px;margin-bottom:14px;font-size:13px;line-height:1.85}
+.opt-box .ob-title{font-weight:700;margin-bottom:6px;font-size:12.5px;text-transform:uppercase;letter-spacing:.4px}
+.opt-box .ob-item{display:flex;gap:8px}
+.opt-box .ob-key{font-weight:700;min-width:26px}
+.q-card{margin-bottom:12px;padding:13px 15px;background:var(--white);border:1px solid #e5e5e5}
+.q-card:hover{border-color:var(--border-dark)}
+.q-card.is-correct{border-color:var(--green);background:var(--green-light)}
+.q-card.is-wrong{border-color:var(--red);background:var(--red-light)}
+.q-head{display:flex;align-items:flex-start;gap:10px}
+.q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#e0e0e0;font-size:12px;font-weight:700;flex-shrink:0}
+.q-num.done{background:var(--green);color:#fff}
+.q-stem{font-size:14px;line-height:1.55;flex:1}
+.q-opts{margin-top:9px;padding-left:36px}
+.q-opt{display:flex;align-items:flex-start;gap:9px;padding:6px 10px;margin-bottom:3px;cursor:pointer;font-size:13.5px;line-height:1.55;border-radius:3px;user-select:none}
+.q-opt:hover{background:#f0f0f0}
+.q-opt input{accent-color:var(--bar);margin-top:3px;cursor:pointer;width:15px;height:15px;flex-shrink:0}
+.q-opt span{flex:1}
+.q-sel{margin-top:8px;margin-left:36px;padding:7px 10px;font-size:13.5px;border:1px solid var(--border-dark);background:var(--white);min-width:230px;font-family:inherit;cursor:pointer}
+.q-sel:focus{outline:none;border-color:var(--bar)}
+.multi-hint{font-size:11.5px;color:var(--text-light);padding-left:36px;margin-top:6px}
+.multi-hint.full{color:var(--green);font-weight:600}
+
+/* SUMMARY / NOTE COMPLETION */
+.sum-card{margin-bottom:14px;padding:16px 18px;background:var(--white);border:1px solid var(--border-dark)}
+.sum-title{text-align:center;font-style:italic;font-weight:700;font-size:14px;margin-bottom:12px}
+.sum-body{font-size:14px;line-height:2.15;text-align:justify}
+.sum-body.notes{text-align:left}
+.sum-body ul{list-style:none;margin:0 0 8px 6px}
+.sum-body li{position:relative;padding-left:16px;line-height:2.1}
+.sum-body li::before{content:"\25CF";position:absolute;left:0;font-size:9px;top:1px}
+.note-h{font-weight:700;margin-top:6px}
+.sum-inp{display:inline-block;width:130px;padding:3px 7px;border:none;border-bottom:2px solid var(--bar);background:#f7f7f7;font-size:13.5px;font-family:inherit;outline:none}
+.sum-inp:focus{background:#fff8dc}
+.sum-inp.blank-ok{border-bottom-color:var(--green);background:var(--green-light);color:var(--green);font-weight:600}
+.sum-inp.blank-no{border-bottom-color:var(--red);background:var(--red-light);color:var(--red);font-weight:600}
+.sum-num{display:inline-block;font-weight:700;font-size:11.5px;background:#e0e0e0;border-radius:3px;padding:1px 5px;margin-right:3px}
+.sum-num.done{background:var(--green);color:#fff}
+.sum-fb{margin-top:14px;border-top:1px solid var(--border);padding-top:10px}
+
+/* FEEDBACK */
+.fb-verdict{font-size:12px;font-weight:700;margin-top:8px;padding-left:36px}
+.fb-verdict.ok{color:var(--green)}.fb-verdict.no{color:var(--red)}
+.fb-explain{margin-top:10px;padding:13px 15px;background:#f9f9f9;border:1px solid var(--border);border-left:3px solid var(--blue);font-size:13px;line-height:1.75;color:#333}
+.fb-explain .step{font-weight:700;color:var(--blue);display:block;margin-top:9px;margin-bottom:2px}
+.fb-explain .step:first-child{margin-top:0}
+.fb-explain .kw{margin:2px 0 0 10px;font-size:12.5px;color:var(--text-mid)}
+.fb-explain .distractor{margin-top:6px;padding-left:8px;border-left:2px solid #ddd;font-size:12.5px;line-height:1.7;color:var(--text-mid)}
+.fb-explain .distractor strong{color:var(--text)}
+.fb-item{padding:10px 12px;border:1px solid var(--border);background:#fafafa;margin-bottom:8px;font-size:13px;line-height:1.7}
+.fb-item.ok{border-left:3px solid var(--green)}
+.fb-item.no{border-left:3px solid var(--red)}
+.fb-item b{font-weight:700}
+
+/* BOTTOM BAR */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;height:46px;background:var(--bar);display:flex;align-items:center;padding:0 12px;z-index:100;overflow-x:auto}
+.qnav{display:flex;gap:3px;align-items:center}
+.qnav-sep{width:1px;height:20px;background:#555;margin:0 7px;flex-shrink:0}
+.qnav-lb{font-size:10px;color:#888;font-weight:700;margin-right:5px;flex-shrink:0}
+.qnav-btn{width:26px;height:26px;border-radius:3px;border:1px solid #444;background:#333;color:#888;font-size:10.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qnav-btn:hover{background:#444;color:#ccc}
+.qnav-btn.done{background:var(--green);color:#fff;border-color:var(--green)}
+.qnav-btn.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+.qnav-btn.cur{outline:2px solid #fff;outline-offset:1px}
+
+/* PRIVACY */
+.privacy-shield{position:fixed;inset:0;z-index:9999;background:rgba(20,20,20,.85);display:none;align-items:center;justify-content:center;text-align:center;color:#fff;font-size:15px;font-weight:600;line-height:1.6;padding:24px}
+.privacy-shield.show{display:flex}
+body.shielded .screen{filter:blur(16px);pointer-events:none}
+
+/* MODAL CONFIRM */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.overlay.show{display:flex}
+.confirm-card{background:var(--white);border:1px solid var(--border);padding:28px 32px;max-width:420px;width:100%;text-align:center}
+.confirm-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.confirm-card p{font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:18px}
+.cf-btns{display:flex;gap:10px}
+.cf-btn{flex:1;padding:11px;border:none;font-size:13px;font-weight:600;cursor:pointer}
+.cf-yes{background:var(--bar);color:#fff}.cf-yes:hover{background:#000}
+.cf-no{background:#eee;color:var(--text-mid);border:1px solid var(--border)}
+
+/* RESULTS */
+.result-card{background:var(--white);border:1px solid var(--border);padding:34px 40px;max-width:500px;width:100%;text-align:center;max-height:90vh;overflow-y:auto}
+.result-card h2{font-size:20px;font-weight:700;margin-bottom:2px}
+.rname{font-size:13px;color:var(--text-mid);margin-bottom:12px}
+.raw-big{font-size:52px;font-weight:800;margin:6px 0 0;line-height:1.1}
+.raw-big small{font-size:18px;color:var(--text-light);font-weight:400}
+.raw-pct{font-size:15px;font-weight:600;color:var(--blue);margin-bottom:10px}
+.no-band{font-size:12px;color:var(--text-mid);background:#fff8e1;border:1px solid #ffe082;padding:9px 12px;line-height:1.6;text-align:left;margin:10px 0 14px}
+.result-stats{display:flex;justify-content:center;gap:22px;margin:12px 0 16px;flex-wrap:wrap}
+.rs{text-align:center}.rv{font-size:22px;font-weight:700}.rl{font-size:10.5px;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px}
+.rs-ok .rv{color:var(--green)}.rs-no .rv{color:var(--red)}
+.sec-break{display:flex;justify-content:center;gap:10px;font-size:12px;color:var(--text-mid);margin-bottom:14px;flex-wrap:wrap}
+.sec-break span{background:#f2f2f2;border:1px solid var(--border);padding:4px 10px;border-radius:2px}
+.rbtn{display:block;width:100%;padding:11px;border:none;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px}
+.rbtn-review{background:var(--bar);color:#fff}.rbtn-review:hover{background:#000}
+.rbtn-again{background:var(--white);color:var(--text-mid);border:1px solid var(--border)}
+
+/* ANALYSIS */
+.analysis-screen.active{display:block;height:auto;min-height:100vh;overflow-y:auto}
+.analysis-wrap{max-width:820px;margin:0 auto;padding:38px 22px 70px}
+.analysis-wrap h2{font-size:21px;font-weight:700;margin-bottom:4px}
+.asub{font-size:13px;color:var(--text-mid);margin-bottom:26px}
+.a-section{margin-bottom:30px}
+.a-section h3{font-size:13.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.a-wrong-item{padding:11px 15px;background:var(--red-light);border:1px solid #ffcdd2;margin-bottom:9px;font-size:13px;line-height:1.65}
+.a-wrong-item .aq{font-weight:600;color:var(--red)}
+.a-wrong-item .adetail{color:#555;margin-top:4px}
+.a-tip{padding:14px 18px;background:var(--blue-light);border:1px solid #bbdefb;margin-bottom:10px;font-size:13.5px;line-height:1.75}
+.a-tip strong{color:var(--blue)}
+.a-tip ul{margin:6px 0 0 18px}
+.a-tip li{margin-bottom:4px}
+.a-note{font-size:12px;color:var(--text-mid);margin-bottom:8px}
+
+/* PARAPHRASE TABLE */
+.ptable{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--white);margin-bottom:14px}
+.ptable th,.ptable td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top;line-height:1.6}
+.ptable th{background:#f0f0f0;font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px}
+.ptable td:first-child{width:34%}
+.ptable td:nth-child(2){width:34%}
+
+/* GRAMMAR */
+.gram-box{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--bar);padding:12px 15px;margin-bottom:10px;font-size:13px;line-height:1.75}
+.gram-box .gname{font-weight:700;font-size:13px;margin-bottom:3px}
+.gram-box .gex{font-style:italic;color:#333;background:#f7f7f7;padding:6px 9px;margin:5px 0;border-radius:2px}
+.gram-box .guse{color:var(--text-mid);font-size:12.5px}
+
+/* COLLOCATION CHIPS - CLICK to open */
+.a-vocab{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.col-chip{position:relative;background:var(--white);border:1px solid var(--border);padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer;border-radius:3px;user-select:none}
+.col-chip:hover{background:#e3f2fd;border-color:var(--blue)}
+.col-chip.open{background:#e3f2fd;border-color:var(--blue)}
+.col-chip .col-detail{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:12px 16px;border-radius:6px;min-width:250px;max-width:320px;z-index:80;text-align:left;font-weight:400;font-size:12.5px;line-height:1.7;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.col-chip.open .col-detail{display:block}
+.col-detail .cd-word{font-size:14px;font-weight:700;color:#8ab4ff;margin-bottom:2px}
+.col-detail .cd-ipa{font-size:12px;color:#aaa;margin-bottom:6px;font-style:italic}
+.col-detail .cd-vi{color:#ffd54f;font-weight:600;margin-bottom:4px}
+.col-detail .cd-ex{color:#ccc;font-size:11.5px;font-style:italic}
+.abtn-back{display:inline-block;margin-top:18px;padding:10px 30px;background:var(--bar);color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer}
+.abtn-back:hover{background:#000}
+
+@media(max-width:820px){
+  .main-wrap{flex-direction:column}
+  .resizer{width:100%;height:5px;cursor:row-resize}
+  .panel{padding:16px 14px 80px}
+  .entry-card{padding:30px 20px}
+  .top-bar .title{display:none}
+  .ptable td:first-child,.ptable td:nth-child(2){width:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="screen entry-screen active" id="screenEntry">
+  <div class="entry-card">
+    <h1>IELTS Academic Reading</h1>
+    <div class="sub">Computer-Based Practice Test - Mock Test 2</div>
+    <div class="info-box">
+      <strong>Total:</strong> 40 questions<br>
+      <strong>Time:</strong> 60 minutes
+    </div>
+    <div class="entry-err" id="entryErr">Please enter your name to begin.</div>
+    <input class="entry-input" id="nameInput" type="text" placeholder="What is your name?" autofocus>
+    <button class="btn-start" onclick="beginTest()">START TEST</button>
+  </div>
+</div>
+
+<div class="screen" id="screenTest">
+  <div class="top-bar">
+    <div class="left"><div class="title">IELTS Academic Reading</div><div class="name-tag" id="barName"></div></div>
+    <div class="right">
+      <div class="timer" id="timer">60:00</div>
+      <button class="btn-submit" id="btnSubmit" onclick="submitTest()">SUBMIT</button>
+    </div>
+  </div>
+  <div class="section-tabs" id="secTabs"></div>
+  <div class="clear-bar">
+    <button onclick="clearAllHL()">Clear all highlights &amp; notes</button>
+    <span class="hint">Boi den van ban de highlight hoac ghi chu</span>
+  </div>
+  <div class="main-wrap" id="mainWrap">
+    <div class="panel passage-panel" id="passagePanel"></div>
+    <div class="resizer" id="resizer"></div>
+    <div class="panel question-panel" id="questionPanel"></div>
+  </div>
+  <div class="bottom-bar"><div class="qnav" id="qNav"></div></div>
+</div>
+
+<div class="screen analysis-screen" id="screenAnalysis"></div>
+
+<div class="sel-popup" id="selPopup">
+  <div class="sp-color cy" onclick="applyHL('y')"></div>
+  <div class="sp-color cb" onclick="applyHL('b')"></div>
+  <div class="sp-color cg" onclick="applyHL('g')"></div>
+  <div class="sp-divider"></div>
+  <button class="sp-note" onclick="openNoteInput()">Note</button>
+</div>
+
+<div class="note-input-wrap" id="noteInput">
+  <textarea id="noteText" placeholder="Add your note..."></textarea>
+  <div class="ni-btns">
+    <button class="ni-btn ni-cancel" onclick="cancelNote()">Cancel</button>
+    <button class="ni-btn ni-save" onclick="saveNote()">Save</button>
+  </div>
+</div>
+
+<div class="overlay" id="confirmOverlay">
+  <div class="confirm-card">
+    <h3>Nộp bài?</h3>
+    <p id="confirmMsg"></p>
+    <div class="cf-btns">
+      <button class="cf-btn cf-no" onclick="closeConfirm()">Tiếp tục làm</button>
+      <button class="cf-btn cf-yes" onclick="confirmSubmitYes()">Nộp bài</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="result-card">
+    <h2>Your Result</h2>
+    <div class="rname" id="resName"></div>
+    <div class="raw-big" id="resBand">-<small> / 9.0</small></div>
+    <div class="raw-pct" id="resPct">0 / 40 correct (0%)</div>
+    <div class="result-stats">
+      <div class="rs rs-ok"><div class="rv" id="resOk">0</div><div class="rl">Correct</div></div>
+      <div class="rs"><div class="rv" id="resTotal">40</div><div class="rl">Total</div></div>
+      <div class="rs rs-no"><div class="rv" id="resNo">0</div><div class="rl">Incorrect</div></div>
+    </div>
+    <div class="sec-break" id="resSec"></div>
+    <div id="gsMsg" style="font-size:12px;margin-bottom:12px;min-height:18px"></div>
+    <button class="rbtn rbtn-review" onclick="reviewMode()">Review Answers</button>
+    <button class="rbtn rbtn-again" onclick="restart()">Try Again</button>
+  </div>
+</div>
+
+<div class="note-tooltip" id="noteTooltip"></div>
+<div class="privacy-shield" id="privacyShield"><div id="shieldMsg"></div></div>
+
+<script>
+/* ==========================================================
+   DATA - PASSAGES
+   ========================================================== */
+var P1_HTML=""
++"<p>Sydney Opera House is an example of late modern architecture; it is admired internationally and treasured by the people of Australia.</p>"
++"<p>In 1956 the Premier of New South Wales, Australia, announced an international competition for the design of an opera house for Sydney. It attracted more than 200 entries from around the world and was won by Jørn Utzon, a relatively little-known architect from Denmark. The story goes that during the judging of the competition, one judge, American architect Eero Saarinen, arrived in Sydney after the other three judges had started assessing the entries. He looked through their rejected entries and stopped at the Utzon design, declaring it to be outstanding.</p>"
++"<p>It was Utzon’s life and travels that had shaped his design for the Sydney Opera House. Though he had never visited the site, he used his maritime background to study naval charts of Sydney Harbour. His early exposure to shipbuilding provided the inspiration for the design of the roof, which is a series of curved ’shells’ that look like the sails of a sailing ship billowing in the wind. From his travels to Mexico, he had the idea of placing his building on a wide horizontal platform.</p>"
++"<p>Construction of the platform began in 1959, and throughout the early 1960s Utzon amended his original designs in order to develop a way to build the large ’shells’ that cover the two main halls. The construction of the roof brought together some of the world’s best engineers and craftsmen, devising innovative techniques to create a major visual impact in accordance with Utzon’s vision. The design was one of the first examples of the use of computer-aided design for complex shapes.</p>"
++"<p>Although Utzon had spectacular plans for the interior, he was unable to realise them. Cost overruns contributed to criticism of the project and, after a change of government, the Minister of Works began questioning Utzon’s schedules and cost estimates. Payments to Utzon were stopped and he was forced to withdraw as chief architect in 1966. Following his resignation, there were protests through the streets led by prominent architect Harry Seidler and others, demanding that Utzon be reinstated as architect. However, Utzon was not reinstated and left Australia in 1966. He never returned, and new architects were appointed to complete the building in his absence.</p>"
++"<p>The original cost estimate for the Opera House was $7 million with the completion date set for 26 January 1963. However, the Opera House was not formally completed until 1973 having cost $102 million.</p>"
++"<p>Since its opening in 1973, Sydney Opera House has earned a reputation as a world-class performing arts centre and become a symbol of both Sydney and Australia. Situated at Bennelong Point on Sydney Harbour, it consists of a series of large precast ’shells’ made of concrete, each composed of sections of a sphere of 75.2 metres radius, forming the roofs of the structure, set on a monumental platform. The building is 183 metres long and 120 metres wide at its widest point. It is supported on 588 concrete piers, which are sunk approximately 25 metres below sea level.</p>"
++"<p>Although the roof structures are commonly referred to as ’shells’, they are precast concrete panels supported by concrete ribs. The ’shells’ are covered with 1,056,006 white and cream-coloured tiles manufactured in a factory in Sweden that generally produced stoneware tiles for the paper-mill industry. The design solution and construction of the shell structure took eight years to complete, and the development of the special ceramic tiles took over three years. Apart from the tiles covering the ’shells’, the building’s exterior is mostly clad with granite quarried in Australia.</p>"
++"<p>Contrary to its name, Sydney Opera House includes multiple performance venues. It is among the busiest performing-arts centres in the world, holding over 1,500 performances each year. It hosts a large number of performing-arts companies, including the four resident companies: Opera Australia, the Australian Ballet, the Sydney Theatre Company and the Sydney Symphony Orchestra.</p>"
++"<p>With its grand setting and cathedral-like atmosphere, the Concert Hall is Sydney Opera House’s most prestigious performance space. The largest of all interior venues, it delivers outstanding acoustics thanks to its high ceiling and wood panelling. There is a sizeable outdoor forecourt from which people ascend to the main entrance. The steps, which lead up from the forecourt to the main performance venues, are nearly 100 metres wide.</p>"
++"<p>In 1999 Utzon was re-engaged to develop a set of design principles to act as a guide for future changes to the building. All of this design work he did from his base in Europe. These principles help to ensure that the building’s architectural integrity is maintained. The first alteration to the exterior was the addition of a new colonnade, which shades nine large glass openings in the previously solid exterior wall. This Utzon-led project, completed in 2006, enabled theatre patrons to see the harbour for the first time from the theatre foyers. The design also incorporates the first public lift and interior escalators to assist less-mobile patrons.</p>"
++"<p>Since 2007, the cultural, heritage and architectural importance of Sydney Opera House has been protected by its inclusion on the World Heritage List.</p>";
+
+var P2_HTML=""
++"<p><span class='plabel'>A</span> Just over a kilometre south of Berlin’s Potsdamer Platz, near the left bank of the Landwehr Canal, an extensive, triangular-shaped area of waste ground once separated the neighbourhoods of Kreuzberg to the east and Schöneberg to the west. Known as Gleisdreieck, meaning ‘triangle of rails’, it was formed by the intersection of different railway lines built in the mid-nineteenth century that entered Berlin from the south. Tracks, sheds and warehouses belonging to three old railway stations - Dresdner Bahnhof (1875-1882), Potsdamer Bahnhof (1838-1944) and Anhalter Bahnhof (1839-1952) - are situated on a raised area some twenty hectares in size, at a height of four metres above the surrounding ground level.</p>"
++"<p><span class='plabel'>B</span> As the railway infrastructure gradually ceased to be used, the whole area of Gleisdreieck became increasingly run down and abandoned, to the point of being used as a rubbish tip after 1945. Meanwhile, vegetation took over, turning it into a surprising, natural haven in the middle of built-up areas. The closeness of the wall which divided the city of Berlin between 1961 and 1990 also contributed to the fact that Gleisdreieck was for decades clearly identified as no-man’s-land. Only a station of the same name in Berlin’s underground railway system testified to its existence. Shortly before the fall of the Berlin Wall, however, the German Museum of Technology was established there, attracting large numbers of visitors and giving visibility to the site. More importantly, the unification of the formerly divided city gave the location more centrality, at which point it became imperative to identify a purpose for it.</p>"
++"<p><span class='plabel'>C</span> After 2006, the State of Berlin put forward the proposal of converting Gleisdreieck into a large urban park that would integrate the different urban zones which converged there. The decades-long isolation of the site, which had formerly presented a problem, now represented an opportunity for joining the southern area of Potsdamer Platz with Kreuzberg and Schöneberg. The creation of the park would trigger one of the biggest urban expansions inside Berlin, all within a framework of multiple uses, and social characteristics. It was necessary to stimulate the development of sixteen new hectares of local amenities that would be capable of integrating different generations and social groups in a sustainable way, and in harmony with nature. Following intense discussion with local proprietors and residents, the need to reconcile these goals with the conservation of railway heritage also emerged.</p>"
++"<p><span class='plabel'>D</span> Once the area had been subjected to a process of undergrowth clearance and decontamination, it was then organized around a combination of existing and added elements. The project as a whole was planned around a large central meadow, intersected from east to west by a concrete footpath, and from north to the south by a pair of railway lines. Once a month, a train slowly travels along these lines from its parking shed to the German Museum of Technology. The concrete footpath, which is a continuation of one of the main Kreuzberg boulevards, starts in the east, bridges the four-metre difference in ground level by means of a stairway, and suddenly ends in the west on reaching the underground lines.</p>"
++"<p><span class='plabel'>E</span> North of the meadow, there is a large concrete slab with rounded edges. Being south-facing, this functions as a big sunny terrace, full of benches complete with footrests. In the south, the meadow overlooks Yorckstrasse, an underpass crossed by more than fifteen former railway bridges. To the east of the meadow there is quite a dense forest of pre-existing maples, oaks and birches, as well as newly planted trees of the same species. In this area, a couple of large metal frames each hold two swings. The edges of the park are finished with a collection of distinctive, functional spaces, for example a nursery, sports fields, concave surfaces for skateboards, stages for dancing, community gardens, or simply areas covered in gravel obtained from the site itself.</p>"
++"<p><span class='plabel'>F</span> Although initially the regeneration of Gleisdreieck Park was the subject of disagreement between those who were in favour of safeguarding the railway heritage, and those who wanted to regenerate the adjacent neighbourhoods, it was opened to the public in September 2011. The heart of Berlin now has a new green lung, in which the atmosphere of various small, very different corners fit neatly into a large-scale, wide-ranging and robust general order. This has been possible precisely because the intervention was not limited to conserving industrial remains in order to promote railway history. And as a reminder of the six decades of human absence, during which nature took over, the park has been able to conserve to some extent the spirit of the non-place that preceded it.</p>";
+
+var P3_HTML=""
++"<p>Want to devise a new form of alternative medical treatment? No problem. Here’s the recipe. As a practitioner, be warm, sympathetic, reassuring, and enthusiastic. Your treatment should involve physical contact, and each session with your patients should take at least half an hour. Encourage your patients to take an active part in their treatment and understand how their disorders relate to the rest of their lives. Tell them that their own bodies possess the power to heal. Get them to pay you well. Describe your treatment in familiar words, but embellish with a hint of mysticism: energy fields, energy flows, energy blocks, meridians, forces, auras, rhythms, and the like. Refer to the knowledge of an early age: wisdom carelessly swept aside by the rise of blind mechanistic science. Oh, come off it, you’re saying. Something like that couldn’t possibly work, could it?</p>"
++"<p>Well yes, it could - and often well enough to earn you a living. And a very good living if you are sufficiently convincing or, better still, really believe in your therapy. Many illnesses get better on their own, so if you are lucky and administer your treatment at just the right time, you’ll get the credit. But that’s only part of it. Some of the improvement really would be down to you. Not necessarily because you’d recommend acupuncture rather than chamomile tea or used this crystal as opposed to that pressure point. Nothing so specific. Your healing power would be the outcome of a paradoxical force that conventional medicine recognizes but remains oddly ambivalent about: the placebo effect.</p>"
++"<p>Placebos are treatments that have no direct effect on the body, yet still work because the patient has faith in their power to heal. Most often the term refers to a dummy pill, but it applies just as much to any device or procedure, from a sticking plaster to a crystal. The existence of the placebo effect implies that even a complete fraud could make a difference to someone’s health, which is why most practitioners of alternative medicine are sensitive about any mention of the subject. In fact, the placebo is a powerful part of all medical care, orthodox or otherwise, though its role is often neglected and misunderstood.</p>"
++"<p>At one level, it should come as no surprise that our state of mind can influence our physiology: anger opens the superficial blood vessels of the face; sadness pumps the tear glands. But exactly how placebos work their medical magic is still largely unknown. Most of the scant research to date has focused on the control of pain, because it’s one of the commonest complaints and lends itself to experimental study. Here, attention has turned to the endorphins, natural substances produced in the brain that are known to help control pain. “Any of the neurochemicals involved in transmitting pain impulses or modulating them might also be involved in generating the placebo response,” says Don Price, an oral surgeon at the University of Florida.</p>"
++"<p>That case has been strengthened by the recent work of Fabrizio Benedetti of the University of Turin, who showed that the placebo effect can be abolished by a drug, naloxone, which blocks the effects of endorphins. Benedetti induced pain in volunteers by applying a pressure cuff on the forearm. He did this several times a day for several days, using morphine each time to control the pain. On the final day, without saying anything, he replaced the morphine with a saline solution. This still relieved the subjects’ pain: a placebo effect. But when he added naloxone to the saline and blocked the endorphins, the pain relief disappeared. Here was direct proof that the relief of pain by a placebo is carried out, at least in part, by these natural opiates.</p>"
++"<p>Though scientists don’t know exactly how placebos work, they have accumulated a fair bit of knowledge about how to trigger the effect. A London rheumatologist found, for example, that red dummy capsules made more effective painkillers than blue, green, or yellow ones. Research on American students revealed that blue pills make better tranquilizers than pink, a colour more suitable for stimulants. Even branding can make a difference: If Aspro or Tylenol are what you like to take for a headache, their chemically identical generic equivalents may be less effective.</p>"
++"<p>It matters too how the treatment is delivered. Decades ago, when the major tranquilizer chlorpromazine was being introduced, a doctor in Kansas categorized his colleagues according to whether they were keen on it, openly skeptical of its benefits, or took a “let’s try and see” attitude. His conclusion: the more enthusiastic the doctor, the better the drug performed. A recent survey by Ernst on doctors’ bedside manners turned up one consistent finding: Physicians who adopt a warm, friendly, reassuring manner are more effective than those whose consultations are formal and do not offer reassurance.</p>"
++"<p>“Warm, friendly, and reassuring” are precisely what alternative treatment is all about, of course. Many of the ingredients of that opening recipe - the physical contact, the generous swaths of time, the strong hints of supernormal healing power - are just the kind of thing likely to impress patients. “It’s hardly surprising then, that complementary practitioners are generally best at mobilizing the placebo effect,” says Arthur Kleinman, professor of social anthropology at Harvard University.</p>";
+
+var SECTIONS=[
+  {n:1,label:"Passage 1",title:"Sydney Opera House",sub:"",passage:P1_HTML,from:1,to:13},
+  {n:2,label:"Passage 2",title:"Urban Regeneration: an award-winning redevelopment project in Berlin",sub:"",passage:P2_HTML,from:14,to:26},
+  {n:3,label:"Passage 3",title:"The Placebo Effect",sub:"With the right encouragement, your mind can convince the body to heal itself. What is the mysterious force that can do this?",passage:P3_HTML,from:27,to:40}
+];
+
+var TFNG=[{key:"TRUE",text:"TRUE"},{key:"FALSE",text:"FALSE"},{key:"NOT GIVEN",text:"NOT GIVEN"}];
+var YNNG=[{key:"YES",text:"YES"},{key:"NO",text:"NO"},{key:"NOT GIVEN",text:"NOT GIVEN"}];
+
+var HEAD_TFNG="<strong>Questions 1 - 7</strong><br>Do the following statements agree with the information given in Reading Passage 1?<br>In boxes 1-7 on your answer sheet, write<br><strong>TRUE</strong> if the statement agrees with the information<br><strong>FALSE</strong> if the statement contradicts the information<br><strong>NOT GIVEN</strong> if there is no information on this";
+
+var HEAD_NOTES="<strong>Questions 8 - 13</strong><br>Complete the notes below.<br>Choose <strong>ONE WORD AND/OR A NUMBER</strong> from the passage for each answer.<br>Write your answers in boxes 8-13 on your answer sheet.";
+
+var NOTES_HTML=""
++"<div class='sum-body notes'>"
++"<div><strong>Final cost:</strong> $ {{8}}</div>"
++"<div class='note-h'>Construction:</div>"
++"<ul>"
++"<li>A large platform acting as a base for the building</li>"
++"<li>Concrete panels used to make ’shells’, which are covered in tiles</li>"
++"<li>Over a million tiles from {{9}}</li>"
++"<li>{{10}} from Australia covering the outside walls</li>"
++"</ul>"
++"<div class='note-h'>Use:</div>"
++"<ul>"
++"<li>More than 1,500 performances annually</li>"
++"<li>{{11}} performing arts companies have their home base at the Opera House</li>"
++"</ul>"
++"<div class='note-h'>Outside:</div>"
++"<ul><li>A large {{12}} at the foot of a wide staircase</li></ul>"
++"<div class='note-h'>Alterations:</div>"
++"<ul>"
++"<li>A colonnade was added in 2006</li>"
++"<li>Openings made the {{13}} visible from foyers</li>"
++"</ul>"
++"</div>";
+
+var Q_S1=[
+ {qNum:1,sec:1,type:"tfng",head:HEAD_TFNG,stem:"Utzon was famous for his work before he designed the Opera House.",options:TFNG,answer:"FALSE",
+  explain:{step1:"Utzon đã nổi tiếng với các công trình của mình TRƯỚC KHI thiết kế Nhà hát Opera.",
+    kw:["famous ~ little-known (trái nghĩa)","Utzon: giữ nguyên"],
+    step2:"Bài đọc: “It attracted more than 200 entries from around the world and was won by Jørn Utzon, <b>a relatively little-known architect</b> from Denmark.”<br>Bài nói ông là kiến trúc sư <b>tương đối ít được biết đến</b>, mâu thuẫn trực tiếp với “famous”.",
+    tip:"Khi câu hỏi dùng tính từ đánh giá (famous, popular, successful), hãy tìm tính từ đối lập trong bài. little-known / unknown / obscure đều là tín hiệu FALSE."}},
+ {qNum:2,sec:1,type:"tfng",stem:"Utzon's design was favoured by the four judges of the competition from the beginning.",options:TFNG,answer:"FALSE",
+  explain:{step1:"Thiết kế của Utzon được cả BỐN giám khảo yêu thích NGAY TỪ ĐẦU.",
+    kw:["favoured ... from the beginning ~ rejected entries","four judges ~ the other three judges + Saarinen"],
+    step2:"Bài đọc: “one judge, American architect Eero Saarinen, arrived in Sydney after the other three judges had started assessing the entries. He looked through <b>their rejected entries</b> and stopped at the Utzon design.”<br>Ba giám khảo kia đã LOẠI thiết kế này trước đó, nên không thể nói cả bốn người thích ngay từ đầu.",
+    tip:"Chú ý các trạng từ chỉ thời điểm: from the beginning / initially / at first. Chúng thường là chỗ đề bẫy."}},
+ {qNum:3,sec:1,type:"tfng",stem:"Utzon's knowledge of boats gave him the idea for parts of the Opera House.",options:TFNG,answer:"TRUE",
+  explain:{step1:"Kiến thức về tàu thuyền cho Utzon ý tưởng về MỘT SỐ BỘ PHẬN của Nhà hát.",
+    kw:["knowledge of boats ~ maritime background / exposure to shipbuilding","idea for parts ~ inspiration for the design of the roof"],
+    step2:"Bài đọc: “<b>His early exposure to shipbuilding provided the inspiration for the design of the roof</b>, which is a series of curved ’shells’ that look like the sails of a sailing ship.”<br>shipbuilding = knowledge of boats; the roof = parts of the Opera House.",
+    tip:"parts of X là cách diễn đạt khái quát cho một bộ phận cụ thể (the roof). Đề thường khái quát hoá chi tiết trong bài."}},
+ {qNum:4,sec:1,type:"tfng",stem:"Utzon was impressed by the opera houses he had seen in Mexico.",options:TFNG,answer:"NOT GIVEN",
+  explain:{step1:"Utzon bị ấn tượng bởi những nhà hát opera ông đã thấy ở Mexico.",
+    kw:["travels to Mexico: giữ nguyên","opera houses in Mexico: KHÔNG có trong bài"],
+    step2:"Bài đọc: “<b>From his travels to Mexico, he had the idea of placing his building on a wide horizontal platform.</b>”<br>Bài chỉ nói ông lấy ý tưởng về <b>nền bệ ngang</b> từ Mexico. Không hề nhắc tới việc ông có thấy nhà hát opera nào ở đó hay có bị ấn tượng hay không.",
+    tip:"Đúng địa danh nhưng SAI đối tượng là bẫy NOT GIVEN kinh điển. Hỏi: bài có nhắc đến chính xác đối tượng đó không?"}},
+ {qNum:5,sec:1,type:"tfng",stem:"Utzon changed his designs in the 1960s after construction began.",options:TFNG,answer:"TRUE",
+  explain:{step1:"Utzon thay đổi thiết kế vào những năm 1960, SAU KHI việc xây dựng bắt đầu.",
+    kw:["changed his designs ~ amended his original designs","after construction began ~ Construction ... began in 1959, and throughout the early 1960s"],
+    step2:"Bài đọc: “<b>Construction of the platform began in 1959, and throughout the early 1960s Utzon amended his original designs</b> in order to develop a way to build the large ’shells’.”<br>1959 (bắt đầu xây) trước 1960s (sửa thiết kế) nên trật tự thời gian khớp.",
+    tip:"Với câu có mốc thời gian, hãy vẽ nhanh trục thời gian trên giấy nháp rồi so sánh thứ tự."}},
+ {qNum:6,sec:1,type:"tfng",stem:"Seidler defended Utzon's role as architect.",options:TFNG,answer:"TRUE",
+  explain:{step1:"Seidler đã bảo vệ vai trò kiến trúc sư của Utzon.",
+    kw:["defended ~ led protests ... demanding that Utzon be reinstated","Harry Seidler: giữ nguyên"],
+    step2:"Bài đọc: “there were protests through the streets <b>led by prominent architect Harry Seidler</b> and others, <b>demanding that Utzon be reinstated as architect</b>.”<br>Dẫn đầu biểu tình đòi phục chức = bảo vệ vai trò của Utzon.",
+    tip:"defend / support / stand up for thường được diễn đạt lại bằng hành động cụ thể (led protests, campaigned, demanded)."}},
+ {qNum:7,sec:1,type:"tfng",stem:"Utzon went back to Australia in 1973 for the opening of the Opera House.",options:TFNG,answer:"FALSE",
+  explain:{step1:"Utzon quay lại Úc năm 1973 để dự lễ khai trương.",
+    kw:["went back ~ never returned (phủ định)","1973: giữ nguyên"],
+    step2:"Bài đọc: “Utzon was not reinstated and left Australia in 1966. <b>He never returned</b>, and new architects were appointed to complete the building in his absence.”<br>never returned mâu thuẫn tuyệt đối với went back.",
+    tip:"Từ phủ định tuyệt đối (never, none, no longer) trong bài đọc là dấu hiệu mạnh cho đáp án FALSE."}},
+
+ {qNum:8,sec:1,type:"fill",head:HEAD_NOTES,summaryBlanks:[8,9,10,11,12,13],summaryTitle:"Sydney Opera House",summaryHTML:NOTES_HTML,
+  stem:"Final cost: $ ______",accept:["102 million","$102 million","102million","102 m"],display:"102 million",
+  explain:{step1:"Chi phí cuối cùng của nhà hát là bao nhiêu?",
+    kw:["Loại từ: NUMBER + NOUN (đơn vị tiền)","Dấu hiệu: dấu $ đã in sẵn trước ô trống nên KHÔNG viết lại $"],
+    step2:"Bài đọc: “However, the Opera House was not formally completed until 1973 <b>having cost $102 million</b>.”<br>Chú ý bẫy: $7 million là dự toán BAN ĐẦU (original cost estimate), không phải chi phí cuối cùng.",
+    tip:"Với câu điền số tiền, luôn phân biệt estimate/budget (dự toán) và final/actual cost (chi phí thực tế)."}},
+ {qNum:9,sec:1,type:"fill",stem:"Over a million tiles from ______",accept:["sweden"],display:"Sweden",
+  explain:{step1:"Hơn một triệu viên gạch được sản xuất ở đâu?",
+    kw:["Loại từ: NOUN (tên quốc gia)","Dấu hiệu: giới từ from + nơi chốn"],
+    step2:"Bài đọc: “The ’shells’ are covered with 1,056,006 white and cream-coloured tiles <b>manufactured in a factory in Sweden</b>.”<br>from (đề) = manufactured in (bài).",
+    tip:"Bẫy: bài nhắc tới Australia ngay câu sau nhưng đó là nơi khai thác đá granite, không phải nơi sản xuất gạch."}},
+ {qNum:10,sec:1,type:"fill",stem:"______ from Australia covering the outside walls",accept:["granite"],display:"granite",
+  explain:{step1:"Vật liệu nào từ Úc bao phủ tường bên ngoài?",
+    kw:["Loại từ: NOUN (vật liệu)","Dấu hiệu: [NOUN] + from Australia + V-ing"],
+    step2:"Bài đọc: “Apart from the tiles covering the ’shells’, the building’s exterior is mostly <b>clad with granite quarried in Australia</b>.”<br>covering the outside walls = exterior is clad with; from Australia = quarried in Australia.",
+    tip:"clad with / covered with / faced with đều là cách nói vật liệu ốp bên ngoài công trình."}},
+ {qNum:11,sec:1,type:"fill",stem:"______ performing arts companies have their home base at the Opera House",accept:["four","4"],display:"four",
+  explain:{step1:"Bao nhiêu công ty nghệ thuật biểu diễn đóng trụ sở tại nhà hát?",
+    kw:["Loại từ: NUMBER","Dấu hiệu: [NUMBER] + danh từ số nhiều companies"],
+    step2:"Bài đọc: “It hosts a large number of performing-arts companies, including <b>the four resident companies</b>: Opera Australia, the Australian Ballet, the Sydney Theatre Company and the Sydney Symphony Orchestra.”<br>have their home base = resident.",
+    tip:"Bẫy: a large number of companies là số lượng chung; chỉ có four công ty là RESIDENT (thường trú)."}},
+ {qNum:12,sec:1,type:"fill",stem:"A large ______ at the foot of a wide staircase",accept:["forecourt"],display:"forecourt",
+  explain:{step1:"Ở chân cầu thang rộng có gì?",
+    kw:["Loại từ: NOUN (số ít)","Dấu hiệu: A + large + [NOUN]"],
+    step2:"Bài đọc: “There is a <b>sizeable outdoor forecourt</b> from which people ascend to the main entrance. The steps, which lead up from the forecourt ... are nearly 100 metres wide.”<br>large = sizeable; staircase = steps; at the foot of = from which people ascend.",
+    tip:"at the foot of = ở chân (dưới cùng) của. Trong bài thể hiện bằng hướng đi lên: ascend / lead up from."}},
+ {qNum:13,sec:1,type:"fill",stem:"Openings made the ______ visible from foyers",accept:["harbour","harbor"],display:"harbour (harbor)",
+  explain:{step1:"Các ô cửa giúp nhìn thấy gì từ sảnh đợi?",
+    kw:["Loại từ: NOUN","Dấu hiệu: made the + [NOUN] + visible"],
+    step2:"Bài đọc: “This Utzon-led project, completed in 2006, <b>enabled theatre patrons to see the harbour</b> for the first time <b>from the theatre foyers</b>.”<br>made ... visible = enabled ... to see.",
+    tip:"Chấp nhận cả harbour (Anh) và harbor (Mỹ). IELTS chấp nhận cả hai biến thể chính tả."}}
+];
+var HEADINGS=[
+ {key:"i",text:"Objectives of the regeneration project"},
+ {key:"ii",text:"Architectural details of the station buildings"},
+ {key:"iii",text:"Features and facilities of the completed development"},
+ {key:"iv",text:"The remains of a railway system"},
+ {key:"v",text:"A positive evaluation of the finished project"},
+ {key:"vi",text:"A way of controlling development costs"},
+ {key:"vii",text:"Ways of crossing the site"},
+ {key:"viii",text:"Reasons why the area had become neglected"}
+];
+
+function boxHTML(title,arr){
+  var h="<div class='opt-box'><div class='ob-title'>"+title+"</div>";
+  arr.forEach(function(o){h+="<div class='ob-item'><span class='ob-key'>"+o.key+"</span><span>"+o.text+"</span></div>"});
+  return h+"</div>";
+}
+
+var HEAD_HEADINGS="<strong>Questions 14 - 19</strong><br>The reading passage has six paragraphs, <strong>A-F</strong>.<br>Choose the correct heading for each paragraph from the list of headings below.<br>Write the correct number, <strong>i-viii</strong>, in boxes 14-19 on your answer sheet.";
+
+var MULTI_A=[
+ {key:"A",text:"It was a habitat for some rare wildlife species."},
+ {key:"B",text:"It contained a particular tourist attraction."},
+ {key:"C",text:"It lay at the heart of the reunited city."},
+ {key:"D",text:"It was served by a major rail network."},
+ {key:"E",text:"It contained buildings which could be easily converted."}
+];
+var MULTI_B=[
+ {key:"A",text:"to bring people of different ages together"},
+ {key:"B",text:"to encourage tourism"},
+ {key:"C",text:"to improve transport links"},
+ {key:"D",text:"to preserve industrial remains"},
+ {key:"E",text:"to generate income for the city"}
+];
+
+var SUM2_HTML="<div class='sum-body'>In the middle of the new park is a {{24}}, where there is a path for pedestrians and two railway lines. A slow train uses these lines to make a regular journey between its base and a {{25}}. Benches have been provided on the north side, so that people can relax and enjoy the sunshine, and to the east is an area with mature trees of various kinds, as well as sets of swings. A range of sports and leisure areas are situated around the {{26}} of the site.</div>";
+
+var Q_S2=[
+ {qNum:14,sec:2,type:"matchpara",head:HEAD_HEADINGS+boxHTML("List of Headings",HEADINGS),stem:"Paragraph A",options:HEADINGS,answer:"IV",
+  explain:{step1:"Nội dung chính của đoạn A là gì?",
+    kw:["Từ khoá đoạn A: tracks, sheds, warehouses, three old railway stations"],
+    step2:"Đoạn A liệt kê <b>tàn tích vật lý</b> còn lại của hệ thống đường sắt: đường ray, nhà kho, kho hàng thuộc ba nhà ga cũ, nằm trên khu đất cao hơn mặt bằng xung quanh 4 mét.<br>=> Khớp tiêu đề <b>iv. The remains of a railway system</b>.",
+    distractors:[{key:"ii",text:"Bài chỉ nêu TÊN và NĂM của các nhà ga, không mô tả chi tiết kiến trúc (architectural details) của toà nhà."},{key:"viii",text:"Đoạn A mô tả hiện trạng, còn LÝ DO bị bỏ hoang nằm ở đoạn B."}],
+    tip:"Với Matching Headings, đọc câu đầu và câu cuối đoạn trước, sau đó xem danh từ nào lặp lại nhiều nhất trong đoạn."}},
+ {qNum:15,sec:2,type:"matchpara",stem:"Paragraph B",options:HEADINGS,answer:"VIII",
+  explain:{step1:"Nội dung chính của đoạn B là gì?",
+    kw:["Từ khoá: ceased to be used, run down, abandoned, rubbish tip, no-man’s-land"],
+    step2:"Đoạn B giải thích <b>vì sao</b> khu đất bị bỏ bê: hạ tầng đường sắt ngừng hoạt động, khu đất xuống cấp, thành bãi rác, lại nằm sát bức tường chia cắt Berlin nên bị coi là vùng đất không người suốt nhiều thập kỷ.<br>=> Khớp <b>viii. Reasons why the area had become neglected</b>.",
+    distractors:[{key:"iv",text:"Đoạn B nói về quá trình SUY TÀN, không mô tả các tàn tích cụ thể như đoạn A."}],
+    tip:"Tiêu đề bắt đầu bằng Reasons why đòi hỏi đoạn văn phải có quan hệ NHÂN QUẢ (as, because, contributed to the fact that)."}},
+ {qNum:16,sec:2,type:"matchpara",stem:"Paragraph C",options:HEADINGS,answer:"I",
+  explain:{step1:"Nội dung chính của đoạn C là gì?",
+    kw:["Từ khoá: proposal, would integrate, it was necessary to, the need to reconcile these goals"],
+    step2:"Đoạn C trình bày <b>đề xuất và các mục tiêu</b>: kết nối các khu đô thị, kích thích phát triển 16 hecta tiện ích, hoà nhập các thế hệ, đồng thời bảo tồn di sản đường sắt.<br>=> Khớp <b>i. Objectives of the regeneration project</b>.",
+    distractors:[{key:"v",text:"Đây mới là KẾ HOẠCH (would trigger, it was necessary to), chưa phải đánh giá kết quả đã hoàn thành."},{key:"vi",text:"Đoạn C không hề nhắc tới việc kiểm soát chi phí (costs)."}],
+    tip:"Động từ tình thái + thì tương lai trong quá khứ (would, was necessary to) là tín hiệu của MỤC TIÊU/KẾ HOẠCH."}},
+ {qNum:17,sec:2,type:"matchpara",stem:"Paragraph D",options:HEADINGS,answer:"VII",
+  explain:{step1:"Nội dung chính của đoạn D là gì?",
+    kw:["Từ khoá: intersected from east to west, footpath, railway lines, bridges, stairway"],
+    step2:"Đoạn D mô tả các <b>tuyến đi lại cắt ngang khu đất</b>: lối đi bộ bê tông chạy đông-tây, cặp đường ray chạy bắc-nam, cầu thang khắc phục chênh cao 4 mét.<br>=> Khớp <b>vii. Ways of crossing the site</b>.",
+    distractors:[{key:"iii",text:"Đoạn D tập trung vào hạ tầng giao thông chứ chưa liệt kê tiện ích giải trí như đoạn E."}],
+    tip:"Các giới từ chỉ hướng (from east to west, from north to south) là dấu hiệu rõ của tiêu đề crossing/routes."}},
+ {qNum:18,sec:2,type:"matchpara",stem:"Paragraph E",options:HEADINGS,answer:"III",
+  explain:{step1:"Nội dung chính của đoạn E là gì?",
+    kw:["Từ khoá: terrace, benches, forest, swings, nursery, sports fields, community gardens"],
+    step2:"Đoạn E <b>liệt kê tiện ích cụ thể</b> của công viên đã hoàn thiện: sân thượng đầy nắng có ghế băng, rừng cây, xích đu, nhà trẻ, sân thể thao, sân trượt ván, sân khấu khiêu vũ, vườn cộng đồng.<br>=> Khớp <b>iii. Features and facilities of the completed development</b>.",
+    distractors:[{key:"i",text:"Đây là thực tế đã xây xong, không phải mục tiêu dự định."}],
+    tip:"Đoạn văn có danh sách liệt kê dài kèm for example gần như luôn ứng với tiêu đề dạng Features and facilities."}},
+ {qNum:19,sec:2,type:"matchpara",stem:"Paragraph F",options:HEADINGS,answer:"V",
+  explain:{step1:"Nội dung chính của đoạn F là gì?",
+    kw:["Từ khoá: opened to the public, a new green lung, fit neatly, robust general order"],
+    step2:"Đoạn F kết luận: công viên mở cửa tháng 9/2011, trở thành <b>lá phổi xanh mới</b> của Berlin, các góc nhỏ hoà hợp trong một trật tự tổng thể mạnh mẽ, giữ lại được tinh thần của nơi chốn cũ.<br>=> Khớp <b>v. A positive evaluation of the finished project</b>.",
+    distractors:[{key:"i",text:"Dự án đã hoàn thành (opened in 2011), không còn là mục tiêu."}],
+    tip:"Tính từ mang sắc thái khen (robust, neatly, has been able to) báo hiệu tiêu đề dạng positive evaluation."}},
+
+ {qNum:20,sec:2,type:"multi",group:"g1",pair:[20,21],head:"<strong>Questions 20 and 21</strong><br>Choose <strong>TWO</strong> letters, <strong>A-E</strong>.<br>Write the correct letters in boxes 20 and 21 on your answer sheet.",
+  stem:"Which <strong>TWO</strong> reasons are given for the choice of Gleisdreieck as a site for a park?",options:MULTI_A,answer:["B","C"],
+  explain:{step1:"Hai lý do nào được nêu ra cho việc chọn Gleisdreieck làm địa điểm xây công viên?",
+    kw:["reasons for the choice ~ giving visibility to the site / imperative to identify a purpose for it","site ~ the location"],
+    step2:"<b>B.</b> Đoạn B: “the German Museum of Technology was established there, <b>attracting large numbers of visitors and giving visibility to the site</b>.” => khu đất có một điểm thu hút du khách.<br><b>C.</b> Đoạn B: “the unification of the formerly divided city <b>gave the location more centrality</b>” và đoạn C: “an opportunity for <b>joining the southern area of Potsdamer Platz with Kreuzberg and Schöneberg</b>.” => khu đất nằm ở trung tâm thành phố đã thống nhất.",
+    distractors:[{key:"A",text:"Bài có nhắc vegetation took over (cây cỏ mọc um tùm) nhưng KHÔNG nói đó là môi trường sống của loài hoang dã quý hiếm."},{key:"D",text:"Mạng lưới đường sắt đã ngừng hoạt động (ceased to be used), nên không phải lý do được phục vụ bởi mạng lưới lớn."},{key:"E",text:"Bài nhắc tới sheds và warehouses nhưng không nói chúng dễ chuyển đổi công năng."}],
+    tip:"Với Choose TWO letters, mỗi chữ cái đúng được 1 điểm. Không cần đúng thứ tự, nhưng chọn quá 2 sẽ bị huỷ."}},
+ {qNum:21,sec:2,type:"multi",group:"g1",_multiSkip:true},
+ {qNum:22,sec:2,type:"multi",group:"g2",pair:[22,23],head:"<strong>Questions 22 and 23</strong><br>Choose <strong>TWO</strong> letters, <strong>A-E</strong>.<br>Write the correct letters in boxes 22 and 23 on your answer sheet.",
+  stem:"Which <strong>TWO</strong> things did the State of Berlin hope to achieve with the Gleisdreieck development?",options:MULTI_B,answer:["A","D"],
+  explain:{step1:"Bang Berlin hy vọng đạt được hai điều gì qua dự án Gleisdreieck?",
+    kw:["hope to achieve ~ it was necessary to / the need to reconcile these goals"],
+    step2:"<b>A.</b> Đoạn C: “local amenities that would be capable of <b>integrating different generations and social groups</b> in a sustainable way.” => gắn kết các thế hệ khác nhau.<br><b>D.</b> Đoạn C: “the need to reconcile these goals with the <b>conservation of railway heritage</b> also emerged.” => bảo tồn tàn tích công nghiệp.",
+    distractors:[{key:"B",text:"Du lịch chỉ là hệ quả; đoạn C nhấn mạnh local amenities và cư dân địa phương, không nêu mục tiêu khuyến khích du lịch."},{key:"C",text:"Đây là dự án công viên, không phải dự án cải thiện kết nối giao thông."},{key:"E",text:"Bài không đề cập tới việc tạo nguồn thu cho thành phố."}],
+    tip:"Câu hỏi hỏi về MỤC TIÊU (hope to achieve) nên chỉ quét những câu chứa goals, aim, necessary, need to trong bài."}},
+ {qNum:23,sec:2,type:"multi",group:"g2",_multiSkip:true},
+
+ {qNum:24,sec:2,type:"fill",head:"<strong>Questions 24 - 26</strong><br>Complete the summary below.<br>Choose <strong>ONE WORD ONLY</strong> from the passage for each answer.<br>Write your answers in boxes 24-26 on your answer sheet.",
+  summaryBlanks:[24,25,26],summaryTitle:"",summaryHTML:SUM2_HTML,
+  stem:"In the middle of the new park is a ______",accept:["meadow"],display:"meadow",
+  explain:{step1:"Ở giữa công viên mới là gì?",
+    kw:["Loại từ: NOUN số ít","Dấu hiệu: mạo từ a + [NOUN], đứng sau động từ is"],
+    step2:"Đoạn D: “The project as a whole was <b>planned around a large central meadow</b>, intersected from east to west by a concrete footpath, and from north to the south by a pair of railway lines.”<br>In the middle = central; path for pedestrians = concrete footpath; two railway lines = a pair of railway lines.",
+    tip:"ONE WORD ONLY nên chỉ viết meadow, không viết central meadow hay large meadow."}},
+ {qNum:25,sec:2,type:"fill",stem:"...a regular journey between its base and a ______",accept:["museum"],display:"museum",
+  explain:{step1:"Đoàn tàu chạy tới đâu?",
+    kw:["Loại từ: NOUN số ít","Dấu hiệu: cấu trúc between ... and a + [NOUN]"],
+    step2:"Đoạn D: “<b>Once a month, a train slowly travels along these lines from its parking shed to the German Museum of Technology.</b>”<br>regular journey = once a month; its base = its parking shed; and a ... = to the ...",
+    tip:"Đề yêu cầu ONE WORD ONLY nên chỉ viết museum, không viết German Museum of Technology."}},
+ {qNum:26,sec:2,type:"fill",stem:"A range of sports and leisure areas are situated around the ______ of the site",accept:["edges"],display:"edges",
+  explain:{step1:"Các khu thể thao và giải trí nằm ở vị trí nào của khu đất?",
+    kw:["Loại từ: NOUN","Dấu hiệu: the + [NOUN] + of the site"],
+    step2:"Đoạn E: “<b>The edges of the park are finished with a collection of distinctive, functional spaces</b>, for example a nursery, sports fields, concave surfaces for skateboards, stages for dancing, community gardens.”<br>situated around = are finished with; of the site = of the park.",
+    tip:"Giữ nguyên dạng số nhiều edges đúng như trong bài; viết edge sẽ bị tính sai."}}
+];
+var ENDINGS=[
+ {key:"A",text:"should be easy to understand."},
+ {key:"B",text:"can improve without treatment."},
+ {key:"C",text:"can cost the patient less."},
+ {key:"D",text:"ought to last a minimum length of time."},
+ {key:"E",text:"can require a range of different products."},
+ {key:"F",text:"can be described as serious."},
+ {key:"G",text:"should give it greater recognition."},
+ {key:"H",text:"should be able to get a high income."}
+];
+
+var HEAD_ENDINGS="<strong>Questions 27 - 31</strong><br>Complete each sentence with the correct ending, <strong>A-H</strong>, below.<br>Write the correct letter, <strong>A-H</strong>, in boxes 27-31 on your answer sheet.";
+
+var HEAD_MCQ3="<strong>Questions 32 and 33</strong><br>Choose the correct letter, <strong>A, B, C or D</strong>.<br>Write the correct letter in boxes 32 and 33 on your answer sheet.";
+
+var HEAD_YNNG="<strong>Questions 34 - 40</strong><br>Do the following statements agree with the claims of the writer in Reading Passage 3?<br>In boxes 34-40 on your answer sheet, write<br><strong>YES</strong> if the statement agrees with the claims of the writer<br><strong>NO</strong> if the statement contradicts the claims of the writer<br><strong>NOT GIVEN</strong> if it is impossible to say what the writer thinks about this";
+
+var Q_S3=[
+ {qNum:27,sec:3,type:"matchend",head:HEAD_ENDINGS+boxHTML("Endings",ENDINGS),stem:"An appointment with an alternative practitioner",options:ENDINGS,answer:"D",
+  explain:{step1:"Một buổi hẹn với người hành nghề y học thay thế thì nên như thế nào?",
+    kw:["an appointment ~ each session with your patients","alternative practitioner ~ as a practitioner"],
+    step2:"Đoạn 1: “Your treatment should involve physical contact, and <b>each session with your patients should take at least half an hour</b>.”<br>should take at least half an hour = ought to last a minimum length of time.",
+    distractors:[{key:"C",text:"Trái ngược: bài nói Get them to pay you well (bắt bệnh nhân trả nhiều tiền)."},{key:"E",text:"Bài không nói buổi hẹn cần nhiều loại sản phẩm khác nhau."}],
+    tip:"at least + khoảng thời gian là cách diễn đạt trực tiếp của a minimum length of time."}},
+ {qNum:28,sec:3,type:"matchend",stem:"An alternative practitioner’s explanation of their treatment",options:ENDINGS,answer:"A",
+  explain:{step1:"Cách người hành nghề y học thay thế giải thích phương pháp điều trị thì nên thế nào?",
+    kw:["explanation of their treatment ~ describe your treatment","easy to understand ~ in familiar words"],
+    step2:"Đoạn 1: “<b>Describe your treatment in familiar words</b>, but embellish with a hint of mysticism: energy fields, energy flows, energy blocks, meridians...”<br>in familiar words = should be easy to understand.",
+    distractors:[{key:"F",text:"Bài không nói lời giải thích cần nghe có vẻ nghiêm trọng."},{key:"E",text:"Danh sách energy fields, meridians... là từ ngữ huyền bí, không phải các sản phẩm khác nhau."}],
+    tip:"familiar / plain / everyday words đều là paraphrase của easy to understand."}},
+ {qNum:29,sec:3,type:"matchend",stem:"If alternative practitioners have faith in their treatment, they",options:ENDINGS,answer:"H",
+  explain:{step1:"Nếu người hành nghề y học thay thế thực sự tin vào liệu pháp của mình thì họ sẽ ra sao?",
+    kw:["have faith in their treatment ~ really believe in your therapy","high income ~ a very good living"],
+    step2:"Đoạn 2: “Well yes, it could - and often well enough to earn you a living. <b>And a very good living if you are sufficiently convincing or, better still, really believe in your therapy.</b>”<br>a very good living = a high income.",
+    distractors:[{key:"C",text:"Ngược lại: bệnh nhân phải trả nhiều tiền hơn chứ không phải ít hơn."},{key:"B",text:"Đây là mô tả bệnh tật tự khỏi, dùng cho câu 30."}],
+    tip:"earn a living = kiếm sống; make a very good living = kiếm được rất nhiều tiền. Đây là collocation cần nhớ."}},
+ {qNum:30,sec:3,type:"matchend",stem:"Quite often, a patient’s illness",options:ENDINGS,answer:"B",
+  explain:{step1:"Bệnh của bệnh nhân thường diễn tiến ra sao?",
+    kw:["quite often ~ many","illness ~ illnesses","improve without treatment ~ get better on their own"],
+    step2:"Đoạn 2: “<b>Many illnesses get better on their own</b>, so if you are lucky and administer your treatment at just the right time, you’ll get the credit.”<br>get better on their own = can improve without treatment.",
+    distractors:[{key:"F",text:"Bài không phân loại bệnh là nghiêm trọng hay không."}],
+    tip:"on your own / of its own accord / spontaneously = without treatment / without help."}},
+ {qNum:31,sec:3,type:"matchend",stem:"Conventional doctors are aware of the placebo effect and they",options:ENDINGS,answer:"G",
+  explain:{step1:"Các bác sĩ chính thống biết về hiệu ứng giả dược và họ nên làm gì?",
+    kw:["conventional doctors ~ all medical care, orthodox or otherwise","greater recognition ~ its role is often neglected"],
+    step2:"Đoạn 3: “In fact, the placebo is a powerful part of all medical care, orthodox or otherwise, <b>though its role is often neglected and misunderstood</b>.”<br>Vai trò bị xem nhẹ => hàm ý cần được công nhận nhiều hơn (should give it greater recognition).",
+    distractors:[{key:"A",text:"Không liên quan tới việc lời giải thích dễ hiểu."},{key:"H",text:"Thu nhập cao là nói về alternative practitioners, không phải bác sĩ chính thống."}],
+    tip:"neglected / overlooked / underestimated hàm ý ngược với recognition, nên tạo ra kết luận should give it greater recognition."}},
+
+ {qNum:32,sec:3,type:"mcq",head:HEAD_MCQ3,stem:"In the third paragraph, the writer says that the placebo effect",
+  options:[{key:"A",text:"works best in tablet form."},{key:"B",text:"is a new type of medical treatment."},{key:"C",text:"is trusted more by some patients than others."},{key:"D",text:"has a significant role in both alternative and conventional medicine."}],answer:"D",
+  explain:{step1:"Ở đoạn 3, tác giả nói gì về hiệu ứng giả dược?",
+    kw:["significant role ~ a powerful part","both alternative and conventional ~ all medical care, orthodox or otherwise"],
+    step2:"Đoạn 3: “In fact, <b>the placebo is a powerful part of all medical care, orthodox or otherwise</b>, though its role is often neglected and misunderstood.”<br>orthodox = conventional; otherwise = alternative.",
+    distractors:[{key:"A",text:"Bài nói giả dược thường là viên thuốc giả NHƯNG cũng áp dụng cho bất kỳ thiết bị hay thủ thuật nào; không nói dạng viên là hiệu quả nhất."},{key:"B",text:"Bài không nói đây là phương pháp điều trị MỚI."},{key:"C",text:"Bài không so sánh mức độ tin tưởng giữa các nhóm bệnh nhân."}],
+    tip:"Từ khoá định vị đoạn: In the third paragraph. Hãy đếm đoạn từ đoạn mở đầu, bỏ qua phần in nghiêng dẫn đề."}},
+ {qNum:33,sec:3,type:"mcq",stem:"A reference is made to anger and sadness in order to show that",
+  options:[{key:"A",text:"personal feelings can alter our physical condition."},{key:"B",text:"some human behaviour has no clear explanation."},{key:"C",text:"placebos, like emotions, are experienced by everyone."},{key:"D",text:"people find some physical reactions hard to control."}],answer:"A",
+  explain:{step1:"Việc nhắc tới sự tức giận và nỗi buồn nhằm chứng minh điều gì?",
+    kw:["personal feelings ~ our state of mind","physical condition ~ our physiology"],
+    step2:"Đoạn 4: “it should come as no surprise that <b>our state of mind can influence our physiology</b>: anger opens the superficial blood vessels of the face; sadness pumps the tear glands.”<br>Hai ví dụ này minh hoạ cho luận điểm ngay trước dấu hai chấm.",
+    distractors:[{key:"B",text:"Ngược lại: bài nói đây là điều KHÔNG đáng ngạc nhiên, tức là có thể giải thích được."},{key:"C",text:"Bài không so sánh giả dược với cảm xúc theo hướng ai cũng trải qua."},{key:"D",text:"Bài không bàn về việc khó kiểm soát phản ứng thể chất."}],
+    tip:"Khi câu hỏi hỏi in order to show that, hãy tìm câu luận điểm NGAY TRƯỚC ví dụ, thường đứng trước dấu hai chấm."}},
+
+ {qNum:34,sec:3,type:"ynng",head:HEAD_YNNG,stem:"Scientists now have enough information to understand how the placebo effect becomes active in people.",options:YNNG,answer:"NO",
+  explain:{step1:"Các nhà khoa học đã có đủ thông tin để hiểu cách hiệu ứng giả dược hoạt động.",
+    kw:["have enough information to understand ~ don’t know exactly how"],
+    step2:"Đoạn 6: “<b>Though scientists don’t know exactly how placebos work</b>, they have accumulated a fair bit of knowledge about how to trigger the effect.”<br>Biết cách KÍCH HOẠT khác với hiểu CƠ CHẾ. Bài khẳng định họ chưa biết chính xác cơ chế.",
+    tip:"Phân biệt know how to trigger (biết cách gây ra) và know how it works (hiểu cơ chế). Đề đánh tráo hai ý này."}},
+ {qNum:35,sec:3,type:"ynng",stem:"As a result of experiments, some painkillers have been taken off the market.",options:YNNG,answer:"NOT GIVEN",
+  explain:{step1:"Do kết quả thí nghiệm, một số thuốc giảm đau đã bị rút khỏi thị trường.",
+    kw:["taken off the market: KHÔNG xuất hiện trong bài"],
+    step2:"Đoạn 6 nói về màu viên thuốc: “red dummy capsules made more effective painkillers than blue, green, or yellow ones” và “blue pills make better tranquilizers than pink”.<br>Bài <b>không hề</b> đề cập tới việc thu hồi hay rút thuốc khỏi thị trường.",
+    tip:"Nếu một hành động/hệ quả hoàn toàn không xuất hiện trong bài, đáp án là NOT GIVEN chứ không phải NO."}},
+ {qNum:36,sec:3,type:"ynng",stem:"Fabrizio Benedetti’s experiment proved that endorphins are involved in reducing pain through the placebo effect.",options:YNNG,answer:"YES",
+  explain:{step1:"Thí nghiệm của Fabrizio Benedetti đã chứng minh rằng endorphin có tham gia vào quá trình giảm đau thông qua hiệu ứng giả dược.",
+    kw:["proved ~ here was direct proof","endorphins ~ these natural opiates","involved in reducing pain ~ the relief of pain ... is carried out ... by"],
+    step2:"Đoạn 5: “But when he added naloxone to the saline and blocked the endorphins, the pain relief disappeared. <b>Here was direct proof that the relief of pain by a placebo is carried out, at least in part, by these natural opiates.</b>”<br>Logic thí nghiệm: chặn endorphin thì tác dụng giảm đau biến mất, chứng tỏ endorphin có vai trò trong cơ chế giảm đau của giả dược.",
+    tip:"Chú ý cụm hedging <b>at least in part</b> (ít nhất là một phần). Câu hỏi dùng <b>are involved in</b> (có tham gia) nên vẫn khớp, cho đáp án YES. Nhưng nếu đề viết “entirely caused by endorphins” hoặc “the only cause” thì lại thành NO, vì tác giả không khẳng định tuyệt đối."}},
+ {qNum:37,sec:3,type:"ynng",stem:"Individual preference can have an impact on the effectiveness of different brands of headache tablets.",options:YNNG,answer:"YES",
+  explain:{step1:"Sở thích cá nhân có ảnh hưởng tới hiệu quả của các nhãn hiệu thuốc đau đầu khác nhau.",
+    kw:["individual preference ~ what you like to take","different brands ~ Aspro or Tylenol vs generic equivalents"],
+    step2:"Đoạn 6: “Even branding can make a difference: <b>If Aspro or Tylenol are what you like to take for a headache, their chemically identical generic equivalents may be less effective.</b>”<br>Cùng thành phần hoá học nhưng khác thương hiệu thì hiệu quả khác nhau, tuỳ sở thích người dùng.",
+    tip:"make a difference = có tác động. Đây là collocation quan trọng thay cho have an impact."}},
+ {qNum:38,sec:3,type:"ynng",stem:"Doctors expressed a range of views on the drug chlorpromazine when it was first introduced.",options:YNNG,answer:"YES",
+  explain:{step1:"Các bác sĩ bày tỏ nhiều quan điểm khác nhau về chlorpromazine khi thuốc mới ra mắt.",
+    kw:["a range of views ~ keen on it / openly skeptical / let’s try and see"],
+    step2:"Đoạn 7: “when the major tranquilizer chlorpromazine was being introduced, a doctor in Kansas <b>categorized his colleagues according to whether they were keen on it, openly skeptical of its benefits, or took a “let’s try and see” attitude</b>.”<br>Ba nhóm thái độ khác nhau = a range of views.",
+    tip:"Khi bài liệt kê 3 thái độ trở lên, đó chính là paraphrase cho a range of / a variety of views."}},
+ {qNum:39,sec:3,type:"ynng",stem:"Ernst’s study had a big influence on doctors’ behaviour with patients.",options:YNNG,answer:"NOT GIVEN",
+  explain:{step1:"Nghiên cứu của Ernst có ảnh hưởng lớn tới cách bác sĩ cư xử với bệnh nhân.",
+    kw:["Ernst: giữ nguyên","had a big influence on doctors’ behaviour: KHÔNG có trong bài"],
+    step2:"Đoạn 7: “A recent survey by Ernst on doctors’ bedside manners turned up one consistent finding: Physicians who adopt a warm, friendly, reassuring manner are more effective...”<br>Bài chỉ nêu <b>kết quả</b> của khảo sát, không nói khảo sát đó có tác động gì tới hành vi của bác sĩ.",
+    tip:"Bẫy phổ biến: bài mô tả PHÁT HIỆN của nghiên cứu, đề lại hỏi về ẢNH HƯỞNG của nghiên cứu. Hai thứ khác nhau."}},
+ {qNum:40,sec:3,type:"ynng",stem:"Alternative practitioners work in a way that is likely to trigger the placebo effect.",options:YNNG,answer:"YES",
+  explain:{step1:"Người hành nghề y học thay thế làm việc theo cách dễ kích hoạt hiệu ứng giả dược.",
+    kw:["alternative practitioners ~ complementary practitioners","likely to trigger ~ best at mobilizing"],
+    step2:"Đoạn 8: “Many of the ingredients of that opening recipe - the physical contact, the generous swaths of time, the strong hints of supernormal healing power - are just the kind of thing likely to impress patients. <b>It’s hardly surprising then, that complementary practitioners are generally best at mobilizing the placebo effect.</b>”",
+    tip:"complementary medicine = alternative medicine. mobilize / trigger / bring about đều là kích hoạt."}}
+];
+
+var QUESTIONS=Q_S1.concat(Q_S2).concat(Q_S3);
+
+var GROUPS={
+  g1:{pair:[20,21],answer:["B","C"],display:"B, C"},
+  g2:{pair:[22,23],answer:["A","D"],display:"A, D"}
+};
+/* ==========================================================
+   REFERENCE DATA - COLLOCATIONS / PARAPHRASE / GRAMMAR
+   IPA theo chuan RP (Oxford Learner's Dictionaries / Cambridge)
+   ========================================================== */
+var COLLOCATIONS=[
+ {sec:1,word:"cost overrun",ipa:"/ˈkɒst ˌəʊvərʌn/",vi:"khoản vượt dự toán chi phí",ex:"Cost overruns contributed to criticism of the project."},
+ {sec:1,word:"cost estimate",ipa:"/ˈkɒst ˌestɪmət/",vi:"dự toán chi phí",ex:"The original cost estimate for the Opera House was $7 million."},
+ {sec:1,word:"earn a reputation",ipa:"/ˌɜːn ə ˌrepjuˈteɪʃn/",vi:"gây dựng được danh tiếng",ex:"The city has earned a reputation as a cultural hub."},
+ {sec:1,word:"world-class",ipa:"/ˌwɜːld ˈklɑːs/",vi:"đẳng cấp thế giới",ex:"Sydney has a world-class performing arts centre."},
+ {sec:1,word:"performing arts",ipa:"/pəˌfɔːmɪŋ ˈɑːts/",vi:"nghệ thuật biểu diễn",ex:"Four performing arts companies are based there."},
+ {sec:1,word:"hand in your resignation",ipa:"/ˌhænd ɪn jɔː ˌrezɪɡˈneɪʃn/",vi:"nộp đơn từ chức",ex:"He handed in his resignation after the funding was cut."},
+ {sec:1,word:"a change of government",ipa:"/ə ˌtʃeɪndʒ əv ˈɡʌvənmənt/",vi:"sự thay đổi chính phủ",ex:"After a change of government, the budget was reviewed."},
+ {sec:1,word:"be forced to withdraw",ipa:"/bi ˌfɔːst tə wɪðˈdrɔː/",vi:"buộc phải rút lui",ex:"He was forced to withdraw as chief architect."},
+ {sec:1,word:"below sea level",ipa:"/bɪˌləʊ ˈsiː levl/",vi:"dưới mực nước biển",ex:"The piers are sunk 25 metres below sea level."},
+ {sec:1,word:"in accordance with",ipa:"/ɪn əˈkɔːdns wɪð/",vi:"theo đúng, phù hợp với",ex:"The roof was built in accordance with the architect’s vision."},
+ {sec:1,word:"maintain integrity",ipa:"/meɪnˈteɪn ɪnˈteɡrəti/",vi:"giữ vững tính toàn vẹn",ex:"These principles help maintain the building’s architectural integrity."},
+
+ {sec:2,word:"urban regeneration",ipa:"/ˌɜːbən rɪˌdʒenəˈreɪʃn/",vi:"tái thiết/cải tạo đô thị",ex:"Urban regeneration transformed the abandoned rail yard."},
+ {sec:2,word:"waste ground",ipa:"/ˈweɪst ɡraʊnd/",vi:"đất hoang, đất bỏ không",ex:"An extensive area of waste ground separated the two districts."},
+ {sec:2,word:"run down",ipa:"/ˌrʌn ˈdaʊn/",vi:"xuống cấp, tồi tàn",ex:"The whole area became increasingly run down."},
+ {sec:2,word:"built-up area",ipa:"/ˌbɪlt ʌp ˈeəriə/",vi:"khu vực dày đặc nhà cửa",ex:"It became a natural haven in the middle of built-up areas."},
+ {sec:2,word:"put forward a proposal",ipa:"/ˌpʊt ˈfɔːwəd ə prəˈpəʊzl/",vi:"đưa ra một đề xuất",ex:"The State of Berlin put forward the proposal of converting the site."},
+ {sec:2,word:"local amenities",ipa:"/ˌləʊkl əˈmiːnətiz/",vi:"tiện ích địa phương",ex:"Sixteen hectares of local amenities were developed."},
+ {sec:2,word:"in harmony with",ipa:"/ɪn ˈhɑːməni wɪð/",vi:"hài hoà với",ex:"The park was designed in harmony with nature."},
+ {sec:2,word:"no-man’s-land",ipa:"/ˈnəʊ mænz lænd/",vi:"vùng đất không người",ex:"For decades the site was identified as no-man’s-land."},
+ {sec:2,word:"take over",ipa:"/ˌteɪk ˈəʊvə/",vi:"chiếm lấy, lấn át",ex:"Vegetation took over the abandoned tracks."},
+ {sec:2,word:"open to the public",ipa:"/ˌəʊpən tə ðə ˈpʌblɪk/",vi:"mở cửa cho công chúng",ex:"The park was opened to the public in September 2011."},
+ {sec:2,word:"large-scale",ipa:"/ˌlɑːdʒ ˈskeɪl/",vi:"quy mô lớn",ex:"Small corners fit into a large-scale general order."},
+ {sec:2,word:"cease to be used",ipa:"/ˌsiːs tə bi ˈjuːzd/",vi:"ngừng được sử dụng",ex:"As the railway infrastructure ceased to be used, the area declined."},
+
+ {sec:3,word:"placebo effect",ipa:"/pləˈsiːbəʊ ɪˌfekt/",vi:"hiệu ứng giả dược",ex:"The placebo effect can be abolished by naloxone."},
+ {sec:3,word:"alternative medicine",ipa:"/ɔːlˌtɜːnətɪv ˈmedsn/",vi:"y học thay thế",ex:"Practitioners of alternative medicine avoid the subject."},
+ {sec:3,word:"conventional medicine",ipa:"/kənˌvenʃənl ˈmedsn/",vi:"y học thông thường/chính thống",ex:"Conventional medicine recognizes the placebo effect."},
+ {sec:3,word:"take an active part in",ipa:"/ˌteɪk ən ˌæktɪv ˈpɑːt ɪn/",vi:"tham gia tích cực vào",ex:"Encourage patients to take an active part in their treatment."},
+ {sec:3,word:"make a difference to",ipa:"/ˌmeɪk ə ˈdɪfrəns tə/",vi:"tạo ra khác biệt cho",ex:"Even a complete fraud could make a difference to someone’s health."},
+ {sec:3,word:"come as no surprise",ipa:"/ˌkʌm əz nəʊ səˈpraɪz/",vi:"không có gì đáng ngạc nhiên",ex:"It should come as no surprise that our mood affects our body."},
+ {sec:3,word:"state of mind",ipa:"/ˌsteɪt əv ˈmaɪnd/",vi:"trạng thái tinh thần",ex:"Our state of mind can influence our physiology."},
+ {sec:3,word:"pain relief",ipa:"/ˈpeɪn rɪˌliːf/",vi:"sự giảm đau",ex:"When endorphins were blocked, the pain relief disappeared."},
+ {sec:3,word:"bedside manner",ipa:"/ˈbedsaɪd mænə/",vi:"cách cư xử của bác sĩ với bệnh nhân",ex:"A survey on doctors’ bedside manners found one consistent result."},
+ {sec:3,word:"earn a living",ipa:"/ˌɜːn ə ˈlɪvɪŋ/",vi:"kiếm sống",ex:"It works well enough to earn you a living."},
+ {sec:3,word:"get the credit",ipa:"/ˌɡet ðə ˈkredɪt/",vi:"được ghi công",ex:"If the illness clears up on its own, you’ll get the credit."},
+ {sec:3,word:"have faith in",ipa:"/ˌhæv ˈfeɪθ ɪn/",vi:"tin tưởng vào",ex:"Placebos work because the patient has faith in their power to heal."},
+ {sec:3,word:"induce pain",ipa:"/ɪnˌdjuːs ˈpeɪn/",vi:"gây ra cơn đau",ex:"Benedetti induced pain in volunteers with a pressure cuff."},
+ {sec:3,word:"at least in part",ipa:"/ət ˌliːst ɪn ˈpɑːt/",vi:"ít nhất là một phần",ex:"The pain relief is produced, at least in part, by natural opiates."}
+];
+
+var PARAPHRASE=[
+ {sec:1,q:"famous",p:"a relatively little-known architect",vi:"nổi tiếng / ít được biết đến (trái nghĩa)"},
+ {sec:1,q:"knowledge of boats",p:"maritime background; exposure to shipbuilding",vi:"nền tảng hàng hải, đóng tàu"},
+ {sec:1,q:"parts of the Opera House",p:"the design of the roof",vi:"bộ phận công trình"},
+ {sec:1,q:"changed his designs",p:"amended his original designs",vi:"sửa đổi thiết kế"},
+ {sec:1,q:"defended Utzon’s role",p:"led protests demanding that Utzon be reinstated",vi:"bảo vệ vai trò của ai đó"},
+ {sec:1,q:"went back to Australia",p:"he never returned",vi:"quay trở lại (phủ định)"},
+ {sec:1,q:"final cost",p:"having cost $102 million",vi:"chi phí cuối cùng"},
+ {sec:1,q:"tiles from Sweden",p:"tiles manufactured in a factory in Sweden",vi:"được sản xuất tại"},
+ {sec:1,q:"covering the outside walls",p:"the exterior is mostly clad with",vi:"ốp mặt ngoài"},
+ {sec:1,q:"have their home base",p:"the four resident companies",vi:"đóng trụ sở thường trú"},
+ {sec:1,q:"at the foot of a wide staircase",p:"the steps which lead up from the forecourt",vi:"ở chân cầu thang"},
+ {sec:1,q:"made the harbour visible",p:"enabled theatre patrons to see the harbour",vi:"giúp nhìn thấy"},
+
+ {sec:2,q:"a particular tourist attraction",p:"the German Museum of Technology, attracting large numbers of visitors",vi:"điểm thu hút du khách"},
+ {sec:2,q:"at the heart of the reunited city",p:"the unification gave the location more centrality",vi:"trung tâm thành phố thống nhất"},
+ {sec:2,q:"bring people of different ages together",p:"integrating different generations and social groups",vi:"gắn kết các thế hệ"},
+ {sec:2,q:"preserve industrial remains",p:"the conservation of railway heritage",vi:"bảo tồn di sản công nghiệp"},
+ {sec:2,q:"in the middle of the new park",p:"planned around a large central meadow",vi:"ở trung tâm"},
+ {sec:2,q:"a path for pedestrians",p:"a concrete footpath",vi:"lối đi bộ"},
+ {sec:2,q:"two railway lines",p:"a pair of railway lines",vi:"cặp đường ray"},
+ {sec:2,q:"a regular journey",p:"once a month, a train slowly travels",vi:"hành trình định kỳ"},
+ {sec:2,q:"its base",p:"its parking shed",vi:"nhà kho đỗ tàu"},
+ {sec:2,q:"situated around the edges",p:"the edges of the park are finished with",vi:"nằm quanh rìa"},
+
+ {sec:3,q:"an appointment",p:"each session with your patients",vi:"buổi hẹn khám"},
+ {sec:3,q:"ought to last a minimum length of time",p:"should take at least half an hour",vi:"kéo dài tối thiểu"},
+ {sec:3,q:"easy to understand",p:"describe your treatment in familiar words",vi:"dễ hiểu"},
+ {sec:3,q:"have faith in their treatment",p:"really believe in your therapy",vi:"tin vào liệu pháp"},
+ {sec:3,q:"a high income",p:"a very good living",vi:"thu nhập cao"},
+ {sec:3,q:"improve without treatment",p:"many illnesses get better on their own",vi:"tự khỏi"},
+ {sec:3,q:"should give it greater recognition",p:"its role is often neglected and misunderstood",vi:"cần được công nhận nhiều hơn"},
+ {sec:3,q:"a significant role in both alternative and conventional medicine",p:"a powerful part of all medical care, orthodox or otherwise",vi:"vai trò quan trọng ở cả hai dòng y học"},
+ {sec:3,q:"personal feelings alter our physical condition",p:"our state of mind can influence our physiology",vi:"cảm xúc ảnh hưởng thể chất"},
+ {sec:3,q:"a range of views",p:"keen on it / openly skeptical / a let’s try and see attitude",vi:"nhiều quan điểm khác nhau"},
+ {sec:3,q:"proved",p:"here was direct proof",vi:"bằng chứng trực tiếp"},
+ {sec:3,q:"endorphins are involved in reducing pain",p:"the relief of pain ... is carried out ... by these natural opiates",vi:"endorphin tham gia giảm đau"},
+ {sec:3,q:"likely to trigger the placebo effect",p:"best at mobilizing the placebo effect",vi:"dễ kích hoạt hiệu ứng"}
+];
+
+var GRAMMAR=[
+ {sec:1,name:"Cleft sentence: It was + N + that + V",ex:"It was Utzon’s life and travels that had shaped his design for the Sydney Opera House.",use:"Nhấn mạnh chủ ngữ hoặc tân ngữ. Dùng trong Writing Task 2 khi muốn làm nổi bật nguyên nhân chính: It is poor urban planning that causes traffic congestion, not the number of cars."},
+ {sec:1,name:"Reduced relative clause (V-ed)",ex:"1,056,006 tiles manufactured in a factory in Sweden",use:"Rút gọn mệnh đề bị động which were manufactured. Giúp câu gọn và nâng điểm Grammatical Range: Policies introduced last year have reduced emissions."},
+ {sec:1,name:"Perfect participle: having + V3",ex:"The Opera House was not formally completed until 1973 having cost $102 million.",use:"Diễn tả hành động/kết quả đi kèm. Dùng để nối hai ý mà không lặp and: Having invested heavily in renewables, the country now exports electricity."},
+ {sec:1,name:"Subjunctive sau demand/suggest/insist that",ex:"...demanding that Utzon be reinstated as architect.",use:"Sau demand, suggest, insist, recommend dùng V nguyên thể (không chia). Rất hữu ích cho câu đề xuất giải pháp: I would recommend that the government subsidise public transport."},
+ {sec:1,name:"Non-defining relative clause với which",ex:"It is supported on 588 concrete piers, which are sunk approximately 25 metres below sea level.",use:"Bổ sung thông tin phụ, có dấu phẩy. Tránh lỗi dùng that cho mệnh đề không xác định."},
+ {sec:1,name:"Although + clause để nhượng bộ",ex:"Although Utzon had spectacular plans for the interior, he was unable to realise them.",use:"Cấu trúc bắt buộc cho đoạn concession trong Task 2: Although online learning is convenient, it cannot replace face-to-face interaction."},
+
+ {sec:2,name:"Past perfect vs past simple để phân tách mốc thời gian",ex:"The decades-long isolation of the site, which had formerly presented a problem, now represented an opportunity.",use:"Quá khứ hoàn thành cho việc xảy ra TRƯỚC. Dùng khi kể diễn tiến trong Task 1 (bản đồ) hoặc Speaking Part 2."},
+ {sec:2,name:"Once + past perfect (mệnh đề thời gian)",ex:"Once the area had been subjected to a process of undergrowth clearance and decontamination, it was then organized around...",use:"Once = sau khi đã. Thay cho after để tăng độ đa dạng: Once the data had been collected, the results were analysed."},
+ {sec:2,name:"Rút gọn mệnh đề quan hệ bị động sau danh từ",ex:"an underpass crossed by more than fifteen former railway bridges",use:"= an underpass which is crossed by... Rất phù hợp để mô tả biểu đồ, bản đồ trong Task 1."},
+ {sec:2,name:"Fronting trạng ngữ chỉ nơi chốn + there is",ex:"North of the meadow, there is a large concrete slab with rounded edges.",use:"Đảo trạng ngữ lên đầu câu để tăng tính mạch lạc khi mô tả bố cục: To the east of the site lies a residential district."},
+ {sec:2,name:"Cấu trúc phi nhân xưng: It was necessary to / the need to",ex:"It was necessary to stimulate the development of sixteen new hectares of local amenities.",use:"Giọng văn học thuật, tránh dùng I think. Trong Task 2: It is essential to invest in early-childhood education."},
+ {sec:2,name:"be capable of + V-ing",ex:"local amenities that would be capable of integrating different generations",use:"Thay cho can một cách trang trọng hơn: Renewable technology is capable of meeting most domestic demand."},
+
+ {sec:3,name:"Câu điều kiện loại 2 / would giả định",ex:"Your healing power would be the outcome of a paradoxical force...",use:"Bàn về tình huống giả định. Task 2: If governments raised fuel taxes, commuters would switch to public transport."},
+ {sec:3,name:"It + should + come as no surprise + that-clause",ex:"At one level, it should come as no surprise that our state of mind can influence our physiology.",use:"Mở đầu một luận điểm được coi là hiển nhiên. Thay cho Obviously / It is clear that."},
+ {sec:3,name:"Though + clause đảo lên đầu câu",ex:"Though scientists don’t know exactly how placebos work, they have accumulated a fair bit of knowledge.",use:"Nhượng bộ trang trọng hơn although một chút, hay dùng đầu câu trong văn học thuật."},
+ {sec:3,name:"The + comparative..., the + comparative...",ex:"The more enthusiastic the doctor, the better the drug performed.",use:"Cấu trúc song hành rất được đánh giá cao. Task 2: The earlier children learn a second language, the more fluent they become."},
+ {sec:3,name:"Danh từ + V-ed + that-clause (rút gọn kép)",ex:"the endorphins, natural substances produced in the brain that are known to help control pain",use:"Kết hợp appositive + rút gọn quan hệ. Giúp nén thông tin, tăng lexical density."},
+ {sec:3,name:"Bị động + cụm chêm at least in part",ex:"the relief of pain by a placebo is carried out, at least in part, by these natural opiates",use:"Hedging (giảm nhẹ khẳng định) - kỹ năng bắt buộc để đạt Task Response band 7: Unemployment is caused, at least in part, by automation."}
+];
+
+var STRATEGY=[
+ {name:"TRUE / FALSE / NOT GIVEN (Q1-7)",tips:[
+   "FALSE = bài nói NGƯỢC LẠI. NOT GIVEN = bài KHÔNG nói gì về ý đó.",
+   "Nếu thấy mình phải suy luận thêm một bước mới ra đáp án thì thường đó là NOT GIVEN.",
+   "Gạch chân danh từ riêng, số và mốc thời gian trong câu hỏi để định vị nhanh.",
+   "Câu hỏi theo đúng thứ tự đoạn văn: câu 1 nằm trước câu 2 trong bài."]},
+ {name:"Note / Summary Completion (Q8-13, Q24-26)",tips:[
+   "Xác định LOẠI TỪ cần điền trước khi quét bài (danh từ, số, tính từ).",
+   "Đếm đúng số từ cho phép: ONE WORD AND/OR A NUMBER khác ONE WORD ONLY.",
+   "Chép nguyên dạng từ trong bài, không đổi số ít/số nhiều (edges chứ không phải edge).",
+   "Không viết lại ký hiệu đã in sẵn trong đề, ví dụ dấu $ ở câu 8."]},
+ {name:"Matching Headings (Q14-19)",tips:[
+   "Làm dạng này SAU CÙNG của passage 2 vì cần hiểu tổng thể từng đoạn.",
+   "Đọc câu đầu và câu cuối đoạn, rồi tìm danh từ chủ đề lặp lại.",
+   "Loại tiêu đề chỉ khớp với một CHI TIẾT nhỏ chứ không phải ý chính cả đoạn.",
+   "Danh sách tiêu đề luôn nhiều hơn số đoạn, nên phải có tiêu đề thừa."]},
+ {name:"Choose TWO letters (Q20-21, Q22-23)",tips:[
+   "Mỗi chữ cái đúng được 1 điểm, không cần đúng thứ tự.",
+   "Chọn nhiều hơn 2 đáp án sẽ bị tính sai cả cặp.",
+   "Hai đáp án đúng thường nằm ở HAI đoạn khác nhau, không dồn vào một chỗ.",
+   "Loại nhanh phương án chứa từ tuyệt đối (rare, major, easily) nếu bài không khẳng định."]},
+ {name:"Sentence Endings (Q27-31)",tips:[
+   "Đọc phần đầu câu và dự đoán loại thông tin còn thiếu trước khi nhìn danh sách A-H.",
+   "Kiểm tra ngữ pháp: phần đuôi phải hợp với chủ ngữ và thì của phần đầu.",
+   "Đáp án theo thứ tự bài đọc, nên định vị dần từ trên xuống.",
+   "Có đuôi thừa nên đừng cố dùng hết tất cả các lựa chọn."]},
+ {name:"Multiple Choice (Q32-33)",tips:[
+   "Bẫy thường gặp: đúng từ vựng nhưng sai ý (paraphrase trap).",
+   "Với câu hỏi in the third paragraph, đếm đoạn trước rồi mới đọc, không quét cả bài.",
+   "Với câu hỏi in order to show that, tìm câu luận điểm ngay trước ví dụ.",
+   "Loại trừ từng phương án, ghi lý do loại ra giấy nháp."]},
+ {name:"YES / NO / NOT GIVEN (Q34-40)",tips:[
+   "Khác TFNG ở chỗ đây là QUAN ĐIỂM của tác giả, không phải dữ kiện khách quan.",
+   "Chú ý các từ thể hiện thái độ: it should come as no surprise, hardly surprising, oddly ambivalent.",
+   "Bài mô tả PHÁT HIỆN của nghiên cứu nhưng đề hỏi ẢNH HƯỞNG của nghiên cứu thì thường là NOT GIVEN.",
+   "Đừng dùng kiến thức nền của bản thân, chỉ dựa vào những gì tác giả viết."]}
+];
+/* ==========================================================
+   ENGINE
+   ========================================================== */
+var SCRIPT_URL='https://script.google.com/macros/s/AKfycbwKh4DNWdfkqiFXMRwqFmrHjjmovR5atubKduO4Yt6VdxSgdrF5ETB2k6B6owV18X2T/exec';
+var TOTAL_Q=QUESTIONS.length;
+function rawToBand(r){if(r>=39)return"9.0";if(r>=37)return"8.5";if(r>=35)return"8.0";if(r>=33)return"7.5";if(r>=30)return"7.0";if(r>=27)return"6.5";if(r>=23)return"6.0";if(r>=19)return"5.5";if(r>=15)return"5.0";if(r>=13)return"4.5";if(r>=10)return"4.0";if(r>=8)return"3.5";if(r>=6)return"3.0";if(r>=4)return"2.5";return"2.0"}
+var TEST_SECONDS=60*60;
+var studentName='',answers={},timerSec=TEST_SECONDS,timerInt=null,done=false,curSec=1,savedRange=null;
+
+var QMAP={};
+QUESTIONS.forEach(function(q){QMAP[q.qNum]=q});
+QUESTIONS.forEach(function(q){
+  if(q.summaryBlanks){
+    q.summaryBlanks.forEach(function(n,i){
+      var t=QMAP[n];if(!t)return;
+      t._sumMember=true;
+      if(i>0)t._sumSkip=true;
+    });
+  }
+});
+
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function normFill(s){
+  return String(s==null?'':s).toLowerCase().trim()
+    .replace(/[\u2018\u2019]/g,"'")
+    .replace(/[\u201c\u201d]/g,'"')
+    .replace(/[.,;:!?]+$/,'')
+    .replace(/\s+/g,' ');
+}
+function isCorrect(q){
+  if(!q)return false;
+  if(q.type==='fill'){
+    var ua=normFill(answers[q.qNum]);
+    if(!ua)return false;
+    for(var i=0;i<q.accept.length;i++){if(normFill(q.accept[i])===ua)return true}
+    return false;
+  }
+  var v=String(answers[q.qNum]==null?'':answers[q.qNum]).trim().toUpperCase();
+  return v!==''&&v===String(q.answer).toUpperCase();
+}
+function groupInter(g){
+  var sel=answers[g]||[];var key=GROUPS[g].answer;var n=0;
+  sel.forEach(function(x){if(key.indexOf(x)>=0)n++});
+  return n;
+}
+function statusOf(n){
+  var q=QMAP[n];if(!q)return false;
+  if(q.group){var g=GROUPS[q.group];return g.pair.indexOf(n)<groupInter(q.group)}
+  return isCorrect(q);
+}
+function answeredOf(n){
+  var q=QMAP[n];if(!q)return false;
+  if(q.group)return (answers[q.group]||[]).length===2;
+  return String(answers[n]==null?'':answers[n]).trim()!=='';
+}
+
+/* ---------- START ---------- */
+document.getElementById('nameInput').addEventListener('keydown',function(e){if(e.key==='Enter')beginTest()});
+function beginTest(){
+  var n=document.getElementById('nameInput').value.trim();
+  if(!n){document.getElementById('entryErr').style.display='block';return}
+  studentName=n;show('screenTest');
+  document.getElementById('barName').textContent=n;
+  renderTabs();renderSection();startTimer();initResizer();
+}
+function show(id){
+  var list=document.querySelectorAll('.screen');
+  for(var i=0;i<list.length;i++)list[i].classList.remove('active');
+  document.getElementById(id).classList.add('active');
+}
+function renderTabs(){
+  var h='';
+  SECTIONS.forEach(function(s){
+    h+='<button class="section-tab'+(s.n===curSec?' active':'')+'" onclick="switchSection('+s.n+')">Section '+s.n+' (Q'+s.from+'-'+s.to+')</button>';
+  });
+  document.getElementById('secTabs').innerHTML=h;
+}
+function switchSection(n){
+  if(n===curSec)return;
+  curSec=n;renderTabs();renderSection();
+  document.getElementById('passagePanel').scrollTop=0;
+  document.getElementById('questionPanel').scrollTop=0;
+}
+function renderSection(){renderPassage();renderQuestions(done);updateNav()}
+
+function renderPassage(){
+  var s=SECTIONS[curSec-1];
+  var h='<div class="passage-kicker">READING PASSAGE '+s.n+'</div><div class="passage-title">'+s.title+'</div>';
+  if(s.sub)h+='<div class="passage-sub">'+s.sub+'</div>';
+  h+='<div class="passage-body" id="passageBody">'+s.passage+'</div>';
+  document.getElementById('passagePanel').innerHTML=h;
+}
+
+/* ---------- QUESTIONS ---------- */
+function explainHTML(q){
+  var e=q.explain;if(!e)return '';
+  var h='<div class="fb-explain"><span class="step">Bước 1: Hiểu câu hỏi</span>'+e.step1;
+  if(e.kw&&e.kw.length){
+    h+='<span class="step">Bước 2: Keywords được paraphrase</span>';
+    e.kw.forEach(function(k){h+='<div class="kw">- '+k+'</div>'});
+    h+='<span class="step">Bước 3: So sánh và đối chiếu</span>'+e.step2;
+  }else{
+    h+='<span class="step">Bước 2: So sánh và đối chiếu</span>'+e.step2;
+  }
+  var ansTxt=(q.type==='fill')?q.display:(q.group?GROUPS[q.group].display:q.answer);
+  h+='<span class="step">Bước '+(e.kw&&e.kw.length?'4':'3')+': Đáp án đúng: '+ansTxt+'</span>';
+  if(e.distractors&&e.distractors.length){
+    h+='<span class="step">Bước '+(e.kw&&e.kw.length?'5':'4')+': Vì sao các phương án còn lại sai</span><div class="distractor">';
+    e.distractors.forEach(function(d){h+='<strong>'+d.key+'.</strong> '+d.text+'<br>'});
+    h+='</div>';
+  }
+  if(e.tip)h+='<span class="step">Mẹo áp dụng lần sau</span>'+e.tip;
+  return h+'</div>';
+}
+
+function buildSummaryCard(q,review){
+  var h='<div class="sum-card">';
+  if(q.summaryTitle)h+='<div class="sum-title">'+q.summaryTitle+'</div>';
+  var body=q.summaryHTML;
+  q.summaryBlanks.forEach(function(n){
+    var sq=QMAP[n];var ua=answers[n]||'';
+    var cls='';
+    if(review)cls=isCorrect(sq)?' blank-ok':' blank-no';
+    var badge='<span class="sum-num'+(ua?' done':'')+'" id="sn-'+n+'">'+n+'</span>';
+    var inp=badge+'<input class="sum-inp'+cls+'" id="sum-inp-'+n+'" type="text" value="'+esc(ua)+'"'+(done?' disabled':'')+' oninput="pickFill('+n+',this.value)" autocomplete="off" spellcheck="false">';
+    body=body.split('{{'+n+'}}').join(inp);
+  });
+  h+=body;
+  if(review){
+    h+='<div class="sum-fb">';
+    q.summaryBlanks.forEach(function(n){
+      var sq=QMAP[n];var ok=isCorrect(sq);
+      h+='<div class="fb-item '+(ok?'ok':'no')+'" id="qc-'+n+'">';
+      h+='<b>Câu '+n+':</b> '+(ok?'ĐÚNG':'SAI')+' | Bạn viết: <b>'+(answers[n]?esc(answers[n]):'(bỏ trống)')+'</b> | Đáp án: <b>'+sq.display+'</b>';
+      h+=explainHTML(sq);
+      h+='</div>';
+    });
+    h+='</div>';
+  }
+  return h+'</div>';
+}
+
+function buildChoiceCard(q,review){
+  var ua=String(answers[q.qNum]==null?'':answers[q.qNum]);
+  var ok=isCorrect(q);
+  var cls=review?(ok?' is-correct':' is-wrong'):'';
+  var h='<div class="q-card'+cls+'" id="qc-'+q.qNum+'"><div class="q-head"><span class="q-num'+(ua?' done':'')+'" id="qn-'+q.qNum+'">'+q.qNum+'</span><span class="q-stem">'+q.stem+'</span></div>';
+  if(q.type==='matchpara'||q.type==='matchend'){
+    h+='<select class="q-sel" id="sel-'+q.qNum+'" onchange="pick('+q.qNum+',this.value)"'+(done?' disabled':'')+'>';
+    h+='<option value="">- select -</option>';
+    q.options.forEach(function(o){
+      h+='<option value="'+o.key+'"'+(ua===o.key?' selected':'')+'>'+o.key+'. '+o.text+'</option>';
+    });
+    h+='</select>';
+  }else{
+    h+='<div class="q-opts">';
+    q.options.forEach(function(o){
+      var lbl=(o.key===o.text)?o.text:('<strong>'+o.key+'.</strong> '+o.text);
+      h+='<label class="q-opt"><input type="radio" name="q'+q.qNum+'" value="'+o.key+'"'+(ua===o.key?' checked':'')+(done?' disabled':'')+' onchange="pick('+q.qNum+',this.value)"><span>'+lbl+'</span></label>';
+    });
+    h+='</div>';
+  }
+  if(review){
+    h+='<div class="fb-verdict '+(ok?'ok':'no')+'">'+(ok?'Correct':'Incorrect - Đáp án đúng: '+q.answer)+'</div>';
+    h+=explainHTML(q);
+  }
+  return h+'</div>';
+}
+
+function buildMultiCard(q,review){
+  var g=GROUPS[q.group];var sel=answers[q.group]||[];
+  var inter=groupInter(q.group);
+  var cls=review?(inter===2?' is-correct':' is-wrong'):'';
+  var h='<div class="q-card'+cls+'" id="qc-'+g.pair[0]+'"><div class="q-head">';
+  g.pair.forEach(function(n){h+='<span class="q-num'+(sel.length===2?' done':'')+'" id="qn-'+n+'">'+n+'</span>'});
+  h+='<span class="q-stem">'+q.stem+'</span></div><div class="q-opts">';
+  q.options.forEach(function(o){
+    var on=sel.indexOf(o.key)>=0;
+    h+='<label class="q-opt"><input type="checkbox" value="'+o.key+'"'+(on?' checked':'')+(done?' disabled':'')+' onchange="pickMulti(\''+q.group+'\',\''+o.key+'\',this)"><span><strong>'+o.key+'.</strong> '+o.text+'</span></label>';
+  });
+  h+='</div><div class="multi-hint'+(sel.length===2?' full':'')+'" id="mh-'+q.group+'">Đã chọn '+sel.length+'/2</div>';
+  if(review){
+    h+='<div class="fb-verdict '+(inter===2?'ok':'no')+'">'+(inter===2?'Correct (2/2)':'Đúng '+inter+'/2 - Đáp án đúng: '+g.display)+'</div>';
+    h+=explainHTML(q);
+  }
+  return h+'</div>';
+}
+
+function renderQuestions(review){
+  var h='<div class="q-block">';
+  QUESTIONS.forEach(function(q){
+    if(q.sec!==curSec)return;
+    if(q.head)h+='<div class="q-instruction">'+q.head+'</div>';
+    if(q._multiSkip)return;
+    if(q._sumSkip)return;
+    if(q.summaryBlanks){h+=buildSummaryCard(q,review);return}
+    if(q.group){h+=buildMultiCard(q,review);return}
+    h+=buildChoiceCard(q,review);
+  });
+  h+='</div>';
+  if(review){
+    var top='<div style="text-align:center;margin:0 0 16px"><button class="btn-start" style="width:auto;padding:11px 30px" onclick="showAnalysis()">View Analysis &amp; Tips</button></div>';
+    h=top+h;
+  }
+  document.getElementById('questionPanel').innerHTML=h;
+}
+
+/* ---------- ANSWER HANDLERS ---------- */
+function pick(n,v){
+  if(done)return;
+  answers[n]=v;
+  var qn=document.getElementById('qn-'+n);
+  if(qn){if(String(v).trim())qn.classList.add('done');else qn.classList.remove('done')}
+  updateNav();
+}
+function pickFill(n,v){
+  if(done)return;
+  answers[n]=v;
+  var sn=document.getElementById('sn-'+n);
+  if(sn){if(String(v).trim())sn.classList.add('done');else sn.classList.remove('done')}
+  updateNav();
+}
+function pickMulti(g,letter,el){
+  if(done){el.checked=!el.checked;return}
+  var arr=(answers[g]||[]).slice();
+  var i=arr.indexOf(letter);
+  if(el.checked){
+    if(arr.length>=2){el.checked=false;flashHint(g);return}
+    if(i<0)arr.push(letter);
+  }else{
+    if(i>=0)arr.splice(i,1);
+  }
+  answers[g]=arr;
+  var hint=document.getElementById('mh-'+g);
+  if(hint){hint.textContent='Đã chọn '+arr.length+'/2';hint.className='multi-hint'+(arr.length===2?' full':'')}
+  GROUPS[g].pair.forEach(function(n){
+    var qn=document.getElementById('qn-'+n);
+    if(qn){if(arr.length===2)qn.classList.add('done');else qn.classList.remove('done')}
+  });
+  updateNav();
+}
+function flashHint(g){
+  var hint=document.getElementById('mh-'+g);
+  if(!hint)return;
+  hint.textContent='Đã chọn đủ 2/2. Bỏ chọn một đáp án trước khi đổi.';
+  setTimeout(function(){
+    var arr=answers[g]||[];
+    hint.textContent='Đã chọn '+arr.length+'/2';
+  },1800);
+}
+
+function updateNav(){
+  var h='';
+  SECTIONS.forEach(function(s,si){
+    if(si>0)h+='<div class="qnav-sep"></div>';
+    h+='<span class="qnav-lb">P'+s.n+'</span>';
+    for(var n=s.from;n<=s.to;n++){
+      var cls='';
+      if(done)cls=statusOf(n)?' done':' wrong';
+      else if(answeredOf(n))cls=' done';
+      if(s.n===curSec)cls+=' cur';
+      h+='<button class="qnav-btn'+cls+'" onclick="scrollQ('+n+')">'+n+'</button>';
+    }
+  });
+  document.getElementById('qNav').innerHTML=h;
+}
+function scrollQ(n){
+  var q=QMAP[n];if(!q)return;
+  if(q.sec!==curSec){switchSection(q.sec)}
+  var target=n;
+  if(q.group&&!done)target=GROUPS[q.group].pair[0];
+  var el=document.getElementById('qc-'+target)||document.getElementById('sum-inp-'+target);
+  if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ---------- TIMER ---------- */
+function startTimer(){
+  if(timerInt)clearInterval(timerInt);
+  timerInt=setInterval(function(){
+    if(done){clearInterval(timerInt);return}
+    timerSec--;
+    if(timerSec<=0){timerSec=0;clearInterval(timerInt);forceSubmit();return}
+    paintTimer();
+  },1000);
+  paintTimer();
+}
+function paintTimer(){
+  var m=String(Math.floor(timerSec/60));while(m.length<2)m='0'+m;
+  var s=String(timerSec%60);while(s.length<2)s='0'+s;
+  var el=document.getElementById('timer');
+  if(!el)return;
+  el.textContent=m+':'+s;
+  if(timerSec<=120)el.classList.add('warn');else el.classList.remove('warn');
+}
+
+/* ---------- SUBMIT ---------- */
+function submitTest(){
+  if(done)return;
+  var un=0;
+  for(var n=1;n<=TOTAL_Q;n++){if(!answeredOf(n))un++}
+  var msg=un>0?('Bạn còn '+un+' câu chưa trả lời. Vẫn nộp bài?'):('Bạn đã trả lời đủ '+TOTAL_Q+' câu. Nộp bài ngay?');
+  document.getElementById('confirmMsg').textContent=msg;
+  document.getElementById('confirmOverlay').classList.add('show');
+}
+function closeConfirm(){document.getElementById('confirmOverlay').classList.remove('show')}
+function confirmSubmitYes(){closeConfirm();doSubmit()}
+function forceSubmit(){closeConfirm();doSubmit()}
+function doSubmit(){
+  if(done)return;
+  done=true;
+  if(timerInt)clearInterval(timerInt);
+  var correct=0,secOk=[0,0,0];
+  QUESTIONS.forEach(function(q){if(statusOf(q.qNum)){correct++;secOk[q.sec-1]++}});
+  var wrong=TOTAL_Q-correct;
+  var pct=Math.round((correct/TOTAL_Q)*100);
+  var used=TEST_SECONDS-timerSec;
+  var timeUsed=Math.floor(used/60)+'m '+(used%60)+'s';
+  var band=rawToBand(correct);
+  document.getElementById('resName').textContent=studentName;
+  document.getElementById('resBand').innerHTML=band+'<small> / 9.0</small>';
+  document.getElementById('resPct').textContent=correct+' / '+TOTAL_Q+' correct ('+pct+'%)';
+  document.getElementById('resOk').textContent=correct;
+  document.getElementById('resTotal').textContent=TOTAL_Q;
+  document.getElementById('resNo').textContent=wrong;
+  var sb='';
+  SECTIONS.forEach(function(s,i){sb+='<span>Passage '+s.n+': '+secOk[i]+'/'+(s.to-s.from+1)+'</span>'});
+  document.getElementById('resSec').innerHTML=sb;
+  document.getElementById('overlay').classList.add('show');
+  var btn=document.getElementById('btnSubmit');
+  btn.textContent='SUBMITTED';btn.disabled=true;
+  renderQuestions(true);updateNav();
+  pushToSheets({name:studentName,correct:correct,total:TOTAL_Q,percent:pct,band:band,timeUsed:timeUsed,answers:buildPayloadAnswers()});
+}
+function buildPayloadAnswers(){
+  var out={};
+  QUESTIONS.forEach(function(q){
+    if(q.group)return;
+    out[String(q.qNum)]=String(answers[q.qNum]==null?'':answers[q.qNum]);
+  });
+  var keys=Object.keys(GROUPS);
+  keys.forEach(function(g){out[g]=(answers[g]||[]).slice().sort().join('+')});
+  return out;
+}
+function pushToSheets(data){
+  var gsMsg=document.getElementById('gsMsg');
+  if(!SCRIPT_URL){gsMsg.textContent='';return}
+  gsMsg.textContent='Saving...';gsMsg.style.color='#888';
+  fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify(data),mode:'no-cors'})
+    .then(function(){gsMsg.textContent='Saved';gsMsg.style.color='#2e7d32'})
+    .catch(function(){gsMsg.textContent=''});
+}
+function reviewMode(){
+  document.getElementById('overlay').classList.remove('show');
+  renderQuestions(true);updateNav();
+}
+function restart(){
+  done=false;answers={};timerSec=TEST_SECONDS;curSec=1;
+  document.getElementById('overlay').classList.remove('show');
+  var btn=document.getElementById('btnSubmit');btn.textContent='SUBMIT';btn.disabled=false;
+  show('screenEntry');
+  document.getElementById('nameInput').value='';
+}
+
+/* ---------- ANALYSIS ---------- */
+function chipHTML(c){
+  return '<div class="col-chip" onclick="toggleChip(this)">'+c.word+'<div class="col-detail"><div class="cd-word">'+c.word+'</div><div class="cd-ipa">'+c.ipa+'</div><div class="cd-vi">'+c.vi+'</div><div class="cd-ex">'+c.ex+'</div></div></div>';
+}
+function toggleChip(el){
+  var open=el.classList.contains('open');
+  var all=document.querySelectorAll('.col-chip');
+  for(var i=0;i<all.length;i++)all[i].classList.remove('open');
+  if(!open)el.classList.add('open');
+}
+function showAnalysis(){
+  var correct=0,secOk=[0,0,0];
+  QUESTIONS.forEach(function(q){if(statusOf(q.qNum)){correct++;secOk[q.sec-1]++}});
+  var pct=Math.round((correct/TOTAL_Q)*100);
+  var band=rawToBand(correct);
+  var br=[];
+  SECTIONS.forEach(function(s,i){br.push('Passage '+s.n+': '+secOk[i]+'/'+(s.to-s.from+1))});
+  var h='<div class="analysis-wrap"><h2>Performance Analysis</h2><div class="asub">'+esc(studentName)+' - Band '+band+' - Raw score '+correct+'/'+TOTAL_Q+' ('+pct+'%) - '+br.join(', ')+'</div>';
+  h+='<div style="margin-bottom:22px"><button class="abtn-back" style="margin-top:0" onclick="backToReview()">Back to Review</button></div>';
+
+  h+='<div class="a-section"><h3>1. Các câu trả lời sai</h3>';
+  var anyWrong=false;
+  SECTIONS.forEach(function(s,si){
+    var rows='';
+    for(var n=s.from;n<=s.to;n++){
+      if(statusOf(n))continue;
+      anyWrong=true;
+      var q=QMAP[n];
+      var yours,keyAns;
+      if(q.group){
+        yours=(answers[q.group]||[]).join(', ')||'(bỏ trống)';
+        keyAns=GROUPS[q.group].display;
+      }else if(q.type==='fill'){
+        yours=answers[n]?esc(answers[n]):'(bỏ trống)';
+        keyAns=q.display;
+      }else{
+        yours=answers[n]?esc(answers[n]):'(bỏ trống)';
+        keyAns=q.answer;
+      }
+      var lead=q.explain?q.explain.step1:'';
+      var tip=q.explain&&q.explain.tip?q.explain.tip:'';
+      rows+='<div class="a-wrong-item"><div class="aq">Câu '+n+': '+lead+'</div>';
+      rows+='<div class="adetail">Bạn chọn/viết: <strong>'+yours+'</strong> | Đáp án đúng: <strong>'+keyAns+'</strong></div>';
+      if(tip)rows+='<div class="adetail">Rút kinh nghiệm: '+tip+'</div>';
+      rows+='</div>';
+    }
+    if(rows)h+='<div class="a-note"><strong>Passage '+s.n+' - '+s.title+'</strong></div>'+rows;
+  });
+  if(!anyWrong)h+='<div class="a-tip"><strong>Xuất sắc.</strong> Toàn bộ '+TOTAL_Q+' câu đều đúng.</div>';
+  h+='</div>';
+
+  h+='<div class="a-section"><h3>2. Collocations nên học thuộc (bấm vào từ để xem IPA, nghĩa, ví dụ)</h3>';
+  SECTIONS.forEach(function(s){
+    h+='<div class="a-tip"><strong>Passage '+s.n+' - '+s.title+'</strong><div class="a-vocab">';
+    COLLOCATIONS.forEach(function(c){if(c.sec===s.n)h+=chipHTML(c)});
+    h+='</div></div>';
+  });
+  h+='</div>';
+
+  h+='<div class="a-section"><h3>3. Bảng paraphrase: đề bài so với bài đọc</h3>';
+  SECTIONS.forEach(function(s){
+    h+='<div class="a-note"><strong>Passage '+s.n+'</strong></div>';
+    h+='<table class="ptable"><tr><th>Trong câu hỏi</th><th>Trong bài đọc</th><th>Nghĩa</th></tr>';
+    PARAPHRASE.forEach(function(p){
+      if(p.sec!==s.n)return;
+      h+='<tr><td>'+p.q+'</td><td>'+p.p+'</td><td>'+p.vi+'</td></tr>';
+    });
+    h+='</table>';
+  });
+  h+='</div>';
+
+  h+='<div class="a-section"><h3>4. Cấu trúc ngữ pháp lấy từ bài đọc để dùng lại trong Writing và Speaking</h3>';
+  SECTIONS.forEach(function(s){
+    h+='<div class="a-note"><strong>Passage '+s.n+'</strong></div>';
+    GRAMMAR.forEach(function(g){
+      if(g.sec!==s.n)return;
+      h+='<div class="gram-box"><div class="gname">'+g.name+'</div><div class="gex">'+g.ex+'</div><div class="guse">'+g.use+'</div></div>';
+    });
+  });
+  h+='</div>';
+
+  h+='<div class="a-section"><h3>5. Chiến lược theo từng dạng câu hỏi</h3>';
+  STRATEGY.forEach(function(st){
+    h+='<div class="a-tip"><strong>'+st.name+'</strong><ul>';
+    st.tips.forEach(function(t){h+='<li>'+t+'</li>'});
+    h+='</ul></div>';
+  });
+  h+='</div>';
+
+  h+='<button class="abtn-back" onclick="backToReview()">Back to Review</button></div>';
+  document.getElementById('screenAnalysis').innerHTML=h;
+  show('screenAnalysis');
+  window.scrollTo(0,0);
+}
+function backToReview(){show('screenTest')}
+
+/* ---------- HIGHLIGHT + NOTE ---------- */
+var popup=document.getElementById('selPopup');
+var noteInputWrap=document.getElementById('noteInput');
+document.addEventListener('mouseup',function(e){
+  if(popup.contains(e.target)||noteInputWrap.contains(e.target))return;
+  setTimeout(function(){showPopup()},10);
+});
+function showPopup(){
+  var sel=window.getSelection();
+  if(!sel||!sel.rangeCount||sel.isCollapsed){hidePopup();return}
+  var range=sel.getRangeAt(0);
+  var container=range.commonAncestorContainer;
+  var pp=document.getElementById('passagePanel'),qp=document.getElementById('questionPanel');
+  if(!pp||!qp)return;
+  if(!pp.contains(container)&&!qp.contains(container)){hidePopup();return}
+  savedRange=range.cloneRange();
+  var rect=range.getBoundingClientRect();
+  popup.style.left=Math.max(8,rect.left+rect.width/2-70)+'px';
+  popup.style.top=Math.max(8,rect.top-46)+'px';
+  popup.classList.add('show');
+}
+function hidePopup(){popup.classList.remove('show');noteInputWrap.classList.remove('show')}
+function wrapRange(cls,note){
+  if(!savedRange)return;
+  var sel=window.getSelection();
+  sel.removeAllRanges();sel.addRange(savedRange);
+  var mark=document.createElement('mark');
+  mark.className=cls;
+  if(note)mark.setAttribute('data-note',note);
+  try{savedRange.surroundContents(mark)}
+  catch(err){var frag=savedRange.extractContents();mark.appendChild(frag);savedRange.insertNode(mark)}
+  sel.removeAllRanges();
+  hidePopup();savedRange=null;
+}
+function applyHL(c){wrapRange('hl-'+c,null)}
+function openNoteInput(){
+  var rect=popup.getBoundingClientRect();
+  noteInputWrap.style.left=rect.left+'px';
+  noteInputWrap.style.top=(rect.bottom+6)+'px';
+  noteInputWrap.classList.add('show');
+  document.getElementById('noteText').value='';
+  document.getElementById('noteText').focus();
+}
+function cancelNote(){noteInputWrap.classList.remove('show')}
+function saveNote(){
+  var t=document.getElementById('noteText').value.trim();
+  if(!t||!savedRange)return;
+  wrapRange('hl-y',t);
+}
+document.addEventListener('click',function(e){
+  var tip=document.getElementById('noteTooltip');
+  var m=e.target&&e.target.closest?e.target.closest('mark[data-note]'):null;
+  if(!m){tip.classList.remove('show');return}
+  var rect=m.getBoundingClientRect();
+  tip.innerHTML=esc(m.getAttribute('data-note'))+'<span class="nt-close">đóng</span>';
+  tip.style.left=Math.max(8,rect.left)+'px';
+  tip.style.top=Math.max(8,rect.top-52)+'px';
+  tip.classList.add('show');
+});
+function clearAllHL(){
+  ['passagePanel','questionPanel'].forEach(function(id){
+    var el=document.getElementById(id);if(!el)return;
+    var marks=el.querySelectorAll('mark');
+    for(var i=0;i<marks.length;i++){
+      var m=marks[i],p=m.parentNode;
+      while(m.firstChild)p.insertBefore(m.firstChild,m);
+      p.removeChild(m);
+    }
+  });
+  document.getElementById('noteTooltip').classList.remove('show');
+  hidePopup();
+}
+document.addEventListener('scroll',function(){hidePopup()},true);
+
+/* ---------- RESIZER ---------- */
+function initResizer(){
+  var rs=document.getElementById('resizer'),wrap=document.getElementById('mainWrap');
+  var left=document.getElementById('passagePanel'),right=document.getElementById('questionPanel'),on=false;
+  if(!rs||rs.dataset.init)return;
+  rs.dataset.init='1';
+  rs.addEventListener('mousedown',function(e){on=true;rs.classList.add('on');document.body.style.cursor='col-resize';document.body.style.userSelect='none';e.preventDefault()});
+  document.addEventListener('mousemove',function(e){
+    if(!on)return;var r=wrap.getBoundingClientRect();var pct=((e.clientX-r.left)/r.width)*100;
+    if(pct<25||pct>75)return;
+    left.style.flex='none';right.style.flex='none';left.style.width=pct+'%';right.style.width=(100-pct)+'%';
+  });
+  document.addEventListener('mouseup',function(){if(on){on=false;rs.classList.remove('on');document.body.style.cursor='';document.body.style.userSelect=''}});
+  rs.addEventListener('touchstart',function(e){on=true;rs.classList.add('on');e.preventDefault()},{passive:false});
+  document.addEventListener('touchmove',function(e){
+    if(!on)return;var t=e.touches[0];var r=wrap.getBoundingClientRect();var pct=((t.clientX-r.left)/r.width)*100;
+    if(pct<25||pct>75)return;
+    left.style.flex='none';right.style.flex='none';left.style.width=pct+'%';right.style.width=(100-pct)+'%';
+  },{passive:false});
+  document.addEventListener('touchend',function(){if(on){on=false;rs.classList.remove('on')}});
+}
+
+/* ---------- PRIVACY DETERRENT ---------- */
+var SHIELD_DEFAULT='Nội dung đã được ẩn.<br>Quay lại cửa sổ bài thi để tiếp tục.';
+function showShield(msg){
+  document.getElementById('shieldMsg').innerHTML=msg||SHIELD_DEFAULT;
+  document.body.classList.add('shielded');
+  document.getElementById('privacyShield').classList.add('show');
+}
+function hideShield(){
+  document.body.classList.remove('shielded');
+  document.getElementById('privacyShield').classList.remove('show');
+}
+window.addEventListener('blur',function(){showShield()});
+window.addEventListener('focus',function(){hideShield()});
+document.addEventListener('keyup',function(e){
+  if(e.key==='PrintScreen'){
+    try{navigator.clipboard.writeText(' ')}catch(err){}
+    showShield('Không cho phép chụp màn hình.<br>Nội dung đã được ẩn.');
+  }
+});
+</script>
+</body>
+</html>
